@@ -1,0 +1,11 @@
+{
+  "project_name": "OTE-API My Plugin",
+  "project_slug": "oteapi-myplugin",
+  "package_name": "{{ cookiecutter.project_name|lower|replace('-', '_') }}",
+  "author": "Firstname Lastname",
+  "organization": "SINTEF",
+  "email": "firstname.lastname@organization.org",
+  "version": "0.0.1",
+  "git_url": "https://github.com/{{ cookiecutter.author|replace(' ', '') }}/{{ cookiecutter.project_slug }}",
+  "year": "2022"
+}
