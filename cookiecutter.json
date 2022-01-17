@@ -1,7 +1,7 @@
 {
   "project_name": "OTE-API My Plugin",
   "project_slug": "oteapi-myplugin",
-  "package_name": "{{ cookiecutter.project_name|lower|replace('-', '_') }}",
+  "package_name": "{{ cookiecutter.project_slug|lower|replace('-', '_') }}",
   "author": "Firstname Lastname",
   "organization": "SINTEF",
   "email": "firstname.lastname@organization.org",
