@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional
 
 from oteapi.datacache.datacache import DataCache
 from oteapi.models.resourceconfig import ResourceConfig
-from oteapi.interfaces.factory import StrategyFactory
+from oteapi.plugins.factories import StrategyFactory
 from pydantic import BaseModel, Extra, Field
 
 
@@ -24,9 +24,7 @@ class FileConfig(BaseModel):
 
 
 @dataclass
-@StrategyFactory.register(
-    ("scheme", "file"),
-)
+@StrategyFactory.register(("scheme", "fileDEMO"))
 class FileStrategy:
     """Strategy for retrieving data via local file."""
 

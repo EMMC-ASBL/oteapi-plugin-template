@@ -6,13 +6,12 @@ from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
 from oteapi.models.resourceconfig import ResourceConfig
-from oteapi.interfaces.factory import StrategyFactory
-from oteapi.interfaces.idownloadstrategy import create_download_strategy
+from oteapi.plugins.factories import StrategyFactory
+from oteapi.plugins.factories import create_download_strategy
 
 
 @dataclass
-# TODO: Replace "demo-access-service" below with appropriate accessService
-@StrategyFactory.register(("accessService", "demo-access-service"))
+@StrategyFactory.register(("accessService", "DEMO-access-service"))
 class DemoResourceStrategy:
     """Resource Interface"""
 

@@ -7,17 +7,17 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
 from oteapi.models.filterconfig import FilterConfig
-from oteapi.interfaces.factory import StrategyFactory
+from oteapi.plugins.factories import StrategyFactory
 from pydantic import BaseModel
 
 
-class CropDataModel(BaseModel):
-    crop: List[int]
+class DemoDataModel(BaseModel):
+    demoData: List[int]
 
 
 @dataclass
-@StrategyFactory.register(("filterType", "filter/crop"))
-class CropFilter:
+@StrategyFactory.register(("filterType", "filter/DEMO"))
+class DemoFilter:
 
     filter_config: FilterConfig
 
@@ -30,7 +30,7 @@ class CropFilter:
     def get(self, session: Optional[Dict[str, Any]] = None) -> Dict:
         """Execute strategy and return a dictionary"""
 
-        cropData = CropDataModel(**self.filter_config.configuration)
-        retobj = dict(imagecrop=cropData.crop)
+        model = DemoDataModel(**self.filter_config.configuration)
+        retobj = dict(key=model.demoData)
 
         return retobj

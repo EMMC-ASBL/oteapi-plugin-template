@@ -10,11 +10,11 @@ from oteapi.models.transformationconfig import (
     TransformationConfig,
     TransformationStatus,
 )
-from oteapi.interfaces.factory import StrategyFactory
+from oteapi.plugins.factories import StrategyFactory
 
 
 @dataclass
-@StrategyFactory.register(("transformation_type", "script/dummy"))
+@StrategyFactory.register(("transformation_type", "script/DEMO"))
 class DummyTransformationStrategy:
     """Testing the API"""
 
@@ -50,4 +50,4 @@ class DummyTransformationStrategy:
         """get transformation"""
 
         # TODO: update and return global state
-        return dict()
+        return {}

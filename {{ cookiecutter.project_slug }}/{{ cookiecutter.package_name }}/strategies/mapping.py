@@ -6,11 +6,11 @@ from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
 from oteapi.models.mappingconfig import MappingConfig
-from oteapi.interfaces.factory import StrategyFactory
+from oteapi.plugins.factories import StrategyFactory
 
 
 @dataclass
-@StrategyFactory.register(("mappingType", "mapping/demo"))
+@StrategyFactory.register(("mappingType", "mapping/DEMO"))
 class DemoMappingStrategy:
     """Mapping Interface"""
 

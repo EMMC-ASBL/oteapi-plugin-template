@@ -5,13 +5,13 @@ from typing import Any, Dict, Optional
 
 from oteapi.datacache.datacache import DataCache
 from oteapi.models.resourceconfig import ResourceConfig
-from oteapi.interfaces.factory import StrategyFactory
-from oteapi.interfaces.idownloadstrategy import create_download_strategy
+from oteapi.plugins.factories import StrategyFactory
+from oteapi.plugins.factories import create_download_strategy
 
 
 @dataclass
-@StrategyFactory.register(("mediaType", "text/json"))
-class JSONDataParseStrategy:
+@StrategyFactory.register(("mediaType", "text/jsonDEMO"))
+class DemoJSONDataParseStrategy:
 
     resource_config: ResourceConfig
 
