@@ -5,9 +5,7 @@ def test_json():
     from {{ cookiecutter.package_name }}.strategies.parse import DemoJSONDataParseStrategy
     from oteapi.models.resourceconfig import ResourceConfig
     from oteapi.plugins.plugins import load_plugins
-
-    load_plugins()
-    
+   
     data = {
         "firstName": "Joe",
         "lastName": "Jackson",
