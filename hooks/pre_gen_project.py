@@ -65,6 +65,7 @@ if result.stdout:
     if VALID != 2:
         sys.exit(
             "ERROR: git has not been configured.\nPlease set user information by "
-            'running:\n\n  git config --global user.email "{{ cookiecutter.email }}"\n'
-            '  git config --global user.name "{{ cookiecutter.author }}"'
+            "running for example:\n\n  git config --global user.email "
+            '"{{ cookiecutter.email }}"\n  git config --global user.name '
+            '"{{ cookiecutter.author }}"\n'
         )
