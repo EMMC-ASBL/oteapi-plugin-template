@@ -3,12 +3,13 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, List
 
-from oteapi.models.filterconfig import FilterConfig
 from oteapi.plugins.factories import StrategyFactory
 from pydantic import BaseModel, Field
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
+
+    from oteapi.models.filterconfig import FilterConfig
 
 
 class DemoDataModel(BaseModel):

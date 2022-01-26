@@ -27,7 +27,7 @@ jobs:
         pip install cookiecutter
 
     - name: Run cookiecutter
-      run: cookiecutter --no-input . project_name=oteapi_ci project_slug=oteapi-ci package_name=oteapi_ci
+      run: cookiecutter --no-input --config-file .github/utils/cookiecutter_values.yaml .
 
     - name: Install template
       run: |
@@ -35,7 +35,8 @@ jobs:
         pip install -e oteapi-ci[dev]
 
     - name: Run pytest
-      run: pytest oteapi-ci
+      run: pytest -vvv
+      working-directory: ./oteapi-ci
 
     - name: Run pre-commit
       run: pre-commit run --all-files

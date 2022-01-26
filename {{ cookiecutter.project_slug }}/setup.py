@@ -7,9 +7,7 @@ from setuptools import find_packages, setup
 TOP_DIR = Path(__file__).resolve().parent
 PACKAGE_NAME = "{{ cookiecutter.package_name }}"
 
-with open(
-    TOP_DIR / PACKAGE_NAME / "__init__.py", "r", encoding="utf8"
-) as handle:
+with open(TOP_DIR / PACKAGE_NAME / "__init__.py", "r", encoding="utf8") as handle:
     VERSION = AUTHOR = AUTHOR_EMAIL = None
     for line in handle.readlines():
         VERSION_match = re.match(r'^__version__ = (\'|")(?P<version>.+)(\'|")', line)

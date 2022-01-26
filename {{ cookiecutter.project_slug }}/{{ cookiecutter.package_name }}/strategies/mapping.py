@@ -34,7 +34,6 @@ class DemoMappingStrategy:
             dictionary context.
 
         """
-        # TODO: Add initializing logic
         return {}
 
     def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
@@ -51,5 +50,4 @@ class DemoMappingStrategy:
             dictionary context.
 
         """
-        # TODO: Add mapping logic
         return {}

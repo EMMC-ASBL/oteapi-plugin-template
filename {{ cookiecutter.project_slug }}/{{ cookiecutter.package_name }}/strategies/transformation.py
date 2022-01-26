@@ -52,7 +52,6 @@ class DummyTransformationStrategy:
             dictionary context.
 
         """
-        # TODO: update and return global state
         return {}
 
     def run(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
