@@ -25,6 +25,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install cookiecutter
     - name: Run cookiecutter
-      run: cookiecutter --no-input . project_name=oteapi_ci
-
+      run: cookiecutter --no-input . project_name=oteapi_ci project_slug=oteapi-ci package_name=oteapi_ci
+    - name: Install template
+      run: |
+        pip install -r oteapi-ci/requirements.txt
+        pip install -e oteapi-ci
+    - name: Run tests
+      run: |
+        pip install pytest
+        pytest oteapi-ci
 
