@@ -18,7 +18,7 @@ def test_json():
 
     config = ResourceConfig(
         downloadUrl="https://filesamples.com/samples/code/json/sample2.json",
-        mediaType="text/json",
+        mediaType="text/jsonDEMO",
     )
     parser = DemoJSONDataParseStrategy(config)
     json = parser.parse()

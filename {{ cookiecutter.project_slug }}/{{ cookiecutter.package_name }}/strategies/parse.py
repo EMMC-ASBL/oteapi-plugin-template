@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
-@StrategyFactory.register(("mediaType", "text/json"))
+@StrategyFactory.register(("mediaType", "text/jsonDEMO"))
 class DemoJSONDataParseStrategy:
     """Parse Strategy."""
 
