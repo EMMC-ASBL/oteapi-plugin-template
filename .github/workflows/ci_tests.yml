@@ -35,16 +35,16 @@ jobs:
         pip install -e oteapi-ci[dev]
 
     - name: Run pytest
-      run: |
-        pip install pytest
-        pytest oteapi-ci
+      run: pytest oteapi-ci
 
     - name: Run pre-commit
       run: pre-commit run --all-files
       working-directory: ./oteapi-ci
 
     - name: Run safety
-      run: pip freeze | safety check --stdin
+      run: |
+        pip install safety
+        pip freeze | safety check --stdin
 
   pre-commit_safety:
     runs-on: ubuntu-latest
@@ -63,6 +63,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U setuptools wheel
         pip install -r requirements.txt
+        pip install safety
 
     - name: Test with pre-commit
       run: pre-commit run --all-files
