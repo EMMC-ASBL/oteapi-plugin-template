@@ -41,14 +41,16 @@ if not MODULE_REGEX.match(MODULE_NAME):
     sys.exit(f"ERROR: {MODULE_NAME!r} is not a valid Python module name!")
 
 
-# Ensure package_name starts with `"oteapi_"`
+# Warn if package_name does not start with `"oteapi_"`
+PROJECT_NAME = "{{ cookiecutter.project_slug }}"
 if not MODULE_NAME.startswith("oteapi_"):
-    sys.exit(f"ERROR: package_name ({MODULE_NAME!r}) must start with 'oteapi_'.")
+    print(f"WARNING: package_name ({MODULE_NAME!r}) does not start with 'oteapi_' !")
+if not PROJECT_NAME.startswith("oteapi-"):
+    print(f"WARNING: project_slug ({PROJECT_NAME!r}) does not start with 'oteapi-' !")
 
 
 # Ensure there is no white space in `project_slug` or `package_name`
 ERROR_MSG = "ERROR: {input_key} may not contain white space."
-PROJECT_NAME = "{{ cookiecutter.project_slug }}"
 if re.match(r"\s", MODULE_NAME):
     sys.exit(ERROR_MSG.format(input_key="package_name"))
 if re.match(r"\s", PROJECT_NAME):
