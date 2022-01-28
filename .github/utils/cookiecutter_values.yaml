@@ -1,0 +1,10 @@
+default_context:
+  project_name: "OTE-API Plugin CI"
+  project_slug: "oteapi-ci"
+  package_name: "oteapi_ci"
+  author: "Team4.0"
+  organization: "SINTEF"
+  email: "Team4.0@SINTEF.no"
+  version: "0.0.1"
+  git_url: "https://github.com/EMMC-ASBL/oteapi-plugin-template-ci"
+  year: "2022"

@@ -1,46 +1,84 @@
-# pylint: disable=W0613, C0103
-"""Demo download strategy class for file"""
-
+"""Demo download strategy class for file."""
+# pylint: disable=no-self-use,unused-argument
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from pathlib import Path
+from typing import TYPE_CHECKING, Optional
 
 from oteapi.datacache.datacache import DataCache
-from oteapi.models.resourceconfig import ResourceConfig
 from oteapi.plugins.factories import StrategyFactory
 from pydantic import BaseModel, Extra, Field
+
+if TYPE_CHECKING:
+    from typing import Any, Dict
+
+    from oteapi.models.resourceconfig import ResourceConfig
 
 
 class FileConfig(BaseModel):
     """File Specific Configuration"""
 
     text: bool = Field(
-        False, description="Whether the file should be opened in text mode."
+        False,
+        description=(
+            "Whether the file should be opened in text mode. If `False`, the file will"
+            " be opened in bytes mode."
+        ),
     )
-    encoding: str = Field(
+    encoding: Optional[str] = Field(
         None,
-        description="Encoding used when opening the file.  "
-        "Default is platform dependent.",
+        description=(
+            "Encoding used when opening the file. The default is platform dependent."
+        ),
     )
 
 
 @dataclass
 @StrategyFactory.register(("scheme", "fileDEMO"))
 class FileStrategy:
-    """Strategy for retrieving data via local file."""
+    """Download Strategy."""
 
-    resource_config: ResourceConfig
+    resource_config: "ResourceConfig"
 
     def initialize(
-        self, session: Optional[Dict[str, Any]] = None  # pylint: disable=W0613
-    ) -> Dict:
-        """Initialize"""
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> "Dict[str, Any]":
+        """Initialize strategy.
+
+        This method will be called through the `/initialize` endpoint of the OTE-API
+        Services.
+
+        Parameters:
+            session: A session-specific dictionary context.
+
+        Returns:
+            Dictionary of key/value-pairs to be stored in the sessions-specific
+            dictionary context.
+
+        """
         return {}
 
-    def get(self, session: Optional[Dict[str, Any]] = None) -> Dict:
-        """Read local file."""
-        assert self.resource_config.downloadUrl
-        assert self.resource_config.downloadUrl.scheme == "file"
-        filename = self.resource_config.downloadUrl.host
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+        """Execute the strategy.
+
+        This method will be called through the strategy-specific endpoint of the
+        OTE-API Services.
+
+        Parameters:
+            session: A session-specific dictionary context.
+
+        Returns:
+            Dictionary of key/value-pairs to be stored in the sessions-specific
+            dictionary context.
+
+        """
+        if (
+            self.resource_config.downloadUrl is None
+            or self.resource_config.downloadUrl.scheme != "file"
+        ):
+            raise ValueError(
+                "Expected 'downloadUrl' to have scheme 'file' in the configuration."
+            )
+        filename = Path(self.resource_config.downloadUrl.host).resolve()
 
         cache = DataCache(self.resource_config.configuration)
         if cache.config.accessKey and cache.config.accessKey in cache:
@@ -49,8 +87,10 @@ class FileStrategy:
             config = FileConfig(
                 **self.resource_config.configuration, extra=Extra.ignore
             )
-            mode = "rt" if config.text else "rb"
-            with open(filename, mode, encoding=config.encoding) as f:
-                key = cache.add(f.read())
+            key = cache.add(
+                filename.read_text(encoding=config.encoding)
+                if config.text
+                else filename.read_bytes()
+            )
 
         return {"key": key}

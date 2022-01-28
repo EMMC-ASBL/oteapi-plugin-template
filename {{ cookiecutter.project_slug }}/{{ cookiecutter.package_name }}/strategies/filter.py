@@ -1,36 +1,61 @@
-
-# pylint: disable=W0511, W0613
-"""
-Demo filter strategy
-"""
+"""Demo filter strategy."""
+# pylint: disable=no-self-use,unused-argument
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, List
 
-from oteapi.models.filterconfig import FilterConfig
 from oteapi.plugins.factories import StrategyFactory
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+if TYPE_CHECKING:
+    from typing import Any, Dict, Optional
+
+    from oteapi.models.filterconfig import FilterConfig
 
 
 class DemoDataModel(BaseModel):
-    demoData: List[int]
+    """Demo filter data model."""
+
+    demo_data: List[int] = Field([], description="List of demo data.")
 
 
 @dataclass
 @StrategyFactory.register(("filterType", "filter/DEMO"))
 class DemoFilter:
+    """Filter Strategy."""
 
-    filter_config: FilterConfig
+    filter_config: "FilterConfig"
 
-    def initialize(self, session: Optional[Dict[str, Any]] = None) -> Dict:
-        """Initialize strategy and return a dictionary"""
+    def initialize(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> "Dict[str, Any]":
+        """Initialize strategy.
 
-        # TODO: Add logic
-        return dict(result="collectionid")
+        This method will be called through the `/initialize` endpoint of the OTE-API
+        Services.
 
-    def get(self, session: Optional[Dict[str, Any]] = None) -> Dict:
-        """Execute strategy and return a dictionary"""
+        Parameters:
+            session: A session-specific dictionary context.
 
+        Returns:
+            Dictionary of key/value-pairs to be stored in the sessions-specific
+            dictionary context.
+
+        """
+        return {"result": "collectionid"}
+
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+        """Execute the strategy.
+
+        This method will be called through the strategy-specific endpoint of the
+        OTE-API Services.
+
+        Parameters:
+            session: A session-specific dictionary context.
+
+        Returns:
+            Dictionary of key/value-pairs to be stored in the sessions-specific
+            dictionary context.
+
+        """
         model = DemoDataModel(**self.filter_config.configuration)
-        retobj = dict(key=model.demoData)
-
-        return retobj
+        return {"key": model.demo_data}

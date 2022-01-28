@@ -1,13 +1,15 @@
 """Test parse strategies."""
 
+
 def test_json():
-    """Test `text/json` parse strategy.""" 
-    from {{ cookiecutter.package_name }}.strategies.parse import DemoJSONDataParseStrategy
+    """Test `text/json` parse strategy."""
     from oteapi.models.resourceconfig import ResourceConfig
     from oteapi.plugins.plugins import load_plugins
 
+    from {{cookiecutter.package_name}}.strategies.parse import DemoJSONDataParseStrategy
+
     load_plugins()
-    
+
     data = {
         "firstName": "Joe",
         "lastName": "Jackson",
@@ -19,7 +21,7 @@ def test_json():
 
     config = ResourceConfig(
         downloadUrl="https://filesamples.com/samples/code/json/sample2.json",
-        mediaType="text/json",
+        mediaType="text/jsonDEMO",
     )
     parser = DemoJSONDataParseStrategy(config)
     json = parser.parse()
