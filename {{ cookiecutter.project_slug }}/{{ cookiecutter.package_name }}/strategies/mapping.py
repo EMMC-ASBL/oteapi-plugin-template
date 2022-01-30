@@ -1,31 +1,53 @@
-# pylint: disable=W0511, W0613
-"""
-Demo mapping strategy class
-"""
+"""Demo mapping strategy class."""
+# pylint: disable=no-self-use,unused-argument
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING
 
-from oteapi.models.mappingconfig import MappingConfig
 from oteapi.plugins.factories import StrategyFactory
+
+if TYPE_CHECKING:
+    from typing import Any, Dict, Optional
+
+    from oteapi.models.mappingconfig import MappingConfig
 
 
 @dataclass
 @StrategyFactory.register(("mappingType", "mapping/DEMO"))
 class DemoMappingStrategy:
-    """Mapping Interface"""
+    """Mapping Strategy."""
 
-    mapping_config: MappingConfig
+    mapping_config: "MappingConfig"
 
-    def initialize(self, session: Optional[Dict[str, Any]] = None) -> Dict:
-        """Initialize mapping"""
+    def initialize(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> "Dict[str, Any]":
+        """Initialize strategy.
 
-        # TODO: Add initializing logic
+        This method will be called through the `/initialize` endpoint of the OTE-API
+        Services.
 
+        Parameters:
+            session: A session-specific dictionary context.
+
+        Returns:
+            Dictionary of key/value-pairs to be stored in the sessions-specific
+            dictionary context.
+
+        """
         return {}
 
-    def get(self, session: Optional[Dict[str, Any]] = None) -> Dict:
-        """Manage mapping and return shared map"""
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+        """Execute the strategy.
 
-        # TODO: Add mapping logic
+        This method will be called through the strategy-specific endpoint of the
+        OTE-API Services.
 
+        Parameters:
+            session: A session-specific dictionary context.
+
+        Returns:
+            Dictionary of key/value-pairs to be stored in the sessions-specific
+            dictionary context.
+
+        """
         return {}
