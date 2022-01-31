@@ -8,4 +8,3 @@ def load_plugins() -> None:
     from oteapi.plugins.plugins import load_plugins
 
     load_plugins()
-
