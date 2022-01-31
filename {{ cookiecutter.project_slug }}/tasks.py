@@ -28,8 +28,8 @@ def update_file(filename: Path, sub_line: "Tuple[str, str]", strip: str = None) 
     filename.write_text("\n".join(lines) + "\n", encoding="utf8")
 
 
-@task(help={"ver": "{{ cookiecutter.project_slug }} version to set"})
-def setver(_, ver=""):
+@task(help={"version": "{{ cookiecutter.project_slug }} version to set"})
+def setver(_, version=""):
     """Sets the {{ cookiecutter.project_slug }} version."""
     match = re.fullmatch(
         (
@@ -37,7 +37,7 @@ def setver(_, ver=""):
             r"(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?"  # pre-release
             r"(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?)"  # build metadata
         ),
-        ver,
+        version,
     )
     if not match:
         sys.exit(
@@ -45,23 +45,24 @@ def setver(_, ver=""):
             "'Major.Minor.Patch(-Pre-Release+Build Metadata)' or "
             "'vMajor.Minor.Patch(-Pre-Release+Build Metadata)'"
         )
-    ver = match.group("version")
+    version = match.group("version")
 
     update_file(
         TOP_DIR / "{{ cookiecutter.package_name }}" / "__init__.py",
-        (r'__version__ = (\'|").*(\'|")', f'__version__ = "{ver}"'),
+        (r'__version__ = (\'|").*(\'|")', f'__version__ = "{version}"'),
     )
 
-    print(f"Bumped version to {ver}.")
+    print(f"Bumped version to {version}.")
 
 
 @task(
     help={
-        "pre-clean": ("Remove the 'api_reference' sub directory prior to (re)creation.")
+        "pre-clean": "Remove the 'api_reference' sub directory prior to (re)creation.",
+        "pre-commit": "Return a non-zero error code if changes were made.",
     }
 )  # pylint: disable=too-many-branches
 def create_api_reference_docs(context, pre_clean=False, pre_commit=False):
-    """Create the API Reference in the documentation"""
+    """Create the API Reference in the documentation."""
     import os
     import shutil
 
