@@ -38,16 +38,22 @@ with open(TOP_DIR / PACKAGE_NAME / "__init__.py", "r", encoding="utf8") as handl
     AUTHOR_EMAIL = AUTHOR_EMAIL.group("email")  # type: ignore[union-attr]
 
 BASE = [
-    f"{_.strip()}"
+    _.strip()
     for _ in (TOP_DIR / "requirements.txt").read_text(encoding="utf8").splitlines()
     if not _.startswith("#") and "git+" not in _
 ]
 
-DEV = [
-    f"{_.strip()}"
-    for _ in (TOP_DIR / "requirements_dev.txt").read_text(encoding="utf8").splitlines()
+DOCS = [
+    _.strip()
+    for _ in (TOP_DIR / "requirements_docs.txt").read_text(encoding="utf8").splitlines()
     if not _.startswith("#") and "git+" not in _
 ]
+
+DEV = [
+    _.strip()
+    for _ in (TOP_DIR / "requirements_dev.txt").read_text(encoding="utf8").splitlines()
+    if not _.startswith("#") and "git+" not in _
+] + DOCS
 
 setup(
     name="{{ cookiecutter.project_slug }}",
@@ -61,5 +67,5 @@ setup(
     packages=find_packages(),
     python_requires=">=3.9",
     install_requires=BASE,
-    extras_require={"dev": DEV},
+    extras_require={"dev": DEV, "docs": DOCS},
 )
