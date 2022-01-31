@@ -106,13 +106,15 @@ def create_api_reference_docs(context, pre_clean=False, pre_commit=False):
 
         relpath = Path(dirpath).relative_to(package_dir)
 
-        if not (package_dir.stem / relpath / "__init__.py").exists():
+        if not (package_dir.name / relpath / "__init__.py").exists():
             # Avoid paths that are not included in the public Python API
+            print("does not exist:", package_dir.name / relpath / "__init__.py")
             continue
 
         # Create `.pages`
         docs_sub_dir = docs_api_ref_dir / relpath
         docs_sub_dir.mkdir(exist_ok=True)
+        print(docs_sub_dir)
         if str(relpath) != ".":
             write_file(
                 full_path=docs_sub_dir / ".pages",
@@ -131,9 +133,9 @@ def create_api_reference_docs(context, pre_clean=False, pre_commit=False):
 
             basename = filename[: -len(".py")]
             py_path = (
-                f"{package_dir.stem}/{relpath}/{basename}".replace("/", ".")
+                f"{package_dir.name}/{relpath}/{basename}".replace("/", ".")
                 if str(relpath) != "."
-                else f"{package_dir.stem}/{basename}".replace("/", ".")
+                else f"{package_dir.name}/{basename}".replace("/", ".")
             )
             md_filename = filename.replace(".py", ".md")
 
