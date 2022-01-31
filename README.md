@@ -1,5 +1,7 @@
 # OTE-API Plugin Cookiecutter Template
 
+<!-- markdownlint-disable MD033 -->
+
 A [cookiecutter](https://cookiecutter.readthedocs.io/) template for creating an OTE-API Plugin repository.
 
 ## What you get
@@ -76,4 +78,4 @@ OTE-API Plugin Cookiecutter Template is released under the [MIT license](LICENSE
 
 OTE-API Plugin Cookiecutter Template has been supported by the following projects:
 
-- __OntoTrans__ (2020-2024) that receives funding from the European Union’s Horizon 2020 Research and Innovation Programme, under Grant Agreement n. 862136.
+- **OntoTrans** (2020-2024) that receives funding from the European Union’s Horizon 2020 Research and Innovation Programme, under Grant Agreement n. 862136.

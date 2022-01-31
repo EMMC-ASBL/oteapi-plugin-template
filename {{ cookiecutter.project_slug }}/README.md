@@ -17,4 +17,4 @@ Further reading:
 
 {{ cookiecutter.project_name }} has been supported by the following projects:
 
-- __OntoTrans__ (2020-2024) that receives funding from the European Union’s Horizon 2020 Research and Innovation Programme, under Grant Agreement n. 862136.
+- **OntoTrans** (2020-2024) that receives funding from the European Union’s Horizon 2020 Research and Innovation Programme, under Grant Agreement n. 862136.
