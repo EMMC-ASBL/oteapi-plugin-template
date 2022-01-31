@@ -25,7 +25,7 @@ Furthermore, the repository will contain **dummy/demo** strategies for each of t
 These should be **updated** to **your specific needs** according to the strategy or strategies you intend to implement.
 The ones that are not used should be deleted.
 
-It is **important** to update the [`setup.cfg`]({{ cookiecutter.project_slug }}/setup.cfg) according to the updated strategies in order for the strategies to be importable through OTE-API Core.
+It is **important** to update the [`setup.cfg`](%7B%7B%20cookiecutter.project_slug%20%7D%7D/setup.cfg) according to the updated strategies in order for the strategies to be importable through OTE-API Core.
 
 ## Usage
 
