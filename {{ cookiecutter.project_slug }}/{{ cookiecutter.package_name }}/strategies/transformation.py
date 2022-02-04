@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from oteapi.models.transformationconfig import TransformationStatus
-from oteapi.plugins.factories import StrategyFactory
+from oteapi.models import TransformationStatus
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
@@ -14,7 +13,6 @@ if TYPE_CHECKING:
 
 
 @dataclass
-@StrategyFactory.register(("transformation_type", "script/DEMO"))
 class DummyTransformationStrategy:
     """Transformation Strategy."""
 

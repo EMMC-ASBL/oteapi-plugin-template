@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
-from oteapi.datacache.datacache import DataCache
-from oteapi.plugins.factories import StrategyFactory
+from oteapi.datacache import DataCache
 from pydantic import BaseModel, Extra, Field
 
 if TYPE_CHECKING:
@@ -33,11 +32,10 @@ class FileConfig(BaseModel):
 
 
 @dataclass
-@StrategyFactory.register(("scheme", "fileDEMO"))
 class DemoFileStrategy:
     """Strategy for retrieving data via local file."""
 
-    resource_config: "ResourceConfig"
+    download_config: "ResourceConfig"
 
     def initialize(
         self, session: "Optional[Dict[str, Any]]" = None
