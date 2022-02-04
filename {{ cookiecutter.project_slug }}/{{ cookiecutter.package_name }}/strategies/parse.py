@@ -51,9 +51,9 @@ class DemoJSONDataParseStrategy:
             dictionary context.
 
         """
-        downloader = create_strategy("download", self.resource_config)
+        downloader = create_strategy("download", self.parse_config)
         output = downloader.get()
-        cache = DataCache(self.resource_config.configuration)
+        cache = DataCache(self.parse_config.configuration)
         content = cache.get(output["key"])
 
         if isinstance(content, dict):
