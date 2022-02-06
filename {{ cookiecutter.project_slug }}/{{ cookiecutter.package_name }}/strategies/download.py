@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
-from oteapi.datacache.datacache import DataCache
-from oteapi.plugins.factories import StrategyFactory
+from oteapi.datacache import DataCache
 from pydantic import BaseModel, Extra, Field
 
 if TYPE_CHECKING:
@@ -33,11 +32,10 @@ class FileConfig(BaseModel):
 
 
 @dataclass
-@StrategyFactory.register(("scheme", "fileDEMO"))
 class DemoFileStrategy:
     """Strategy for retrieving data via local file."""
 
-    resource_config: "ResourceConfig"
+    download_config: "ResourceConfig"
 
     def initialize(
         self, session: "Optional[Dict[str, Any]]" = None
@@ -72,20 +70,20 @@ class DemoFileStrategy:
 
         """
         if (
-            self.resource_config.downloadUrl is None
-            or self.resource_config.downloadUrl.scheme != "file"
+            self.download_config.downloadUrl is None
+            or self.download_config.downloadUrl.scheme != "file"
         ):
             raise ValueError(
                 "Expected 'downloadUrl' to have scheme 'file' in the configuration."
             )
-        filename = Path(self.resource_config.downloadUrl.host).resolve()
+        filename = Path(self.download_config.downloadUrl.host).resolve()
 
-        cache = DataCache(self.resource_config.configuration)
+        cache = DataCache(self.download_config.configuration)
         if cache.config.accessKey and cache.config.accessKey in cache:
             key = cache.config.accessKey
         else:
             config = FileConfig(
-                **self.resource_config.configuration, extra=Extra.ignore
+                **self.download_config.configuration, extra=Extra.ignore
             )
             key = cache.add(
                 filename.read_text(encoding=config.encoding)

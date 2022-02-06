@@ -21,6 +21,6 @@ def test_json():
         mediaType="text/jsonDEMO",
     )
     parser = DemoJSONDataParseStrategy(config)
-    json = parser.parse()
+    json = parser.get()
 
     assert json == data

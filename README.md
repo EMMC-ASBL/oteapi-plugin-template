@@ -22,7 +22,7 @@ Furthermore, the repository will contain **dummy/demo** strategies for each of t
 - Mapping (`mappingType`)
 - Parse (`mediaType`)
 - Resource (`accessService`)
-- Transformation (`transformation_type`)
+- Transformation (`transformationType`)
 
 These should be **updated** to **your specific needs** according to the strategy or strategies you intend to implement.
 The ones that are not used should be deleted.
