@@ -54,6 +54,13 @@ jobs:
         pip install safety
         pip freeze | safety check --stdin --ignore 44715
 
+    - name: Build docs
+      run: |
+        invoke create-api-reference-docs --pre-clean
+        invoke create-docs-index
+        mkdocs build --strict
+      working-directory: ./oteapi-ci
+
   pre-commit_safety:
     runs-on: ubuntu-latest
     name: pre-commit & safety

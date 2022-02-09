@@ -9,7 +9,7 @@ Further reading:
 
 ## License and copyright
 
-{{ cookiecutter.project_name }} is released under the [MIT license](LICENSE) with copyright &copy; {{ cookiecutter.organization }}.
+{{ cookiecutter.project_name }} is released under the [MIT license](LICENSE.md) with copyright &copy; {{ cookiecutter.organization }}.
 
 ## Acknowledgment
 

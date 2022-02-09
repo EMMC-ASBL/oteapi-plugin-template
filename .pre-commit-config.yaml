@@ -56,3 +56,19 @@ repos:
       require_serial: true
       files: ^.*$
       exclude: ^{{ cookiecutter.project_slug }}/
+    - id: update-docs-api-reference
+      name: Update API Reference in Documentation for Generated Repo
+      entry: bash -c 'cd "{{ cookiecutter.project_slug }}" && invoke "$@"' --
+      args: [create-api-reference-docs, --pre-clean, --pre-commit]
+      language: python
+      pass_filenames: false
+      files: ^{{ cookiecutter.project_slug }}/{{ cookiecutter.package_name }}/.*\.py$
+      description: Update the API Reference documentation, whenever a Python file is touched in the code base.
+    - id: update-docs-index
+      name: Update Landing Page for Documentation for Generated Repo
+      entry: invoke
+      args: [-r,  "{{ cookiecutter.project_slug }}", create-docs-index]
+      language: python
+      pass_filenames: false
+      files: ^{{ cookiecutter.project_slug }}/README.md$
+      description: Update the landing page for the documentation if the source file (README.md) is changed.
