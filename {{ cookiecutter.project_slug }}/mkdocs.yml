@@ -83,7 +83,7 @@ plugins:
             - import os
             - os.environ["MKDOCS_BUILD"] = "1"
       watch:
-        - oteapi
+        - {{ cookiecutter.package_name }}
   - awesome-pages
 
 nav:
