@@ -8,5 +8,6 @@
   "email": "firstname.lastname@{{ cookiecutter.organization }}.org",
   "version": "0.0.1",
   "git_url": "https://github.com/{{ cookiecutter.username }}/{{ cookiecutter.project_slug }}",
-  "year": "2022"
+  "year": "2022",
+  "use_git": true
 }
