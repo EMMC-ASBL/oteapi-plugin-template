@@ -28,6 +28,7 @@ These should be **updated** to **your specific needs** according to the strategy
 The ones that are not used should be deleted.
 
 It is **important** to update the [`setup.cfg`](%7B%7B%20cookiecutter.project_slug%20%7D%7D/setup.cfg) according to the updated strategies in order for the strategies to be importable through OTE-API Core.
+Please ensure to either uncomment the strategies as they are needed or remove them altogether if they are not needed.
 
 ## Usage
 
