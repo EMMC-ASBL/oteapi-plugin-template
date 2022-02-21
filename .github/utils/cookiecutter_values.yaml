@@ -3,6 +3,7 @@ default_context:
   project_slug: "oteapi-ci"
   package_name: "oteapi_ci"
   author: "Team4.0"
+  username: "TEAM4-0"
   organization: "SINTEF"
   email: "Team4.0@SINTEF.no"
   version: "0.0.1"
