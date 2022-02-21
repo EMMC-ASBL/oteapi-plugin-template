@@ -1,6 +1,6 @@
 site_name: "{{ cookiecutter.project_name }}"
 site_description: Documentation for the {{ cookiecutter.project_name }} package
-site_url: https://{{ cookiecutter.author|replace(' ', '') }}.github.io/{{ cookiecutter.project_slug }}
+site_url: https://{{ cookiecutter.username }}.github.io/{{ cookiecutter.project_slug }}
 copyright: Copyright &copy; 2022 {{ cookiecutter.organization }}
 
 theme:
@@ -25,7 +25,7 @@ edit_uri: ""
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/{{ cookiecutter.author|replace(' ', '') }}
+      link: https://github.com/{{ cookiecutter.username }}
       name: "{{ cookiecutter.author }} on GitHub"
   version:
     provider: mike
@@ -83,7 +83,7 @@ plugins:
             - import os
             - os.environ["MKDOCS_BUILD"] = "1"
       watch:
-        - oteapi
+        - "{{ cookiecutter.package_name }}"
   - awesome-pages
 
 nav:
