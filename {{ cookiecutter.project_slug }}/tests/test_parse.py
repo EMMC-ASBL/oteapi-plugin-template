@@ -3,8 +3,6 @@
 
 def test_json():
     """Test `text/json` parse strategy."""
-    from oteapi.models.resourceconfig import ResourceConfig
-
     from {{cookiecutter.package_name}}.strategies.parse import DemoJSONDataParseStrategy
 
     data = {
@@ -16,11 +14,11 @@ def test_json():
         "phoneNumbers": [{"type": "home", "number": "7349282382"}],
     }
 
-    config = ResourceConfig(
-        downloadUrl="https://filesamples.com/samples/code/json/sample2.json",
-        mediaType="text/jsonDEMO",
-    )
+    config = {
+        "downloadUrl": "https://filesamples.com/samples/code/json/sample2.json",
+        "mediaType": "text/jsonDEMO",
+    }
     parser = DemoJSONDataParseStrategy(config)
     json = parser.get()
 
-    assert json == data
+    assert json.dict() == data

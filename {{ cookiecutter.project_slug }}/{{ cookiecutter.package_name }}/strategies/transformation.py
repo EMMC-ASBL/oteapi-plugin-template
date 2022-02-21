@@ -4,23 +4,36 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from oteapi.models import TransformationStatus
+from oteapi.models import SessionUpdate, TransformationStatus
+from pydantic import Field
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
 
-    from oteapi.models.transformationconfig import TransformationConfig
+    from oteapi.models import TransformationConfig
+
+
+class SessionUpdateDummyTransformation(SessionUpdate):
+    """Class for returning values from Dummy Transformation strategy."""
+
+    result: str = Field(..., description="The job ID.")
 
 
 @dataclass
 class DummyTransformationStrategy:
-    """Transformation Strategy."""
+    """Transformation Strategy.
+
+    **Registers strategies**:
+
+    - `("transformationType", "script/DEMO")`
+
+    """
 
     transformation_config: "TransformationConfig"
 
     def initialize(
         self, session: "Optional[Dict[str, Any]]" = None
-    ) -> "Dict[str, Any]":
+    ) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -30,13 +43,13 @@ class DummyTransformationStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        return {"result": "collection id"}
+        return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -46,13 +59,13 @@ class DummyTransformationStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        return {}
+        return SessionUpdate()
 
-    def run(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+    def run(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateDummyTransformation:
         """Run a transformation job.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -62,12 +75,12 @@ class DummyTransformationStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
             As a minimum, the dictionary will contain the job ID.
 
         """
-        return {"result": "a01d"}
+        return SessionUpdateDummyTransformation(result="a01d")
 
     def status(self, task_id: str) -> TransformationStatus:
         """Get job status.

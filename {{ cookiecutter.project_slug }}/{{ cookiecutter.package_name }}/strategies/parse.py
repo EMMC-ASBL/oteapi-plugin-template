@@ -5,23 +5,30 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from oteapi.datacache import DataCache
+from oteapi.models import SessionUpdate
 from oteapi.plugins import create_strategy
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
 
-    from oteapi.models.resourceconfig import ResourceConfig
+    from oteapi.models import ResourceConfig
 
 
 @dataclass
 class DemoJSONDataParseStrategy:
-    """Parse Strategy."""
+    """Parse Strategy.
+
+    **Registers strategies**:
+
+    - `("mediaType", "application/jsonDEMO")`
+
+    """
 
     parse_config: "ResourceConfig"
 
     def initialize(
         self, session: "Optional[Dict[str, Any]]" = None
-    ) -> "Dict[str, Any]":
+    ) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -31,13 +38,13 @@ class DemoJSONDataParseStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        return {}
+        return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -47,8 +54,8 @@ class DemoJSONDataParseStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
         downloader = create_strategy("download", self.parse_config)
@@ -57,5 +64,5 @@ class DemoJSONDataParseStrategy:
         content = cache.get(output["key"])
 
         if isinstance(content, dict):
-            return content
-        return json.loads(content)
+            return SessionUpdate(**content)
+        return SessionUpdate(**json.loads(content))
