@@ -14,7 +14,6 @@ if TYPE_CHECKING:
     from oteapi.models import ResourceConfig
 
 
-
 class FileConfig(BaseModel):
     """File-specific Configuration Data Model."""
 

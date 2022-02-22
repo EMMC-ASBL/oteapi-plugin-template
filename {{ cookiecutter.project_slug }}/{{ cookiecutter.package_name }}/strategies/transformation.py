@@ -31,9 +31,7 @@ class DummyTransformationStrategy:
 
     transformation_config: "TransformationConfig"
 
-    def initialize(
-        self, session: "Optional[Dict[str, Any]]" = None
-    ) -> SessionUpdate:
+    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -65,7 +63,9 @@ class DummyTransformationStrategy:
         """
         return SessionUpdate()
 
-    def run(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateDummyTransformation:
+    def run(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> SessionUpdateDummyTransformation:
         """Run a transformation job.
 
         This method will be called through the `/initialize` endpoint of the OTE-API

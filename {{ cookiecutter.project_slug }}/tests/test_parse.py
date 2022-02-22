@@ -5,7 +5,7 @@ def test_json() -> None:
     """Test `application/jsonDEMO` demo parse strategy."""
     from oteapi.models import ResourceConfig
 
-    from {{cookiecutter.package_name}}.strategies.parse import DemoJSONDataParseStrategy
+    from {{ cookiecutter.package_name }}.strategies.parse import DemoJSONDataParseStrategy
 
     data = {
         "firstName": "Joe",
@@ -18,7 +18,7 @@ def test_json() -> None:
 
     config = ResourceConfig(
         downloadUrl="https://filesamples.com/samples/code/json/sample2.json",
-        mediaType= "application/jsonDEMO",
+        mediaType="application/jsonDEMO",
     )
     parser = DemoJSONDataParseStrategy(config)
     parsed_data = parser.get()

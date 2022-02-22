@@ -16,7 +16,12 @@ if TYPE_CHECKING:
 class SessionUpdateDemoResource(SessionUpdate):
     """Class for returning values from Demo Resource strategy."""
 
-    output: dict = Field(..., description="The output from downloading the response from the given `accessUrl`.")
+    output: dict = Field(
+        ...,
+        description=(
+            "The output from downloading the response from the given `accessUrl`."
+        ),
+    )
 
 
 @dataclass
@@ -31,9 +36,7 @@ class DemoResourceStrategy:
 
     resource_config: "ResourceConfig"
 
-    def initialize(
-        self, session: "Optional[Dict[str, Any]]" = None
-    ) -> SessionUpdate:
+    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -49,7 +52,9 @@ class DemoResourceStrategy:
         """
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateDemoResource:
+    def get(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> SessionUpdateDemoResource:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the

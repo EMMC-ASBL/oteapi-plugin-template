@@ -24,7 +24,6 @@ class SessionUpdateDemoFilter(SessionUpdate):
     key: str = Field(..., description="Key to access the data in the cache.")
 
 
-
 @dataclass
 class DemoFilter:
     """Filter Strategy.
@@ -37,9 +36,7 @@ class DemoFilter:
 
     filter_config: "FilterConfig"
 
-    def initialize(
-        self, session: "Optional[Dict[str, Any]]" = None
-    ) -> SessionUpdate:
+    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -55,7 +52,9 @@ class DemoFilter:
         """
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateDemoFilter:
+    def get(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> SessionUpdateDemoFilter:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
