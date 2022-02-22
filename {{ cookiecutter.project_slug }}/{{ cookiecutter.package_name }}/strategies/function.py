@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from oteapi.models import SessionUpdate
+
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
 
@@ -11,13 +13,19 @@ if TYPE_CHECKING:
 
 @dataclass
 class DemoFunctionStrategy:
-    """Function Strategy."""
+    """Function Strategy.
+
+    **Registers strategies**:
+
+    - `("functionType", "function/DEMO")`
+
+    """
 
     function_config: "FunctionConfig"
 
     def initialize(
         self, session: "Optional[Dict[str, Any]]" = None
-    ) -> "Dict[str, Any]":
+    ) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -27,13 +35,13 @@ class DemoFunctionStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        return {}
+        return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -43,8 +51,8 @@ class DemoFunctionStrategy:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        return {}
+        return SessionUpdate()
