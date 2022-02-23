@@ -1,7 +1,7 @@
 """Demo strategy class for text/json."""
 # pylint: disable=no-self-use,unused-argument
 import json
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
@@ -10,7 +10,7 @@ from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
-    from typing import Any, Dict, Optional
+    from typing import Any, Dict
 
 
 class JSONParseConfig(AttrDict):
