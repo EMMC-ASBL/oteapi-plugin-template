@@ -1,16 +1,14 @@
 """Demo transformation strategy class."""
 # pylint: disable=no-self-use,unused-argument
-from dataclasses import dataclass
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from oteapi.models import SessionUpdate, TransformationStatus
+from oteapi.models import SessionUpdate, TransformationConfig, TransformationStatus
 from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
-
-    from oteapi.models import TransformationConfig
 
 
 class SessionUpdateDummyTransformation(SessionUpdate):
@@ -29,7 +27,7 @@ class DummyTransformationStrategy:
 
     """
 
-    transformation_config: "TransformationConfig"
+    transformation_config: TransformationConfig
 
     def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.

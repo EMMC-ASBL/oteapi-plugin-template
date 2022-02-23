@@ -1,10 +1,10 @@
 """Demo filter strategy."""
 # pylint: disable=no-self-use,unused-argument
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, List
 
-from oteapi.models import SessionUpdate
-from pydantic import BaseModel, Field
+from oteapi.models import AttrDict, SessionUpdate
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
@@ -12,10 +12,18 @@ if TYPE_CHECKING:
     from oteapi.models import FilterConfig
 
 
-class DemoDataModel(BaseModel):
+class DemoDataModel(AttrDict):
     """Demo filter data model."""
 
     demo_data: List[int] = Field([], description="List of demo data.")
+
+
+class DemoFilterConfig(FilterConfig):
+    """Demo filter strategy filter config."""
+
+    configuration: DemoDataModel = Field(
+        DemoDataModel(), description="Demo filter data model."
+    )
 
 
 class SessionUpdateDemoFilter(SessionUpdate):
@@ -34,7 +42,7 @@ class DemoFilter:
 
     """
 
-    filter_config: "FilterConfig"
+    filter_config: DemoFilterConfig
 
     def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.
@@ -68,5 +76,4 @@ class DemoFilter:
             session-specific context from services.
 
         """
-        model = DemoDataModel(**self.filter_config.configuration)
-        return SessionUpdateDemoFilter(key=model.demo_data)
+        return SessionUpdateDemoFilter(key=self.filter_config.configuration.demo_data)

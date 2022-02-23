@@ -1,22 +1,44 @@
 """Demo strategy class for text/json."""
 # pylint: disable=no-self-use,unused-argument
 import json
-from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from oteapi.datacache import DataCache
-from oteapi.models import SessionUpdate
+from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
 from oteapi.plugins import create_strategy
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
 
-    from oteapi.models import ResourceConfig
+
+class JSONParseConfig(AttrDict):
+    """JSON parse-specific Configuration Data Model."""
+
+    datacache_config: Optional[DataCacheConfig] = Field(
+        None,
+        description="Configurations for the data cache for storing the downloaded file content.",
+    )
+
+
+class JSONParseConfig(ResourceConfig):
+    """File download strategy filter config."""
+
+    configuration: JSONParseConfig = Field(
+        JSONParseConfig(), description="JSON parse strategy-specific configuration."
+    )
+
+
+class SessionUpdateJSONParse(SessionUpdate):
+    """Class for returning values from JSON Parse."""
+
+    content: dict = Field(..., description="Content of the JSON document.")
 
 
 @dataclass
 class DemoJSONDataParseStrategy:
-    """Parse Strategy.
+    """Parse strategy for JSON.
 
     **Registers strategies**:
 
@@ -24,43 +46,19 @@ class DemoJSONDataParseStrategy:
 
     """
 
-    parse_config: "ResourceConfig"
+    parse_config: JSONParseConfig
 
     def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
-        """Initialize strategy.
-
-        This method will be called through the `/initialize` endpoint of the OTE-API
-        Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
-
-        Returns:
-            An update model of key/value-pairs to be stored in the
-            session-specific context from services.
-
-        """
+        """Initialize."""
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
-        """Execute the strategy.
-
-        This method will be called through the strategy-specific endpoint of the
-        OTE-API Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
-
-        Returns:
-            An update model of key/value-pairs to be stored in the
-            session-specific context from services.
-
-        """
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateJSONParse:
+        """Parse json."""
         downloader = create_strategy("download", self.parse_config)
         output = downloader.get()
-        cache = DataCache(self.parse_config.configuration)
+        cache = DataCache(self.parse_config.configuration.datacache_config)
         content = cache.get(output["key"])
 
         if isinstance(content, dict):
-            return SessionUpdate(**content)
-        return SessionUpdate(**json.loads(content))
+            return SessionUpdateJSONParse(content=content)
+        return SessionUpdateJSONParse(content=json.loads(content))
