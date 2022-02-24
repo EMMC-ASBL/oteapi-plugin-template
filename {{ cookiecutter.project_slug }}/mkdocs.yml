@@ -19,7 +19,7 @@ theme:
     - navigation.top
 
 repo_name: "{{ cookiecutter.project_slug }}"
-repo_url: "{{ cookiecutter.git_url }}"
+repo_url: "{{ cookiecutter.scm_url }}"
 edit_uri: ""
 
 extra:

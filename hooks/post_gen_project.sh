@@ -27,5 +27,5 @@ Generated {{ cookiecutter.project_name }} using
 oteapi-plugin-template: A cookiecutter template developed by SINTEF.
 https://github.com/EMMC-ASBL/oteapi-plugin-template
 "
-git remote add origin {{ cookiecutter.git_url }}.git
+git remote add origin {{ cookiecutter.scm_url }}.git
 git branch -M main

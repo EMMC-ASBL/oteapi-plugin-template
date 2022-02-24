@@ -60,7 +60,7 @@ setup(
     version=VERSION,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
-    url="{{ cookiecutter.git_url }}",
+    url="{{ cookiecutter.scm_url }}",
     description="OTE-API Plugin.",
     long_description=(TOP_DIR / "README.md").read_text(encoding="utf8"),
     long_description_content_type="text/markdown",

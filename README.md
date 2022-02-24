@@ -68,8 +68,10 @@ An overview is also provided in the following table:
 | `organization` | Your organization. | `SINTEF` |
 | `email` | The author's email address. | `firstname.lastname@SINTEF.org` |
 | `version` | Start version.<br><br>**Important**: Must follow semantic versioning. For more information see [semver.org](https://semver.org). | `0.0.1` |
-| `git_url` | The intended or existing URL to the repository's source code. | `https://github.com/FirstnameLastname/oteapi-myplugin` |
 | `year` | The current year. | `2022` |
+| `use_git` | Whether or not the generated repository should be initialized using [`git`](https://git-scm.com). | `True` |
+| `username` | A public source code platform username, e.g., for [GitHub](https://github.com), [GitLab](https://gitlab.com), [BitBucket](https://bitbucket.org) | `GitHub_GitLab_BitBucket_etc_Username` |
+| `scm_url` | The intended or existing URL to the repository's source code. | `https://github.com/FirstnameLastname/oteapi-myplugin` |
 
 ## License and copyright
 
