@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from typing import Any, Dict
 
 
-class JSONParseConfig(AttrDict):
+class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
     datacache_config: Optional[DataCacheConfig] = Field(
@@ -28,8 +28,8 @@ class JSONParseConfig(AttrDict):
 class JSONParseConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    configuration: JSONParseConfig = Field(
-        JSONParseConfig(), description="JSON parse strategy-specific configuration."
+    configuration: JSONConfig = Field(
+        JSONConfig(), description="JSON parse strategy-specific configuration."
     )
 
 
