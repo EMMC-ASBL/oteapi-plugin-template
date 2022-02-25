@@ -2,9 +2,8 @@
 # pylint: disable=no-self-use,unused-argument
 from typing import TYPE_CHECKING
 
-from pydantic.dataclasses import dataclass
-
 from oteapi.models import FunctionConfig, SessionUpdate
+from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
