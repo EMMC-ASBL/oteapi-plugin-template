@@ -1,20 +1,19 @@
 """Demo download strategy class for file."""
 # pylint: disable=no-self-use,unused-argument
-from dataclasses import dataclass
-from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
 from oteapi.datacache import DataCache
-from pydantic import BaseModel, Extra, Field
+from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
+from oteapi.utils.paths import uri_to_path
+from pydantic import Field, FileUrl, validator
+from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
     from typing import Any, Dict
 
-    from oteapi.models.resourceconfig import ResourceConfig
 
-
-class FileConfig(BaseModel):
-    """File Specific Configuration"""
+class FileConfig(AttrDict):
+    """File-specific Configuration Data Model."""
 
     text: bool = Field(
         False,
@@ -29,66 +28,70 @@ class FileConfig(BaseModel):
             "Encoding used when opening the file. The default is platform dependent."
         ),
     )
+    datacache_config: Optional[DataCacheConfig] = Field(
+        None,
+        description=(
+            "Configurations for the data cache for storing the downloaded file "
+            "content."
+        ),
+    )
+
+
+class FileResourceConfig(ResourceConfig):
+    """File download strategy filter config."""
+
+    downloadUrl: FileUrl = Field(  # type: ignore[assignment]
+        ..., description="The file URL, which will be downloaded."
+    )
+    configuration: FileConfig = Field(
+        FileConfig(), description="File download strategy-specific configuration."
+    )
+
+    @validator("downloadUrl")
+    def ensure_path_exists(cls, value: FileUrl) -> FileUrl:
+        """Ensure `path` is defined in `downloadUrl`."""
+        if not value.path:
+            raise ValueError("downloadUrl must contain a `path` part.")
+        return value
+
+
+class SessionUpdateFile(SessionUpdate):
+    """Class for returning values from Download File strategy."""
+
+    key: str = Field(..., description="Key to access the data in the cache.")
 
 
 @dataclass
-class DemoFileStrategy:
-    """Strategy for retrieving data via local file."""
+class FileStrategy:
+    """Strategy for retrieving data from a local file.
 
-    download_config: "ResourceConfig"
+    **Registers strategies**:
 
-    def initialize(
-        self, session: "Optional[Dict[str, Any]]" = None
-    ) -> "Dict[str, Any]":
-        """Initialize strategy.
+    - `("scheme", "fileDEMO")`
 
-        This method will be called through the `/initialize` endpoint of the OTE-API
-        Services.
+    """
 
-        Parameters:
-            session: A session-specific dictionary context.
+    download_config: FileResourceConfig
 
-        Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+        """Initialize."""
+        return SessionUpdate()
 
-        """
-        return {}
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateFile:
+        """Read local file."""
+        filename = uri_to_path(self.download_config.downloadUrl).resolve()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
-        """Execute the strategy.
+        if not filename.exists():
+            raise FileNotFoundError(f"File not found at {filename}")
 
-        This method will be called through the strategy-specific endpoint of the
-        OTE-API Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
-
-        Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
-
-        """
-        if (
-            self.download_config.downloadUrl is None
-            or self.download_config.downloadUrl.scheme != "file"
-        ):
-            raise ValueError(
-                "Expected 'downloadUrl' to have scheme 'file' in the configuration."
-            )
-        filename = Path(self.download_config.downloadUrl.host).resolve()
-
-        cache = DataCache(self.download_config.configuration)
+        cache = DataCache(self.download_config.configuration.datacache_config)
         if cache.config.accessKey and cache.config.accessKey in cache:
             key = cache.config.accessKey
         else:
-            config = FileConfig(
-                **self.download_config.configuration, extra=Extra.ignore
-            )
             key = cache.add(
-                filename.read_text(encoding=config.encoding)
-                if config.text
+                filename.read_text(encoding=self.download_config.configuration.encoding)
+                if self.download_config.configuration.text
                 else filename.read_bytes()
             )
 
-        return {"key": key}
+        return SessionUpdateFile(key=key)

@@ -1,11 +1,15 @@
 """Test parse strategies."""
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from oteapi.interfaces import IParseStrategy
+
+    from {{ cookiecutter.package_name }}.strategies.parse import SessionUpdateJSONParse
 
 
-def test_json():
-    """Test `text/json` parse strategy."""
-    from oteapi.models.resourceconfig import ResourceConfig
-
-    from {{cookiecutter.package_name}}.strategies.parse import DemoJSONDataParseStrategy
+def test_json() -> None:
+    """Test `application/jsonDEMO` demo parse strategy."""
+    from {{ cookiecutter.package_name }}.strategies.parse import DemoJSONDataParseStrategy
 
     data = {
         "firstName": "Joe",
@@ -16,11 +20,11 @@ def test_json():
         "phoneNumbers": [{"type": "home", "number": "7349282382"}],
     }
 
-    config = ResourceConfig(
-        downloadUrl="https://filesamples.com/samples/code/json/sample2.json",
-        mediaType="text/jsonDEMO",
-    )
-    parser = DemoJSONDataParseStrategy(config)
-    json = parser.get()
+    config = {
+        "downloadUrl": "https://filesamples.com/samples/code/json/sample2.json",
+        "mediaType": "application/jsonDEMO",
+    }
+    parser: "IParseStrategy" = DemoJSONDataParseStrategy(config)
+    parsed_data: "SessionUpdateJSONParse" = parser.get()
 
-    assert json == data
+    assert parsed_data.content == data

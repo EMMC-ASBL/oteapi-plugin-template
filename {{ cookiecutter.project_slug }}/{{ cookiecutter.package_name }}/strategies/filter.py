@@ -1,31 +1,48 @@
 """Demo filter strategy."""
 # pylint: disable=no-self-use,unused-argument
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, List
 
-from pydantic import BaseModel, Field
+from oteapi.models import AttrDict, FilterConfig, SessionUpdate
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional
 
-    from oteapi.models.filterconfig import FilterConfig
 
-
-class DemoDataModel(BaseModel):
+class DemoDataModel(AttrDict):
     """Demo filter data model."""
 
     demo_data: List[int] = Field([], description="List of demo data.")
 
 
+class DemoFilterConfig(FilterConfig):
+    """Demo filter strategy filter config."""
+
+    configuration: DemoDataModel = Field(
+        DemoDataModel(), description="Demo filter data model."
+    )
+
+
+class SessionUpdateDemoFilter(SessionUpdate):
+    """Class for returning values from Download File strategy."""
+
+    key: str = Field(..., description="Key to access the data in the cache.")
+
+
 @dataclass
 class DemoFilter:
-    """Filter Strategy."""
+    """Filter Strategy.
 
-    filter_config: "FilterConfig"
+    **Registers strategies**:
 
-    def initialize(
-        self, session: "Optional[Dict[str, Any]]" = None
-    ) -> "Dict[str, Any]":
+    - `("filterType", "filter/DEMO")`
+
+    """
+
+    filter_config: DemoFilterConfig
+
+    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTE-API
@@ -35,13 +52,15 @@ class DemoFilter:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        return {"result": "collectionid"}
+        return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> "Dict[str, Any]":
+    def get(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> SessionUpdateDemoFilter:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -51,9 +70,8 @@ class DemoFilter:
             session: A session-specific dictionary context.
 
         Returns:
-            Dictionary of key/value-pairs to be stored in the sessions-specific
-            dictionary context.
+            An update model of key/value-pairs to be stored in the
+            session-specific context from services.
 
         """
-        model = DemoDataModel(**self.filter_config.configuration)
-        return {"key": model.demo_data}
+        return SessionUpdateDemoFilter(key=self.filter_config.configuration.demo_data)
