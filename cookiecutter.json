@@ -3,10 +3,11 @@
   "project_slug": "oteapi-myplugin",
   "package_name": "{{ cookiecutter.project_slug|lower|replace('-', '_') }}",
   "author": "Firstname Lastname",
-  "username": "GitHubLabBitBucketUsername",
   "organization": "SINTEF",
   "email": "firstname.lastname@{{ cookiecutter.organization }}.org",
   "version": "0.0.1",
-  "git_url": "https://github.com/{{ cookiecutter.username }}/{{ cookiecutter.project_slug }}",
-  "year": "2022"
+  "year": "2022",
+  "use_git": true,
+  "username": "{{ '' if cookiecutter.use_git in ('y','Y','yes','Yes','YES','true','True','TRUE','on','On','ON') else 'NOT APPLICABLE ' }}GitHub_GitLab_BitBucket_etc_Username",
+  "scm_url": "{{ '' if cookiecutter.use_git in ('y','Y','yes','Yes','YES','true','True','TRUE','on','On','ON') else 'NOT APPLICABLE ' }}https://github.com/{{ cookiecutter.username }}/{{ cookiecutter.project_slug }}"
 }
