@@ -1,11 +1,11 @@
 # {{ cookiecutter.project_name }}
 
-An OTE-API Plugin with OTE strategies.
+An OTEAPI Plugin with OTE strategies.
 
 Further reading:
 
-- [OTE-API Core Documentation](https://emmc-asbl.github.io/oteapi-core)
-- [OTE-API Services Documentation](https://emmc-asbl.github.io/oteapi-services)
+- [OTEAPI Core Documentation](https://emmc-asbl.github.io/oteapi-core)
+- [OTEAPI Services Documentation](https://emmc-asbl.github.io/oteapi-services)
 
 ## License and copyright
 
@@ -13,7 +13,7 @@ Further reading:
 
 ## Acknowledgment
 
-{{ cookiecutter.project_name }} has been created via the [cookiecutter](https://cookiecutter.readthedocs.io/) [template for OTE-API plugins](https://github.com/EMMC-ASBL/oteapi-plugin-template).
+{{ cookiecutter.project_name }} has been created via the [cookiecutter](https://cookiecutter.readthedocs.io/) [template for OTEAPI plugins](https://github.com/EMMC-ASBL/oteapi-plugin-template).
 
 {{ cookiecutter.project_name }} has been supported by the following projects:
 

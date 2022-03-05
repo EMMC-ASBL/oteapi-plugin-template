@@ -1,8 +1,8 @@
-# OTE-API Plugin Cookiecutter Template
+# OTEAPI Plugin Cookiecutter Template
 
 <!-- markdownlint-disable MD033 -->
 
-A [cookiecutter](https://cookiecutter.readthedocs.io/) template for creating an OTE-API Plugin repository.
+A [cookiecutter](https://cookiecutter.readthedocs.io/) template for creating an OTEAPI Plugin repository.
 
 ## What you get
 
@@ -12,7 +12,7 @@ The template contains pre-configured features for:
 - MIT License.
 - [Pre-commit](https://pre-commit.com/) configuration with several useful hooks.
 - Python unit tests through [pytest](https://docs.pytest.org/).
-- Plugin integration tests for [OTE-API Core](https://github.com/EMMC-ASBL/oteapi-core).
+- Plugin integration tests for [OTEAPI Core](https://github.com/EMMC-ASBL/oteapi-core).
 - [pip](https://pip.pypa.io/) installable package.
 
 Furthermore, the repository will contain **dummy/demo** strategies for each of the currently available OTE strategy types:
@@ -27,12 +27,12 @@ Furthermore, the repository will contain **dummy/demo** strategies for each of t
 These should be **updated** to **your specific needs** according to the strategy or strategies you intend to implement.
 The ones that are not used should be deleted.
 
-It is **important** to update the [`setup.cfg`](%7B%7B%20cookiecutter.project_slug%20%7D%7D/setup.cfg) according to the updated strategies in order for the strategies to be importable through OTE-API Core.
+It is **important** to update the [`setup.cfg`](%7B%7B%20cookiecutter.project_slug%20%7D%7D/setup.cfg) according to the updated strategies in order for the strategies to be importable through OTEAPI Core.
 Please ensure to either uncomment the strategies as they are needed or remove them altogether if they are not needed.
 
 ## Usage
 
-To start up a new OTE-API Plugin repository you need to have the following pre-requisites in your system:
+To start up a new OTEAPI Plugin repository you need to have the following pre-requisites in your system:
 
 - Access to a command line.
 - Have [`git`](https://git-scm.com/) installed.
@@ -45,11 +45,11 @@ If you are using a virtual environment, it is understood that it has already bee
 
 Install cookiecutter according to [the documentation](https://cookiecutter.readthedocs.io/en/latest/installation.html).
 
-Then run the following to generate a new OTE-API Plugin repository:
+Then run the following to generate a new OTEAPI Plugin repository:
 
 ```console
 $ cookiecutter gh:EMMC-ASBL/oteapi-plugin-template  # Download from GitHub and generate repo
-project_name [OTE-API My Plugin]:
+project_name [OTEAPI My Plugin]:
 ...
 ```
 
@@ -61,7 +61,7 @@ An overview is also provided in the following table:
 
 | Input key | Description | Default value |
 |:---:|:--- |:--- |
-| `project_name` | A human-readable name of the project. | `OTE-API My Plugin` |
+| `project_name` | A human-readable name of the project. | `OTEAPI My Plugin` |
 | `project_slug` | The official package name to be used when installing the package via a package manager (e.g., `pip` or `conda`).<br>This will be the root directory name and should also be the repository name on an online git repository (like GitHub or GitLab).<br><br>It is recommended to have the project slug start with `oteapi-`.<br><br>**Important**: A project slug value may *not* include white space. | `oteapi-myplugin` |
 | `package_name` | The Python importable root module.<br>This will be the root module repository name, under which the source code will be placed.<br><br>It is recommended to have the package name start with `oteapi_`.<br><br>**Important**: A package name value may *not* include white space. A package name value may *only* be made up of the character set: a-z, A-Z, `_`, 0-9, and may *not* start with a number. | `oteapi_myplugin` |
 | `author` | The author of the package. This can also be your organization name. | `Firstname Lastname` |
@@ -75,10 +75,10 @@ An overview is also provided in the following table:
 
 ## License and copyright
 
-OTE-API Plugin Cookiecutter Template is released under the [MIT license](LICENSE) with copyright &copy; SINTEF.
+OTEAPI Plugin Cookiecutter Template is released under the [MIT license](LICENSE) with copyright &copy; SINTEF.
 
 ## Acknowledgment
 
-OTE-API Plugin Cookiecutter Template has been supported by the following projects:
+OTEAPI Plugin Cookiecutter Template has been supported by the following projects:
 
 - **OntoTrans** (2020-2024) that receives funding from the European Union’s Horizon 2020 Research and Innovation Programme, under Grant Agreement n. 862136.
