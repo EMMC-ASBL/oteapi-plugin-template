@@ -24,7 +24,7 @@ class DemoFunctionStrategy:
     def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Initialize strategy.
 
-        This method will be called through the `/initialize` endpoint of the OTE-API
+        This method will be called through the `/initialize` endpoint of the OTEAPI
         Services.
 
         Parameters:
@@ -41,7 +41,7 @@ class DemoFunctionStrategy:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
-        OTE-API Services.
+        OTEAPI Services.
 
         Parameters:
             session: A session-specific dictionary context.
