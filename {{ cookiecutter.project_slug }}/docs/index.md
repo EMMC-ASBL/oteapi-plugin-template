@@ -38,7 +38,7 @@ docker-compose -f docker-compose.yml pull  # Download the latest container image
 docker-compose -f docker-compose.yml up  # Run the services
 ```
 
-This will start the service and take over the terminal, printing log messages from all the services started through the [`docker-compose.yml`](docker-compose.yml) file.
+This will start the service and take over the terminal, printing log messages from all the services started through the [`docker-compose.yml`]({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml) file.
 If one instead wishes to keep that terminal available, or only show the logs relevant for the `oteapi` service, one can do:
 
 ```shell
@@ -53,7 +53,7 @@ docker logs -f {{ cookiecutter.project_slug }}-oteapi-1
 
 Now, one can instantiate an `otelib.OTEClient` with `"http://localhost:8080"` (or using the `PORT` environment variable value instead of `8080` if it has been set) and test the strategies by supplying the correct configuration values.
 
-Note, remember to update [`setup.cfg`](setup.cfg) to list the plugin strategies - otherwise they will not be findable by the OTEAPI service.
+Note, remember to update [`setup.cfg`]({{ cookiecutter.scm_url }}/blob/main/setup.cfg) to list the plugin strategies - otherwise they will not be findable by the OTEAPI service.
 
 ## License and copyright
 
