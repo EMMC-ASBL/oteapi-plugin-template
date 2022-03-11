@@ -184,11 +184,11 @@ def create_docs_index(_):
         ("(LICENSE)", "(LICENSE.md)"),
         (
             "(docker-compose.yml)",
-            "({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)"  # pylint: disable=line-too-long
+            "({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)",  # pylint: disable=line-too-long
         ),
         (
             "(setup.cfg)",
-            "({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"  # pylint: disable=line-too-long
+            "({{ cookiecutter.scm_url }}/blob/main/setup.cfg)",  # pylint: disable=line-too-long
         ),
     ]
 
