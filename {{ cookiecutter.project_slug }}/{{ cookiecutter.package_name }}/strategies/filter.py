@@ -24,9 +24,7 @@ class DemoFilterConfig(FilterConfig):
         const=True,
         description=FilterConfig.__fields__["filterType"].field_info.description,
     )
-    configuration: DemoDataModel = Field(
-        ..., description="Demo filter data model."
-    )
+    configuration: DemoDataModel = Field(..., description="Demo filter data model.")
 
 
 class SessionUpdateDemoFilter(SessionUpdate):
@@ -47,7 +45,9 @@ class DemoFilter:
 
     filter_config: DemoFilterConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateDemoFilter:
+    def initialize(
+        self, session: "Optional[Dict[str, Any]]" = None
+    ) -> SessionUpdateDemoFilter:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -63,9 +63,7 @@ class DemoFilter:
         """
         return SessionUpdateDemoFilter(key=self.filter_config.configuration.demo_data)
 
-    def get(
-        self, session: "Optional[Dict[str, Any]]" = None
-    ) -> SessionUpdate:
+    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the

@@ -27,7 +27,9 @@ def test_resource(static_files: "Path") -> None:
         "accessService": "DEMO-access-service",
     }
     resource_initialize: "SessionUpdate" = DemoResourceStrategy(config).initialize()
-    resource_get: "SessionUpdateDemoResource" = DemoResourceStrategy(config).get(resource_initialize)
+    resource_get: "SessionUpdateDemoResource" = DemoResourceStrategy(config).get(
+        resource_initialize
+    )
 
     test_data = json.loads(sample_file.read_text())
 

@@ -23,7 +23,9 @@ def test_json(static_files: "Path") -> None:
         "mediaType": "application/jsonDEMO",
     }
     parser_initialize: "SessionUpdate" = DemoJSONDataParseStrategy(config).initialize()
-    parser_get: "SessionUpdateJSONParse" = DemoJSONDataParseStrategy(config).get(parser_initialize)
+    parser_get: "SessionUpdateJSONParse" = DemoJSONDataParseStrategy(config).get(
+        parser_initialize
+    )
 
     test_data = json.loads(sample_file.read_text())
 

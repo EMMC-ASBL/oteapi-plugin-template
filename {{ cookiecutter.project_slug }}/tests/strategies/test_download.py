@@ -1,4 +1,5 @@
 """Tests the download strategy for 'file://'."""
+# pylint: disable=invalid-name
 from typing import TYPE_CHECKING
 
 import pytest

@@ -11,7 +11,9 @@ def test_function() -> None:
 
     config = {"functionType": "function/DEMO"}
     function_initialize: "SessionUpdate" = DemoFunctionStrategy(config).initialize()
-    function_get: "SessionUpdate" = DemoFunctionStrategy(config).get(function_initialize)
+    function_get: "SessionUpdate" = DemoFunctionStrategy(config).get(
+        function_initialize
+    )
 
     assert {**function_initialize} == {}
     assert {**function_get} == {}

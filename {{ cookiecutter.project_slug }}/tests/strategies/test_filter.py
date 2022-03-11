@@ -13,7 +13,7 @@ def test_filter() -> None:
 
     from {{ cookiecutter.package_name }}.strategies.filter import DemoFilter
 
-    demo_data = [randint() for _ in range(5)]
+    demo_data = [randint(0, 100) for _ in range(5)]
 
     config = {
         "filterType": "filter/DEMO",
