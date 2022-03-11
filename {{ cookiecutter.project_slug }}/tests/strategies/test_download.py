@@ -22,7 +22,7 @@ def test_download_file(filename: str, mediaType: str, static_files: "Path") -> N
 
     Test files are taken from filesamples.com.
     """
-    from oteapi.datacache.datacache import DataCache
+    from oteapi.datacache import DataCache
 
     from {{ cookiecutter.package_name }}.strategies.download import FileStrategy
 

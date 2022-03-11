@@ -32,16 +32,14 @@ def test_transformation() -> None:
         "id": test_task_id,
         "status": "wip",
         "messages": [],
-        "priority": 0,
-        "secret": None,
-        "configuration": {},
     }
+    dynamic_status_demo_data = ("created", "startTime", "finishTime")
 
     transformation_status = transformation.status(test_task_id)
     for key, value in static_status_demo_data.items():
         assert hasattr(transformation_status, key)
         assert getattr(transformation_status, key) == value
 
-    for datetime_fields in ("created", "startTime", "finishTime"):
+    for datetime_fields in dynamic_status_demo_data:
         assert hasattr(transformation_status, datetime_fields)
         assert isinstance(getattr(transformation_status, datetime_fields), datetime)
