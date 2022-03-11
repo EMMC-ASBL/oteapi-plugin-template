@@ -182,8 +182,14 @@ def create_docs_index(_):
     replacement_mapping = [
         ("docs/", ""),
         ("(LICENSE)", "(LICENSE.md)"),
-        ("(docker-compose.yml)", "({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)"),
-        ("(setup.cfg)", "({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"),
+        (
+            "(docker-compose.yml)",
+            "({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)"  # pylint: disable=line-too-long
+        ),
+        (
+            "(setup.cfg)",
+            "({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"  # pylint: disable=line-too-long
+        ),
     ]
 
     for old, new in replacement_mapping:
