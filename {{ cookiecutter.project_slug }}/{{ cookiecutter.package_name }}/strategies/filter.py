@@ -6,21 +6,26 @@ from oteapi.models import AttrDict, FilterConfig, SessionUpdate
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict, Optional
 
 
 class DemoDataModel(AttrDict):
     """Demo filter data model."""
 
-    demo_data: List[int] = Field([], description="List of demo data.")
+    demo_data: List[int] = Field(..., description="List of demo data.")
 
 
 class DemoFilterConfig(FilterConfig):
     """Demo filter strategy filter config."""
 
+    filterType: str = Field(
+        "filter/DEMO",
+        const=True,
+        description=FilterConfig.__fields__["filterType"].field_info.description,
+    )
     configuration: DemoDataModel = Field(
-        DemoDataModel(), description="Demo filter data model."
+        ..., description="Demo filter data model."
     )
 
 
@@ -42,7 +47,7 @@ class DemoFilter:
 
     filter_config: DemoFilterConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateDemoFilter:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -56,11 +61,11 @@ class DemoFilter:
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return SessionUpdateDemoFilter(key=self.filter_config.configuration.demo_data)
 
     def get(
         self, session: "Optional[Dict[str, Any]]" = None
-    ) -> SessionUpdateDemoFilter:
+    ) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -74,4 +79,4 @@ class DemoFilter:
             session-specific context from services.
 
         """
-        return SessionUpdateDemoFilter(key=self.filter_config.configuration.demo_data)
+        return SessionUpdate()

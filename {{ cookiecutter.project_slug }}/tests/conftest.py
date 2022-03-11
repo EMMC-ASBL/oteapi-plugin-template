@@ -1,10 +1,15 @@
-"""Pytest fixtures for `strategies/`."""
+"""Pytest fixtures and configuration."""
+from typing import TYPE_CHECKING
+
 import pytest
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-@pytest.fixture(scope="session", autouse=True)
-def load_plugins() -> None:
-    """Load pip installed plugin strategies."""
-    from oteapi.plugins.factories import load_strategies
 
-    load_strategies(test_for_uniqueness=False)
+@pytest.fixture(scope="session")
+def static_files() -> "Path":
+    """Path to `static` folder containing static test files."""
+    from pathlib import Path
+
+    return (Path(__file__).resolve().parent / "static").resolve()

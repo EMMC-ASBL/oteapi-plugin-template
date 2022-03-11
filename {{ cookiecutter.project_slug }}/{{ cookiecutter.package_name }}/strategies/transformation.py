@@ -7,7 +7,7 @@ from oteapi.models import SessionUpdate, TransformationConfig, TransformationSta
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict, Optional
 
 
