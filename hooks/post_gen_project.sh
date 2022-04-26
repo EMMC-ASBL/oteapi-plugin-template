@@ -39,7 +39,7 @@ git branch -M main
 # Create permanent branch for CI concerning dependency updates through Dependabot.
 git checkout -b ci/dependabot-updates
 # Go back to `main`
-git checkot main
+git checkout main
 
 # Information message
 echo "Congratulations on creating '{{ cookiecutter.project_name }}' !
