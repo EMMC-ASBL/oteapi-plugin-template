@@ -20,19 +20,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        ref: {{ ${{ env.DEPENDABOT_BRANCH }} }}
+        ref: {{ "${{ env.DEPENDABOT_BRANCH }}" }}
         fetch-depth: 0
 
     - name: Set up git config
       run: |
-        git config --global user.name {{ "${{ env.GIT_USER_NAME }}" }}
-        git config --global user.email {{ "${{ env.GIT_USER_EMAIL }}" }}
+        git config --global user.name "{{ "${{ env.GIT_USER_NAME }}" }}"
+        git config --global user.email "{{ "${{ env.GIT_USER_EMAIL }}" }}"
 
-    - name: Update {{ '${{ env.DEPENDABOT_BRANCH }}' }}
+    - name: Update '{{ "${{ env.DEPENDABOT_BRANCH }}" }}'
       run: |
         git fetch origin
-
-        {% raw %}
+{% raw %}
         LATEST_PR_BODY="$(gh api /repos/${{ github.repository}}/pulls -X GET -f state=closed -f per_page=1 -f sort=updated -f direction=desc --jq '.[].body')"
         cat .github/utils/single_dependency_pr_body.txt | head -8 > .tmp_file.txt
         if [ -z "$(printf '%s\n' "${LATEST_PR_BODY}" | head -8 | diff - .tmp_file.txt --strip-trailing-cr)" ]; then
@@ -54,8 +53,7 @@ jobs:
         branch: ${{ env.DEPENDABOT_BRANCH }}
         sleep: 15
         force: ${{ env.FORCE_PUSH }}
-        {% endraw %}
-
+{% endraw %}
   deploy-docs:
     name: Deploy `latest` documentation
     if: github.repository_owner == '{{ cookiecutter.username }}'
@@ -64,8 +62,7 @@ jobs:
     steps:
     - name: Release check
       run: |
-        {% raw %}
-        COMMIT_MSG="$(gh api /repos/${{ github.repository}}/commits/${{ env.DEFAULT_REPO_BRANCH }} --jq '.commit.message')"
+        {% raw %}COMMIT_MSG="$(gh api /repos/${{ github.repository}}/commits/${{ env.DEFAULT_REPO_BRANCH }} --jq '.commit.message')"
         if [[ "${COMMIT_MSG}" =~ ^Release\ v.*$ ]]; then
           echo "In a release - do not run this job !"
           echo "RELEASE_RUN=true" >> $GITHUB_ENV
@@ -75,8 +72,7 @@ jobs:
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        {% endraw %}
-
+{% endraw %}
     - name: Checkout repository
       if: env.RELEASE_RUN == 'false'
       uses: actions/checkout@v3
@@ -99,11 +95,9 @@ jobs:
     - name: Set up git user
       if: env.RELEASE_RUN == 'false'
       run: |
-        {% raw %}
-        git config --global user.name "${{ env.GIT_USER_NAME }}"
+        {% raw %}git config --global user.name "${{ env.GIT_USER_NAME }}"
         git config --global user.email "${{ env.GIT_USER_EMAIL }}"
-        {% endraw %}
-
+{% endraw %}
     - name: Check API Reference and landing page
       if: env.RELEASE_RUN == 'false'
       run: |
@@ -125,4 +119,4 @@ jobs:
 
     - name: Deploy documentation
       if: env.RELEASE_RUN == 'false'
-      run: mike deploy --push --remote origin --branch gh-pages --update-aliases --config-file mkdocs.yml latest {{ ${{ env.DEFAULT_REPO_BRANCH }} }}
+      run: mike deploy --push --remote origin --branch gh-pages --update-aliases --config-file mkdocs.yml latest {{ "${{ env.DEFAULT_REPO_BRANCH }}" }}

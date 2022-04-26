@@ -74,8 +74,7 @@ jobs:
     - name: Run safety
       run: pip freeze | safety check --stdin --ignore 44715
 
-  pytest:
-    {% raw %}
+  pytest:{% raw %}
     name: pytest (${{ matrix.os[1] }}-py${{ matrix.python-version }})
     runs-on: ${{ matrix.os[0] }}
 
@@ -92,12 +91,11 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Set up Python ${{ matrix.python-version}}
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version}}
-      {% endraw %}
-
+        python-version: ${{ matrix.python-version }}
+{% endraw %}
     - name: Install linux system dependencies
       if: matrix.os[1] == 'linux'
       run: echo "No dependencies defined."
@@ -121,7 +119,7 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         files: coverage.xml
-        flags: {{ ${{ matrix.os[1] }} }}
+        flags: {{ "${{ matrix.os[1] }}" }}
 
   build-package:
     name: Build distribution package
