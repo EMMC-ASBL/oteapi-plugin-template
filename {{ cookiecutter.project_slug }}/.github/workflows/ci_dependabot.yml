@@ -49,6 +49,7 @@ jobs:
 
     - name: Set up git user info
       run: |
+        {% raw %}
         git config --global user.name "${{ env.GIT_USER_NAME }}"
         git config --global user.email "${{ env.GIT_USER_EMAIL }}"
 
@@ -56,6 +57,7 @@ jobs:
       run: |
         git fetch origin ${{ env.DEPENDABOT_BRANCH }}:${{ env.DEPENDABOT_BRANCH }}
         git reset --hard ${{ env.DEPENDABOT_BRANCH }}
+        {% endraw %}
 
     - name: Auto-update `pre-commit` hooks
       run: |
@@ -89,6 +91,7 @@ jobs:
       id: cpr
       uses: peter-evans/create-pull-request@v4
       with:
+        {% endraw %}
         token: ${{ secrets.RELEASE_PAT }}
         commit-message: New @dependabot-fueled updates
         committer: "${{ env.GIT_USER_NAME }} <${{ env.GIT_USER_EMAIL }}>"
@@ -101,3 +104,4 @@ jobs:
 
     - name: Information
       run: 'echo "${{ steps.cpr.outputs.pull-request-operation }} PR #${{ steps.cpr.outputs.pull-request-number }}: ${{ steps.cpr.outputs.pull-request-url }}"'
+        {% endraw %}
