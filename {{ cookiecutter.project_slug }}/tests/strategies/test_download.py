@@ -38,6 +38,12 @@ def test_download_file(filename: str, mediaType: str, static_files: "Path") -> N
 
     content: bytes = DataCache().get(download_get.key)
 
+    # `download_initialize` is not actually a dictionary, but rather a SessionUpdate
+    # instance. This means by definition `download_initialize` will not be equal to {}.
+    # However, it has the ability to unpack similarly as a dictionary, when adding two
+    # asterisks (*) prior to it: `**download_initialize`.
+    # But since a bare statement `**download_initialize` is not allowed (it fails when
+    # one does this) it needs to be packed into a dictionary, hence the surrounding {}.
     assert {**download_initialize} == {}
 
     if "sqlite" in mediaType:
