@@ -25,21 +25,19 @@ Enjoy !"
         ;;
 esac
 
-git init
-git add .
+git init >> /dev/null
+git add . >> /dev/null
 git commit --no-gpg-sign --author "SINTEF <Team4.0@SINTEF.no>" -m "Initial commit
 
 Generated {{ cookiecutter.project_name }} using
 oteapi-plugin-template: A cookiecutter template developed by SINTEF.
 https://github.com/EMMC-ASBL/oteapi-plugin-template
-"
-git remote add origin {{ cookiecutter.scm_url }}.git
-git branch -M main
+" >> /dev/null
+git remote add origin {{ cookiecutter.scm_url }}.git >> /dev/null
+git branch -M main >> /dev/null
 
 # Create permanent branch for CI concerning dependency updates through Dependabot.
-git checkout -b ci/dependabot-updates
-# Go back to `main`
-git checkout main
+git branch ci/dependabot-updates >> /dev/null
 
 # Information message
 echo "Congratulations on creating '{{ cookiecutter.project_name }}' !
