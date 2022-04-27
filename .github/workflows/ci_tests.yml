@@ -34,6 +34,9 @@ jobs:
     - name: Run cookiecutter
       run: cookiecutter --no-input --config-file .github/utils/cookiecutter_values.yaml .
 
+    - name: Register all template strategies
+      run: sed -i 's|# oteapi|oteapi|' oteapi-ci/setup.cfg
+
     - name: Install template
       run: |
         pip install -r oteapi-ci/requirements.txt

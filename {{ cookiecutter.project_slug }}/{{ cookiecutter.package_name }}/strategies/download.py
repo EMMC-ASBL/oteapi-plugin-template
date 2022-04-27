@@ -8,7 +8,7 @@ from oteapi.utils.paths import uri_to_path
 from pydantic import Field, FileUrl, validator
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict
 
 

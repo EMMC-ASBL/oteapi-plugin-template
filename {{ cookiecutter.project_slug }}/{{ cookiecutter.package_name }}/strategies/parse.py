@@ -9,7 +9,7 @@ from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict
 
 
@@ -28,6 +28,11 @@ class JSONConfig(AttrDict):
 class JSONParseConfig(ResourceConfig):
     """File download strategy filter config."""
 
+    mediaType: str = Field(
+        "application/jsonDEMO",
+        const=True,
+        description=ResourceConfig.__fields__["mediaType"].field_info.description,
+    )
     configuration: JSONConfig = Field(
         JSONConfig(), description="JSON parse strategy-specific configuration."
     )
