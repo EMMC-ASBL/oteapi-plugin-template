@@ -7,7 +7,7 @@ from oteapi.models import SessionUpdate, TransformationConfig, TransformationSta
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict, Optional
 
 
@@ -98,7 +98,4 @@ class DummyTransformationStrategy:
             created=datetime.utcnow(),
             startTime=datetime.utcnow(),
             finishTime=datetime.utcnow(),
-            priority=0,
-            secret=None,
-            configuration={},
         )
