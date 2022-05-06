@@ -7,5 +7,3 @@ Created from cookiecutter-oteapi-plugin, SINTEF, 2022
 """
 
 __version__ = "{{ cookiecutter.version }}"
-__author__ = "{{ cookiecutter.author }}"
-__author_email__ = "{{ cookiecutter.email }}"
