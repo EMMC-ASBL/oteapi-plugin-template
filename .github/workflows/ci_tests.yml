@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -U setuptools wheel
+        pip install -U setuptools wheel flit
         pip install cookiecutter
 
     - name: Set up git
@@ -35,7 +35,9 @@ jobs:
       run: cookiecutter --no-input --config-file .github/utils/cookiecutter_values.yaml .
 
     - name: Register all template strategies
-      run: sed -i 's|# \"oteapi|\"oteapi|' oteapi-ci/pyproject.toml
+      run: |
+        sed -i 's|# \"oteapi|\"oteapi|' oteapi-ci/pyproject.toml
+        cat oteapi-ci/pyproject.toml
 
     - name: Install template
       run: pip install -e oteapi-ci[dev]
@@ -60,6 +62,10 @@ jobs:
         invoke create-api-reference-docs --pre-clean
         invoke create-docs-index
         mkdocs build --strict
+      working-directory: ./oteapi-ci
+
+    - name: Build source distribution
+      run: flit build
       working-directory: ./oteapi-ci
 
   pre-commit_safety:
