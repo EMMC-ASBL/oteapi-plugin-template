@@ -11,6 +11,7 @@ repos:
       exclude: ^{{ cookiecutter.project_slug }}/
     - id: check-yaml
       name: Check YAML
+      exclude: ^{{ cookiecutter.project_slug }}/\.github/workflows/.*\.yml$
     - id: check-toml
       name: Check TOML
     - id: requirements-txt-fixer
