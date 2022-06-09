@@ -206,8 +206,9 @@ def create_docs_index(_):
         ),
     }
 )
-def update_deps(context, fail_fast=False):  # pylint: disable=too-many-branches
+def update_deps(context, fail_fast=False):  # pylint: disable=too-many-branches,too-many-statements,line-too-long
     """Update dependencies in `pyproject.toml`."""
+    # pylint: disable=too-many-nested-blocks
     import tomlkit
 
     if TYPE_CHECKING:  # pragma: no cover
@@ -233,7 +234,8 @@ def update_deps(context, fail_fast=False):  # pylint: disable=too-many-branches
             r"^(?P<full_dependency>(?P<package>[a-zA-Z0-9-_]+)\S*) "
             r"(?P<operator>>|<|<=|>=|==|!=|~=)"
             r"(?P<version>[0-9]+(?:\.[0-9]+){0,2})"
-            r"(?:,(?P<version_req_op>>|<|<=|>=|==|!=|~=)(?P<version_req>[0-9]+(?:\.[0-9]+){0,2}))?$",
+            r"(?:,(?P<version_req_op>>|<|<=|>=|==|!=|~=)"
+            r"(?P<version_req>[0-9]+(?:\.[0-9]+){0,2}))?$",
             line,
         )
         if match is None:
@@ -311,7 +313,7 @@ def update_deps(context, fail_fast=False):  # pylint: disable=too-many-branches
                         if latest_version[index] > version_part:
                             already_handled_packages.append(package)
                             continue
-                    elif version_req_op == ">=" or version_req_op == "~=":
+                    elif version_req_op in (">=", "~="):
                         if latest_version[index] < version_part:
                             already_handled_packages.append(package)
                             continue
