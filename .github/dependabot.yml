@@ -19,3 +19,11 @@ updates:
   target-branch: ci/dependency-updates
   labels:
     - CI/CD
+- package-ecosystem: github-actions
+  directory: "{{ cookiecutter.project_slug }}/"
+  schedule:
+    interval: daily
+    time: "05:34"
+  target-branch: ci/dependency-updates
+  labels:
+    - CI/CD
