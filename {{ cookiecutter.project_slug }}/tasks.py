@@ -206,7 +206,9 @@ def create_docs_index(_):
         ),
     }
 )
-def update_deps(context, fail_fast=False):  # pylint: disable=too-many-branches,too-many-statements,line-too-long
+def update_deps(
+    context, fail_fast=False
+):  # pylint: disable=too-many-branches,too-many-statements,line-too-long
     """Update dependencies in `pyproject.toml`."""
     # pylint: disable=too-many-nested-blocks
     import tomlkit
