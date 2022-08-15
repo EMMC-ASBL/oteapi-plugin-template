@@ -37,7 +37,7 @@ repos:
       files: ^{{ cookiecutter.package_name }}/.*$
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.961
+    rev: v0.971
     hooks:
     - id: mypy
       exclude: ^tests/.*$
@@ -61,7 +61,7 @@ repos:
       args:
       - "--rcfile=pyproject.toml"
       - "--extension-pkg-whitelist='pydantic'"
-      - "--disable=import-outside-toplevel,redefined-outer-name"
+      - "--disable=import-outside-toplevel,redefined-outer-name,import-error"
       language: python
       types: [python]
       require_serial: true
