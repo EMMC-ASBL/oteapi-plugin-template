@@ -1,10 +1,85 @@
+### Installation and source distribution configuration
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
 
+[project]
+name = "{{ cookiecutter.project_slug }}"
+authors = [
+    {name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}"},
+]
+description = "OTEAPI Plugin."
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    # "Framework :: OTEAPI",
+    "Environment :: Plugins",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+]
+keywords = ["OTE", "OTEAPI"]
+requires-python = "~=3.9"
+dynamic = ["version"]
+
+dependencies = [
+    "oteapi-core >=0.1.3,<1",
+]
+
+[project.optional-dependencies]
+doc = [
+    "invoke ~=1.7",
+    "mike ~=1.1",
+    "mkdocs ~=1.4",
+    "mkdocs-awesome-pages-plugin ~=2.8",
+    "mkdocs-material ~=8.5",
+    "mkdocstrings[python] ~=0.19.0",
+]
+dev = [
+    "invoke ~=1.7",
+    "mike ~=1.1",
+    "mkdocs ~=1.4",
+    "mkdocs-awesome-pages-plugin ~=2.8",
+    "mkdocs-material ~=8.5",
+    "mkdocstrings[python] ~=0.19.0",
+    "pre-commit ~=2.20",
+    "pylint ~=2.15",
+    "pytest ~=7.2",
+    "pytest-cov ~=4.0",
+    "tomlkit ~=0.11.0",
+]
+
+[project.urls]
+Home = "{{ cookiecutter.scm_url }}"
+Documentation = "https://{{ cookiecutter.username }}.github.io/{{ cookiecutter.project_slug }}"
+Source = "{{ cookiecutter.scm_url }}"
+"Issue Tracker" = "{{ cookiecutter.scm_url }}/issues"
+Changelog = "{{ cookiecutter.scm_url }}/blob/main/CHANGELOG.md"
+Package = "https://pypi.org/project/{{ cookiecutter.project_slug }}"
+
+[project.entry-points."oteapi.download"]
+# "{{ cookiecutter.package_name }}.fileDEMO" = "{{ cookiecutter.package_name }}.strategies.download:DemoFileStrategy"
+[project.entry-points."oteapi.filter"]
+# "{{ cookiecutter.package_name }}.filter/DEMO" = "{{ cookiecutter.package_name }}.strategies.filter:DemoFilter"
+[project.entry-points."oteapi.function"]
+# "{{ cookiecutter.package_name }}.function/DEMO" = "{{ cookiecutter.package_name }}.strategies.function:DemoFunctionStrategy"
+[project.entry-points."oteapi.mapping"]
+# "{{ cookiecutter.package_name }}.mapping/DEMO" = "{{ cookiecutter.package_name }}.strategies.mapping:DemoMappingStrategy"
+[project.entry-points."oteapi.parse"]
+# "{{ cookiecutter.package_name }}.application/jsonDEMO" = "{{ cookiecutter.package_name }}.strategies.parse:DemoJSONDataParseStrategy"
+[project.entry-points."oteapi.resource"]
+# "{{ cookiecutter.package_name }}.DEMO-access-service" = "{{ cookiecutter.package_name }}.strategies.resource:DemoResourceStrategy"
+[project.entry-points."oteapi.transformation"]
+# "{{ cookiecutter.package_name }}.script/DEMO" = "{{ cookiecutter.package_name }}.strategies.transformation:DummyTransformationStrategy"
+
+[tool.flit.module]
+name = "{{ cookiecutter.package_name }}"
+
+### Dev tools configuration
 [tool.mypy]
 python_version = "3.9"
 ignore_missing_imports = true
@@ -23,7 +98,7 @@ disable = [
 ]
 
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "7.0"
 addopts = "-rs --cov={{ cookiecutter.package_name }} --cov-report=term --durations=10"
 filterwarnings = [
     "ignore:.*imp module.*:DeprecationWarning",
