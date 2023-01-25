@@ -32,20 +32,20 @@ dependencies = [
 
 [project.optional-dependencies]
 doc = [
-    "invoke ~=1.7",
+    "invoke ~=2.0",
     "mike ~=1.1",
     "mkdocs ~=1.4",
     "mkdocs-awesome-pages-plugin ~=2.8",
     "mkdocs-material ~=9.0",
-    "mkdocstrings[python] ~=0.19.1",
+    "mkdocstrings[python] ~=0.20.0",
 ]
 dev = [
-    "invoke ~=1.7",
+    "invoke ~=2.0",
     "mike ~=1.1",
     "mkdocs ~=1.4",
     "mkdocs-awesome-pages-plugin ~=2.8",
     "mkdocs-material ~=9.0",
-    "mkdocstrings[python] ~=0.19.1",
+    "mkdocstrings[python] ~=0.20.0",
     "pre-commit ~=2.21",
     "pylint ~=2.15",
     "pytest ~=7.2",
