@@ -1,7 +1,7 @@
 site_name: "{{ cookiecutter.project_name }}"
 site_description: Documentation for the {{ cookiecutter.project_name }} package
 site_url: https://{{ cookiecutter.username }}.github.io/{{ cookiecutter.project_slug }}
-copyright: Copyright &copy; 2022 {{ cookiecutter.organization }}
+copyright: Copyright &copy; 2023 {{ cookiecutter.organization }}
 
 theme:
   name: material
