@@ -36,7 +36,7 @@ doc = [
     "mike ~=1.1",
     "mkdocs ~=1.4",
     "mkdocs-awesome-pages-plugin ~=2.8",
-    "mkdocs-material ~=9.0",
+    "mkdocs-material ~=9.1",
     "mkdocstrings[python] ~=0.20.0",
 ]
 dev = [
@@ -44,7 +44,7 @@ dev = [
     "mike ~=1.1",
     "mkdocs ~=1.4",
     "mkdocs-awesome-pages-plugin ~=2.8",
-    "mkdocs-material ~=9.0",
+    "mkdocs-material ~=9.1",
     "mkdocstrings[python] ~=0.20.0",
     "pre-commit ~=3.1",
     "pylint ~=2.16",
