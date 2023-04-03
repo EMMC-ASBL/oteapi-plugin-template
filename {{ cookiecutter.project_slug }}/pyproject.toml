@@ -50,7 +50,7 @@ dev = [
     "pylint ~=2.17",
     "pytest ~=7.2",
     "pytest-cov ~=4.0",
-    "tomlkit ~=0.11.6",
+    "tomlkit ~=0.11.7",
 ]
 
 [project.urls]
