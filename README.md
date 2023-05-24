@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/447298593.svg)](https://zenodo.org/badge/latestdoi/447298593)
+
+
 # OTEAPI Plugin Cookiecutter Template
 
 <!-- markdownlint-disable MD033 -->
@@ -56,7 +59,7 @@ project_name [OTEAPI My Plugin]:
 Now type in the required inputs to customize your repository.
 
 Alternatively, you can pre-define the inputs in a JSON file and pass it to the `cookiecutter` command using the `--config-file` option.
-The list of input keys and default values can be found in [`cookiecutter.json`](cookiecutter.json).  
+The list of input keys and default values can be found in [`cookiecutter.json`](cookiecutter.json).
 An overview is also provided in the following table:
 
 | Input key | Description | Default value |
