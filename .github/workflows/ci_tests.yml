@@ -13,7 +13,7 @@ jobs:
     name: Build cookiecutter template and run standard tests
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
@@ -73,7 +73,7 @@ jobs:
     name: pre-commit & safety
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
