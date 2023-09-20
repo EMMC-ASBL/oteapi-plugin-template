@@ -27,7 +27,7 @@ requires-python = "~=3.9"
 dynamic = ["version"]
 
 dependencies = [
-    "oteapi-core >=0.4.4,<1",
+    "oteapi-core >=0.5.0,<1",
 ]
 
 [project.optional-dependencies]
@@ -36,7 +36,7 @@ doc = [
     "mike ~=1.1",
     "mkdocs ~=1.5",
     "mkdocs-awesome-pages-plugin ~=2.9",
-    "mkdocs-material ~=9.2",
+    "mkdocs-material ~=9.3",
     "mkdocstrings[python] ~=0.23.0",
 ]
 dev = [
@@ -44,7 +44,7 @@ dev = [
     "mike ~=1.1",
     "mkdocs ~=1.5",
     "mkdocs-awesome-pages-plugin ~=2.9",
-    "mkdocs-material ~=9.2",
+    "mkdocs-material ~=9.3",
     "mkdocstrings[python] ~=0.23.0",
     "pre-commit ~=3.4",
     "pylint ~=2.17",
