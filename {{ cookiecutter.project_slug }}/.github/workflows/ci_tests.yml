@@ -40,7 +40,7 @@ jobs:
         pip install ${pre_commit} ${invoke}
 
     - name: Test with pre-commit
-      run: SKIP=pylint,pylint-tests pre-commit run --all-files
+      run: pre-commit run --all-files
 
   pylint-safety:
     runs-on: ubuntu-latest
@@ -62,12 +62,6 @@ jobs:
         pip install -U -r requirements.txt -r requirements_dev.txt -r requirements_docs.txt
         pip install -e .
         pip install safety
-
-    - name: Run pylint
-      run: pylint --rcfile=pyproject.toml --ignore-paths=tests/ --extension-pkg-whitelist='pydantic' *.py {{ cookiecutter.package_name }}
-
-    - name: Run pylint - tests
-      run: pylint --rcfile=pyproject.toml --extension-pkg-whitelist='pydantic' --disable=import-outside-toplevel,redefined-outer-name,import-error tests
 
     # Ignore ID 44715 for now.
     # See this NumPy issue for more information: https://github.com/numpy/numpy/issues/19038
