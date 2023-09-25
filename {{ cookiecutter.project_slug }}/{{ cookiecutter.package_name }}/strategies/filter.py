@@ -1,6 +1,8 @@
 """Demo filter strategy."""
 # pylint: disable=unused-argument
-from typing import TYPE_CHECKING, List, Optional
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, FilterConfig, SessionUpdate
@@ -8,14 +10,14 @@ from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict
+    from typing import Any, Literal
 
 
 class DemoDataModel(AttrDict):
     """Demo filter data model."""
 
-    demo_data: List[int] = Field(..., description="List of demo data.")
-    datacache_config: Optional[DataCacheConfig] = Field(
+    demo_data: list[int] = Field(..., description="List of demo data.")
+    datacache_config: DataCacheConfig | None = Field(
         None,
         description=(
             "Configurations for the data cache for storing the downloaded file "
@@ -27,10 +29,9 @@ class DemoDataModel(AttrDict):
 class DemoFilterConfig(FilterConfig):
     """Demo filter strategy filter config."""
 
-    filterType: str = Field(
+    filterType: "Literal['filter/DEMO']" = Field(
         "filter/DEMO",
-        const=True,
-        description=FilterConfig.__fields__["filterType"].field_info.description,
+        description=FilterConfig.model_fields["filterType"].description,
     )
     configuration: DemoDataModel = Field(..., description="Demo filter data model.")
 
@@ -54,7 +55,7 @@ class DemoFilter:
     filter_config: DemoFilterConfig
 
     def initialize(
-        self, session: "Optional[Dict[str, Any]]" = None
+        self, session: "dict[str, Any]" | None = None
     ) -> SessionUpdateDemoFilter:
         """Initialize strategy.
 
@@ -76,7 +77,7 @@ class DemoFilter:
             key = cache.add(self.filter_config.configuration.demo_data)
         return SessionUpdateDemoFilter(key=key)
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the

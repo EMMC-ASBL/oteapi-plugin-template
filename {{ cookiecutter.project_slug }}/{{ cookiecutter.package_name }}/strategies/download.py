@@ -1,15 +1,17 @@
 """Demo download strategy class for file."""
 # pylint: disable=unused-argument
-from typing import TYPE_CHECKING, Optional
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
 from oteapi.utils.paths import uri_to_path
-from pydantic import Field, FileUrl, validator
+from pydantic import Field, FileUrl, field_validator
 from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict
+    from typing import Any
 
 
 class FileConfig(AttrDict):
@@ -22,13 +24,13 @@ class FileConfig(AttrDict):
             " be opened in bytes mode."
         ),
     )
-    encoding: Optional[str] = Field(
+    encoding: str | None = Field(
         None,
         description=(
             "Encoding used when opening the file. The default is platform dependent."
         ),
     )
-    datacache_config: Optional[DataCacheConfig] = Field(
+    datacache_config: DataCacheConfig | None = Field(
         None,
         description=(
             "Configurations for the data cache for storing the downloaded file "
@@ -40,14 +42,15 @@ class FileConfig(AttrDict):
 class FileResourceConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    downloadUrl: FileUrl = Field(  # type: ignore[assignment]
+    downloadUrl: FileUrl = Field(
         ..., description="The file URL, which will be downloaded."
     )
     configuration: FileConfig = Field(
         FileConfig(), description="File download strategy-specific configuration."
     )
 
-    @validator("downloadUrl")
+    @field_validator("downloadUrl")
+    @classmethod
     def ensure_path_exists(cls, value: FileUrl) -> FileUrl:
         """Ensure `path` is defined in `downloadUrl`."""
         if not value.path:
@@ -73,11 +76,11 @@ class FileStrategy:
 
     download_config: FileResourceConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
         """Initialize."""
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateFile:
+    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdateFile:
         """Read local file."""
         filename = uri_to_path(self.download_config.downloadUrl).resolve()
 

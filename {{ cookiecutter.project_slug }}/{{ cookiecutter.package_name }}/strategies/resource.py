@@ -1,6 +1,8 @@
 """Demo resource strategy class."""
 # pylint: disable=unused-argument
-from typing import TYPE_CHECKING, Optional
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
 from oteapi.plugins import create_strategy
@@ -8,13 +10,13 @@ from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict
+    from typing import Any, Literal
 
 
 class DemoConfig(AttrDict):
     """Strategy-specific Configuration Data Model."""
 
-    datacache_config: Optional[DataCacheConfig] = Field(
+    datacache_config: DataCacheConfig | None = Field(
         None,
         description="Configuration for the data cache.",
     )
@@ -25,16 +27,14 @@ class DemoResourceConfig(ResourceConfig):
 
     # Require the resource to be a REST API with JSON responses that uses the
     # DemoJSONDataParseStrategy strategy.
-    mediaType: str = Field(
+    mediaType: "Literal['application/jsonDEMO']" = Field(
         "application/jsonDEMO",
-        const=True,
-        description=ResourceConfig.__fields__["mediaType"].field_info.description,
+        description=ResourceConfig.model_fields["mediaType"].description,
     )
 
-    accessService: str = Field(
+    accessService: "Literal['DEMO-access-service']" = Field(
         "DEMO-access-service",
-        const=True,
-        description=ResourceConfig.__fields__["accessService"].field_info.description,
+        description=ResourceConfig.model_fields["accessService"].description,
     )
     configuration: DemoConfig = Field(
         DemoConfig(),
@@ -65,7 +65,7 @@ class DemoResourceStrategy:
 
     resource_config: DemoResourceConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -82,7 +82,7 @@ class DemoResourceStrategy:
         return SessionUpdate()
 
     def get(
-        self, session: "Optional[Dict[str, Any]]" = None
+        self, session: "dict[str, Any]" | None = None
     ) -> SessionUpdateDemoResource:
         """Execute the strategy.
 

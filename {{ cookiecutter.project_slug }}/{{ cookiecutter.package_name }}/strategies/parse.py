@@ -1,7 +1,9 @@
 """Demo strategy class for text/json."""
 # pylint: disable=unused-argument
+from __future__ import annotations
+
 import json
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
@@ -10,13 +12,13 @@ from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict
+    from typing import Any, Literal
 
 
 class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
-    datacache_config: Optional[DataCacheConfig] = Field(
+    datacache_config: DataCacheConfig | None = Field(
         None,
         description=(
             "Configurations for the data cache for storing the downloaded file "
@@ -28,10 +30,9 @@ class JSONConfig(AttrDict):
 class JSONParseConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    mediaType: str = Field(
+    mediaType: "Literal['application/jsonDEMO']" = Field(
         "application/jsonDEMO",
-        const=True,
-        description=ResourceConfig.__fields__["mediaType"].field_info.description,
+        description=ResourceConfig.model_fields["mediaType"].description,
     )
     configuration: JSONConfig = Field(
         JSONConfig(), description="JSON parse strategy-specific configuration."
@@ -56,11 +57,11 @@ class DemoJSONDataParseStrategy:
 
     parse_config: JSONParseConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
         """Initialize."""
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateJSONParse:
+    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdateJSONParse:
         """Parse json."""
         downloader = create_strategy("download", self.parse_config)
         output = downloader.get()
