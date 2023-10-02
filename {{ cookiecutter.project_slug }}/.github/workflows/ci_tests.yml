@@ -40,7 +40,7 @@ jobs:
         pip install ${pre_commit} ${invoke}
 
     - name: Test with pre-commit
-      run: SKIP=pylint,pylint-tests pre-commit run --all-files
+      run: pre-commit run --all-files
 
   pylint-safety:
     runs-on: ubuntu-latest
@@ -63,16 +63,19 @@ jobs:
         pip install -e .
         pip install safety
 
-    - name: Run pylint
-      run: pylint --rcfile=pyproject.toml --ignore-paths=tests/ --extension-pkg-whitelist='pydantic' *.py {{ cookiecutter.package_name }}
-
-    - name: Run pylint - tests
-      run: pylint --rcfile=pyproject.toml --extension-pkg-whitelist='pydantic' --disable=import-outside-toplevel,redefined-outer-name,import-error tests
-
     # Ignore ID 44715 for now.
     # See this NumPy issue for more information: https://github.com/numpy/numpy/issues/19038
     - name: Run safety
       run: pip freeze | safety check --stdin --ignore 44715
+
+  ruff:
+    name: Ruff
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - uses: chartboost/ruff-action@v1
 
   pytest:{% raw %}
     name: pytest (${{ matrix.os[1] }}-py${{ matrix.python-version }})

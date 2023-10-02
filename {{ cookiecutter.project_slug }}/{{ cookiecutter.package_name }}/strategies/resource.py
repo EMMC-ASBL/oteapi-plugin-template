@@ -1,5 +1,4 @@
 """Demo resource strategy class."""
-# pylint: disable=unused-argument
 from typing import TYPE_CHECKING, Optional
 
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate

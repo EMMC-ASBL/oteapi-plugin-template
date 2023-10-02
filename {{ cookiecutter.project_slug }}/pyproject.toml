@@ -28,6 +28,7 @@ dynamic = ["version"]
 
 dependencies = [
     "oteapi-core >=0.5.0,<1",
+    "pydantic >=1.10.12,<2",
 ]
 
 [project.optional-dependencies]
@@ -47,7 +48,6 @@ dev = [
     "mkdocs-material ~=9.3",
     "mkdocstrings[python] ~=0.23.0",
     "pre-commit ~=3.4",
-    "pylint ~=2.17",
     "pytest ~=7.4",
     "pytest-cov ~=4.1",
     "tomlkit ~=0.12.1",
@@ -87,15 +87,6 @@ scripts_are_modules = true
 warn_unused_configs = true
 show_error_codes = true
 allow_redefinition = true
-
-[tool.pylint.messages_control]
-max-line-length = 90
-disable = [
-    "duplicate-code",
-    "no-name-in-module",
-    "too-few-public-methods",
-    "no-self-argument"
-]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
