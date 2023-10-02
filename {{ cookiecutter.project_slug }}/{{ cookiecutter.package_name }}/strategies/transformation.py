@@ -1,5 +1,4 @@
 """Demo transformation strategy class."""
-# pylint: disable=unused-argument
 from datetime import datetime
 from typing import TYPE_CHECKING
 
