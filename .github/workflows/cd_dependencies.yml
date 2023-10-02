@@ -39,9 +39,9 @@ jobs:
         pip install -U setuptools wheel flit
         pip install -r requirements.txt
 
-    - name: Run invoke task
+    - name: Run SINTEF/ci-cd
       run: |
-        invoke -r "{{ cookiecutter.project_slug }}" update-deps
+        ci-cd update-deps --root-repo-path="{{ cookiecutter.project_slug }}"
 
         if [ -n "$(git status --porcelain {{\ cookiecutter.project_slug\ }}/pyproject.toml)" ]; then
           echo "UPDATE_DEPS=true" >> $GITHUB_ENV
@@ -64,7 +64,6 @@ jobs:
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.RELEASE_PAT }}
-        commit-message: Update dependencies
         committer: "${{ env.GIT_USER_NAME }} <${{ env.GIT_USER_EMAIL }}>"
         author: "${{ env.GIT_USER_NAME }} <${{ env.GIT_USER_EMAIL }}>"
         branch: ci/update-pyproject
