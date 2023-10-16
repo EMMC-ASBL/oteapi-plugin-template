@@ -2,7 +2,6 @@
 
 More information on `invoke` can be found at http://www.pyinvoke.org/.
 """
-# pylint: disable=import-outside-toplevel,too-many-locals
 import re
 import sys
 from pathlib import Path
@@ -62,7 +61,7 @@ def setver(_, version=""):
         "pre-clean": "Remove the 'api_reference' sub directory prior to (re)creation.",
         "pre-commit": "Return a non-zero error code if changes were made.",
     }
-)  # pylint: disable=too-many-branches
+)
 def create_api_reference_docs(context, pre_clean=False, pre_commit=False):
     """Create the API Reference in the documentation."""
     import os
@@ -186,11 +185,11 @@ def create_docs_index(_):
         ("(LICENSE)", "(LICENSE.md)"),
         (
             "(docker-compose.yml)",
-            "({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)",  # pylint: disable=line-too-long
+            "({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)",
         ),
         (
             "(setup.cfg)",
-            "({{ cookiecutter.scm_url }}/blob/main/setup.cfg)",  # pylint: disable=line-too-long
+            "({{ cookiecutter.scm_url }}/blob/main/setup.cfg)",
         ),
     ]
 
@@ -208,11 +207,8 @@ def create_docs_index(_):
         ),
     }
 )
-def update_deps(
-    context, fail_fast=False
-):  # pylint: disable=too-many-branches,too-many-statements,line-too-long
+def update_deps(context, fail_fast=False):
     """Update dependencies in `pyproject.toml`."""
-    # pylint: disable=too-many-nested-blocks
     import tomlkit
 
     if TYPE_CHECKING:  # pragma: no cover
@@ -334,10 +330,8 @@ def update_deps(
         updated_version = ".".join(latest_version[: len(version.split("."))])
         if version_req:
             updated_version += f",{version_req_op}{version_req}"
-        escaped_full_dependency_name = full_dependency_name.replace(
-            "[", "\["  # pylint: disable=anomalous-backslash-in-string
-        ).replace(
-            "]", "\]"  # pylint: disable=anomalous-backslash-in-string
+        escaped_full_dependency_name = full_dependency_name.replace("[", "\[").replace(
+            "]", "\]"
         )
         update_file(
             pyproject_path,

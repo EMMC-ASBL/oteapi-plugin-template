@@ -1,5 +1,7 @@
 # OTEAPI Plugin Cookiecutter Template
 
+[![DOI](https://zenodo.org/badge/447298593.svg)](https://zenodo.org/badge/latestdoi/447298593)
+
 <!-- markdownlint-disable MD033 -->
 
 A [cookiecutter](https://cookiecutter.readthedocs.io/) template for creating an OTEAPI Plugin repository.

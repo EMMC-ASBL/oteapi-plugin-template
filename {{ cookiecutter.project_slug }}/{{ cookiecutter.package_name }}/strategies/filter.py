@@ -1,5 +1,4 @@
 """Demo filter strategy."""
-# pylint: disable=unused-argument
 from typing import Any, Literal, Optional
 
 from oteapi.datacache import DataCache

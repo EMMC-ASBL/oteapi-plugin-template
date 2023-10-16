@@ -1,5 +1,4 @@
 """Demo function strategy class."""
-# pylint: disable=unused-argument
 from typing import Any, Optional
 
 from oteapi.models import FunctionConfig, SessionUpdate
