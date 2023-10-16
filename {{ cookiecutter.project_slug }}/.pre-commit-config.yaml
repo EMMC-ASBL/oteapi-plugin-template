@@ -20,6 +20,10 @@ repos:
     - id: trailing-whitespace
       args: [--markdown-linebreak-ext=md]
 
+  # ruff is a Python linter, incl. import sorter and formatter
+  # It works partly on files in-place
+  # More information can be found in its documentation:
+  # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.0.292
     hooks:

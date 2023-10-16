@@ -1,7 +1,7 @@
 # Python
 *.egg-info
 __pycache__
-*.pyc
+*.py[cod]
 
 # Testing and tools
 .*_cache/

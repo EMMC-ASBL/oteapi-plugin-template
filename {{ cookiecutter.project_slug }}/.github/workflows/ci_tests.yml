@@ -51,15 +51,6 @@ jobs:
         (docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)
         (setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)
 
-  ruff:
-    name: Ruff
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - uses: chartboost/ruff-action@v1
-
   pytest:{% raw %}
     name: pytest (${{ matrix.os[1] }}-py${{ matrix.python-version }})
     runs-on: ${{ matrix.os[0] }}
