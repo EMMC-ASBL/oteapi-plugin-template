@@ -1,7 +1,6 @@
-[![DOI](https://zenodo.org/badge/447298593.svg)](https://zenodo.org/badge/latestdoi/447298593)
-
-
 # OTEAPI Plugin Cookiecutter Template
+
+[![DOI](https://zenodo.org/badge/447298593.svg)](https://zenodo.org/badge/latestdoi/447298593)
 
 <!-- markdownlint-disable MD033 -->
 
