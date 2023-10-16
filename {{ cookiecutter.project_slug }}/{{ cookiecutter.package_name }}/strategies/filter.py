@@ -1,5 +1,5 @@
 """Demo filter strategy."""
-from typing import Any, Literal, Optional
+from typing import Any, Literal, Optional, Annotated
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, FilterConfig, SessionUpdate
@@ -10,30 +10,30 @@ from pydantic.dataclasses import dataclass
 class DemoDataModel(AttrDict):
     """Demo filter data model."""
 
-    demo_data: list[int] = Field(..., description="List of demo data.")
-    datacache_config: Optional[DataCacheConfig] = Field(
-        None,
+    demo_data: Annotated[list[int], Field(description="List of demo data.")]
+
+    datacache_config: Annotated[Optional[DataCacheConfig], Field(
         description=(
             "Configurations for the data cache for storing the downloaded file "
             "content."
         ),
-    )
+    )] = None
 
 
 class DemoFilterConfig(FilterConfig):
     """Demo filter strategy filter config."""
 
-    filterType: Literal['filter/DEMO'] = Field(
-        "filter/DEMO",
+    filterType: Annotated[Literal['filter/DEMO'], Field(
         description=FilterConfig.model_fields["filterType"].description,
-    )
-    configuration: DemoDataModel = Field(..., description="Demo filter data model.")
+    )] = "filter/DEMO"
+
+    configuration: Annotated[DemoDataModel, Field(description="Demo filter data model.")]
 
 
 class SessionUpdateDemoFilter(SessionUpdate):
     """Class for returning values from Download File strategy."""
 
-    key: str = Field(..., description="Key to access the data in the cache.")
+    key: Annotated[str, Field(description="Key to access the data in the cache.")]
 
 
 @dataclass
@@ -65,10 +65,12 @@ class DemoFilter:
 
         """
         cache = DataCache(self.filter_config.configuration.datacache_config)
+
         if cache.config.accessKey and cache.config.accessKey in cache:
             key = cache.config.accessKey
         else:
             key = cache.add(self.filter_config.configuration.demo_data)
+
         return SessionUpdateDemoFilter(key=key)
 
     def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:

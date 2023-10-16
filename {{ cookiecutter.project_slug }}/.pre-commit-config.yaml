@@ -41,6 +41,8 @@ repos:
     hooks:
     - id: mypy
       exclude: ^tests/.*$
+      additional_dependencies:
+        - "pydantic>=2"
 
   - repo: local
     hooks:

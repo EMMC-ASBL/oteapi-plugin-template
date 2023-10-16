@@ -330,8 +330,8 @@ def update_deps(context, fail_fast=False):
         updated_version = ".".join(latest_version[: len(version.split("."))])
         if version_req:
             updated_version += f",{version_req_op}{version_req}"
-        escaped_full_dependency_name = full_dependency_name.replace("[", "\[").replace(
-            "]", "\]"
+        escaped_full_dependency_name = full_dependency_name.replace("[", r"\[").replace(
+            "]", r"\]"
         )
         update_file(
             pyproject_path,

@@ -1,6 +1,6 @@
 """Demo strategy class for text/json."""
 import json
-from typing import Any, Literal, Optional
+from typing import Any, Literal, Optional, Annotated
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
@@ -12,31 +12,30 @@ from pydantic.dataclasses import dataclass
 class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
-    datacache_config: Optional[DataCacheConfig] = Field(
-        None,
+    datacache_config: Annotated[Optional[DataCacheConfig], Field(
         description=(
             "Configurations for the data cache for storing the downloaded file "
             "content."
         ),
-    )
+    )] = None
 
 
 class JSONParseConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    mediaType: Literal['application/jsonDEMO'] = Field(
-        "application/jsonDEMO",
+    mediaType: Annotated[Literal['application/jsonDEMO'], Field(
         description=ResourceConfig.model_fields["mediaType"].description,
-    )
-    configuration: JSONConfig = Field(
-        JSONConfig(), description="JSON parse strategy-specific configuration."
-    )
+    )] = "application/jsonDEMO"
+
+    configuration: Annotated[JSONConfig, Field(
+        description="JSON parse strategy-specific configuration."
+    )] = JSONConfig()
 
 
 class SessionUpdateJSONParse(SessionUpdate):
     """Class for returning values from JSON Parse."""
 
-    content: dict = Field(..., description="Content of the JSON document.")
+    content: Annotated[dict, Field(description="Content of the JSON document.")]
 
 
 @dataclass
@@ -64,4 +63,5 @@ class DemoJSONDataParseStrategy:
 
         if isinstance(content, dict):
             return SessionUpdateJSONParse(content=content)
+
         return SessionUpdateJSONParse(content=json.loads(content))

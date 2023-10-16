@@ -1,5 +1,5 @@
 """Demo download strategy class for file."""
-from typing import Any, Optional
+from typing import Any, Optional, Annotated
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
@@ -11,37 +11,37 @@ from pydantic.dataclasses import dataclass
 class FileConfig(AttrDict):
     """File-specific Configuration Data Model."""
 
-    text: bool = Field(
-        False,
+    text: Annotated[bool, Field(
         description=(
             "Whether the file should be opened in text mode. If `False`, the file will"
             " be opened in bytes mode."
         ),
-    )
-    encoding: Optional[str] = Field(
-        None,
+    )] = False
+
+    encoding: Annotated[Optional[str], Field(
         description=(
             "Encoding used when opening the file. The default is platform dependent."
         ),
-    )
-    datacache_config: Optional[DataCacheConfig] = Field(
-        None,
+    )] = None
+
+    datacache_config: Annotated[Optional[DataCacheConfig], Field(
         description=(
             "Configurations for the data cache for storing the downloaded file "
             "content."
         ),
-    )
+    )] = None
 
 
 class FileResourceConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    downloadUrl: FileUrl = Field(
-        ..., description="The file URL, which will be downloaded."
-    )
-    configuration: FileConfig = Field(
-        FileConfig(), description="File download strategy-specific configuration."
-    )
+    downloadUrl: Annotated[FileUrl, Field(
+        description="The file URL, which will be downloaded."
+    )]
+
+    configuration: Annotated[FileConfig, Field(
+        description="File download strategy-specific configuration."
+    )] = FileConfig()
 
     @field_validator("downloadUrl", mode="after")
     @classmethod
@@ -55,7 +55,7 @@ class FileResourceConfig(ResourceConfig):
 class SessionUpdateFile(SessionUpdate):
     """Class for returning values from Download File strategy."""
 
-    key: str = Field(..., description="Key to access the data in the cache.")
+    key: Annotated[str, Field(description="Key to access the data in the cache.")]
 
 
 @dataclass

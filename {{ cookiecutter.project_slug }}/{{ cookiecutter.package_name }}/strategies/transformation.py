@@ -1,6 +1,6 @@
 """Demo transformation strategy class."""
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, Optional, Annotated
 
 from oteapi.models import SessionUpdate, TransformationConfig, TransformationStatus
 from pydantic import Field
@@ -10,7 +10,7 @@ from pydantic.dataclasses import dataclass
 class SessionUpdateDummyTransformation(SessionUpdate):
     """Class for returning values from Dummy Transformation strategy."""
 
-    result: str = Field(..., description="The job ID.")
+    result: Annotated[str, Field(description="The job ID.")]
 
 
 @dataclass
