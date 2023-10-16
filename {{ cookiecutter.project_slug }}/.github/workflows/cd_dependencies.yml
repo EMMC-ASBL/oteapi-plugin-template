@@ -18,5 +18,7 @@ jobs:
       python_version: "3.9"
       install_extras: "[dev]"
       pr_labels: "CI/CD"
+      ignore: |
+        dependency-name=oteapi-core...versions=>=1
     secrets:
       PAT: {{ "${{ secrets.RELEASE_PAT }}" }}

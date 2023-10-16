@@ -84,6 +84,12 @@ repos:
       - "--replacement=(LICENSE),(LICENSE.md)"
       - "--replacement=(docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)"
       - "--replacement=(setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"
+    - id: update-pyproject
+      stages: [manual]
+      args:
+      - "--root-repo-path={{ cookiecutter.project_slug }}"
+      - "--ignore=dependency-name=oteapi-core...versions=>=1"
+
 
   - repo: local
     hooks:

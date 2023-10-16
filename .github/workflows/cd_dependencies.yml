@@ -39,9 +39,9 @@ jobs:
         pip install -U setuptools wheel flit
         pip install -r requirements.txt
 
-    - name: Run SINTEF/ci-cd
+    - name: Update pyproject.toml dependencies
       run: |
-        ci-cd update-deps --root-repo-path="{{ cookiecutter.project_slug }}"
+        pre-commit run --all-files --hook-stage=manual update-pyproject
 
         if [ -n "$(git status --porcelain {{\ cookiecutter.project_slug\ }}/pyproject.toml)" ]; then
           echo "UPDATE_DEPS=true" >> $GITHUB_ENV

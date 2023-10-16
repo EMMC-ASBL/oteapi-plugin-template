@@ -12,7 +12,8 @@ jobs:
     name: Build cookiecutter template and run standard tests
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
@@ -55,23 +56,7 @@ jobs:
       run: pip freeze | safety check --stdin --ignore 44715
 
     - name: Build docs
-      run: |
-        ci-cd create-api-reference-docs \
-          --pre-clean \
-          --root-repo-path=${PWD} \
-          --package-dir="oteapi_ci" \
-          --unwanted-folder="__pycache__" \
-          --unwanted-file="__init__.py" \
-          --full-docs-folder="strategies"
-
-        ci-cd create-docs-index \
-          --root-repo-path=${PWD} \
-          --replacement-separator="," \
-          --replacement="(LICENSE),(LICENSE.md)" \
-          --replacement="(docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)" \
-          --replacement="(setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"
-
-        mkdocs build --strict
+      run: mkdocs build --strict
       working-directory: ./oteapi-ci
 
     - name: Build source distribution
