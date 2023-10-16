@@ -50,12 +50,10 @@ jobs:
       run: pre-commit run --all-files
       working-directory: ./oteapi-ci
 
-    # Ignore ID 44715 for now.
-    # See this NumPy issue for more information: https://github.com/numpy/numpy/issues/19038
     - name: Run safety
       run: |
         pip install safety
-        pip freeze | safety check --stdin --ignore 44715
+        pip freeze | safety check --stdin
 
     - name: Build docs
       run: |
