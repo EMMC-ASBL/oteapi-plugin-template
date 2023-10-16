@@ -29,4 +29,4 @@ jobs:
       pr_labels: "CI/CD"
       extra_to_dos: "- [ ] Make sure that the PR is **squash** merged, with a sensible commit message."
     secrets:
-      PAT: {{ ${{ secrets.RELEASE_PAT }} }}
+      PAT: {{ "${{ secrets.RELEASE_PAT }}" }}
