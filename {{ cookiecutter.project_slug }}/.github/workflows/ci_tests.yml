@@ -18,17 +18,11 @@ jobs:
       # pre-commit
       run_pre-commit: true
       python_version_pre-commit: "3.9"
-      skip_pre-commit_hooks: "pylint,pylint-tests"
 
       # pylint & safety
       python_version_pylint_safety: "3.9"
 
-      run_pylint: true
-      pylint_runs: |
-        --rcfile=pyproject.toml --ignore-paths=tests/ --extension-pkg-whitelist='pydantic' {{ cookiecutter.package_name }}
-        --rcfile=pyproject.toml --extension-pkg-whitelist='pydantic' --disable=import-outside-toplevel,redefined-outer-name,import-error --recursive=yes tests
-      pylint_targets: "{{ cookiecutter.package_name }}"
-      pylint_options: ""
+      run_pylint: false
 
       run_safety: true
       # Ignore ID 44715 for now.
@@ -56,6 +50,15 @@ jobs:
         (LICENSE),(LICENSE.md)
         (docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)
         (setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)
+
+  ruff:
+    name: Ruff
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - uses: chartboost/ruff-action@v1
 
   pytest:{% raw %}
     name: pytest (${{ matrix.os[1] }}-py${{ matrix.python-version }})
