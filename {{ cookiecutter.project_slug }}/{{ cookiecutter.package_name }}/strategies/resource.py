@@ -1,22 +1,17 @@
 """Demo resource strategy class."""
 # pylint: disable=unused-argument
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
+from typing import Any, Literal, Optional
 
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
 from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Literal
-
 
 class DemoConfig(AttrDict):
     """Strategy-specific Configuration Data Model."""
 
-    datacache_config: DataCacheConfig | None = Field(
+    datacache_config: Optional[DataCacheConfig] = Field(
         None,
         description="Configuration for the data cache.",
     )
@@ -27,12 +22,12 @@ class DemoResourceConfig(ResourceConfig):
 
     # Require the resource to be a REST API with JSON responses that uses the
     # DemoJSONDataParseStrategy strategy.
-    mediaType: "Literal['application/jsonDEMO']" = Field(
+    mediaType: Literal['application/jsonDEMO'] = Field(
         "application/jsonDEMO",
         description=ResourceConfig.model_fields["mediaType"].description,
     )
 
-    accessService: "Literal['DEMO-access-service']" = Field(
+    accessService: Literal['DEMO-access-service'] = Field(
         "DEMO-access-service",
         description=ResourceConfig.model_fields["accessService"].description,
     )
@@ -65,7 +60,7 @@ class DemoResourceStrategy:
 
     resource_config: DemoResourceConfig
 
-    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
+    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -82,7 +77,7 @@ class DemoResourceStrategy:
         return SessionUpdate()
 
     def get(
-        self, session: "dict[str, Any]" | None = None
+        self, session: Optional[dict[str, Any]] = None
     ) -> SessionUpdateDemoResource:
         """Execute the strategy.
 

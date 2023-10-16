@@ -1,9 +1,7 @@
 """Demo strategy class for text/json."""
 # pylint: disable=unused-argument
-from __future__ import annotations
-
 import json
-from typing import TYPE_CHECKING
+from typing import Any, Literal, Optional
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
@@ -11,14 +9,11 @@ from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Literal
-
 
 class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
-    datacache_config: DataCacheConfig | None = Field(
+    datacache_config: Optional[DataCacheConfig] = Field(
         None,
         description=(
             "Configurations for the data cache for storing the downloaded file "
@@ -30,7 +25,7 @@ class JSONConfig(AttrDict):
 class JSONParseConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    mediaType: "Literal['application/jsonDEMO']" = Field(
+    mediaType: Literal['application/jsonDEMO'] = Field(
         "application/jsonDEMO",
         description=ResourceConfig.model_fields["mediaType"].description,
     )
@@ -57,11 +52,11 @@ class DemoJSONDataParseStrategy:
 
     parse_config: JSONParseConfig
 
-    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
+    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Initialize."""
         return SessionUpdate()
 
-    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdateJSONParse:
+    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdateJSONParse:
         """Parse json."""
         downloader = create_strategy("download", self.parse_config)
         output = downloader.get()

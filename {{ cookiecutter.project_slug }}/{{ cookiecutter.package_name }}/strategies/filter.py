@@ -1,23 +1,18 @@
 """Demo filter strategy."""
 # pylint: disable=unused-argument
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
+from typing import Any, Literal, Optional
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, FilterConfig, SessionUpdate
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Literal
-
 
 class DemoDataModel(AttrDict):
     """Demo filter data model."""
 
     demo_data: list[int] = Field(..., description="List of demo data.")
-    datacache_config: DataCacheConfig | None = Field(
+    datacache_config: Optional[DataCacheConfig] = Field(
         None,
         description=(
             "Configurations for the data cache for storing the downloaded file "
@@ -29,7 +24,7 @@ class DemoDataModel(AttrDict):
 class DemoFilterConfig(FilterConfig):
     """Demo filter strategy filter config."""
 
-    filterType: "Literal['filter/DEMO']" = Field(
+    filterType: Literal['filter/DEMO'] = Field(
         "filter/DEMO",
         description=FilterConfig.model_fields["filterType"].description,
     )
@@ -55,7 +50,7 @@ class DemoFilter:
     filter_config: DemoFilterConfig
 
     def initialize(
-        self, session: "dict[str, Any]" | None = None
+        self, session: Optional[dict[str, Any]] = None
     ) -> SessionUpdateDemoFilter:
         """Initialize strategy.
 
@@ -77,7 +72,7 @@ class DemoFilter:
             key = cache.add(self.filter_config.configuration.demo_data)
         return SessionUpdateDemoFilter(key=key)
 
-    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
+    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the

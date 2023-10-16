@@ -1,17 +1,12 @@
 """Demo download strategy class for file."""
 # pylint: disable=unused-argument
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
+from typing import Any, Optional
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
 from oteapi.utils.paths import uri_to_path
 from pydantic import Field, FileUrl, field_validator
 from pydantic.dataclasses import dataclass
-
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any
 
 
 class FileConfig(AttrDict):
@@ -24,13 +19,13 @@ class FileConfig(AttrDict):
             " be opened in bytes mode."
         ),
     )
-    encoding: str | None = Field(
+    encoding: Optional[str] = Field(
         None,
         description=(
             "Encoding used when opening the file. The default is platform dependent."
         ),
     )
-    datacache_config: DataCacheConfig | None = Field(
+    datacache_config: Optional[DataCacheConfig] = Field(
         None,
         description=(
             "Configurations for the data cache for storing the downloaded file "
@@ -49,7 +44,7 @@ class FileResourceConfig(ResourceConfig):
         FileConfig(), description="File download strategy-specific configuration."
     )
 
-    @field_validator("downloadUrl")
+    @field_validator("downloadUrl", mode="after")
     @classmethod
     def ensure_path_exists(cls, value: FileUrl) -> FileUrl:
         """Ensure `path` is defined in `downloadUrl`."""
@@ -76,11 +71,11 @@ class FileStrategy:
 
     download_config: FileResourceConfig
 
-    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
+    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Initialize."""
         return SessionUpdate()
 
-    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdateFile:
+    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdateFile:
         """Read local file."""
         filename = uri_to_path(self.download_config.downloadUrl).resolve()
 

@@ -1,16 +1,11 @@
 """Demo transformation strategy class."""
 # pylint: disable=unused-argument
-from __future__ import annotations
-
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import Any, Optional
 
 from oteapi.models import SessionUpdate, TransformationConfig, TransformationStatus
 from pydantic import Field
 from pydantic.dataclasses import dataclass
-
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any
 
 
 class SessionUpdateDummyTransformation(SessionUpdate):
@@ -31,7 +26,7 @@ class DummyTransformationStrategy:
 
     transformation_config: TransformationConfig
 
-    def initialize(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
+    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -47,7 +42,7 @@ class DummyTransformationStrategy:
         """
         return SessionUpdate()
 
-    def get(self, session: "dict[str, Any]" | None = None) -> SessionUpdate:
+    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -64,7 +59,7 @@ class DummyTransformationStrategy:
         return SessionUpdate()
 
     def run(
-        self, session: "dict[str, Any]" | None = None
+        self, session: Optional[dict[str, Any]] = None
     ) -> SessionUpdateDummyTransformation:
         """Run a transformation job.
 
