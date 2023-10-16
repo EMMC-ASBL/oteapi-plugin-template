@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Do not use SINTEF/ci-cd as is cannot run pre-commit autoupdate on sub-folder
+  # Do not use SINTEF/ci-cd as it cannot run pre-commit autoupdate on sub-folder
   # pre-commit configurations.
   create-collected-pr:
     name: Single dependabot PR

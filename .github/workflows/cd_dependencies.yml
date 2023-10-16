@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Do not use SINTEF/ci-cd as it cannot run for a pyproject.toml file in a sub-folder.
   update-dependencies:
     name: Update dependencies
     if: github.repository_owner == 'EMMC-ASBL'
