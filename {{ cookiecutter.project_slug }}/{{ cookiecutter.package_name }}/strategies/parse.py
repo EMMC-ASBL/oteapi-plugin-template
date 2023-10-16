@@ -12,24 +12,30 @@ from pydantic.dataclasses import dataclass
 class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
-    datacache_config: Annotated[Optional[DataCacheConfig], Field(
-        description=(
-            "Configurations for the data cache for storing the downloaded file "
-            "content."
+    datacache_config: Annotated[
+        Optional[DataCacheConfig],
+        Field(
+            description=(
+                "Configurations for the data cache for storing the downloaded file "
+                "content."
+            ),
         ),
-    )] = None
+    ] = None
 
 
 class JSONParseConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    mediaType: Annotated[Literal['application/jsonDEMO'], Field(
-        description=ResourceConfig.model_fields["mediaType"].description,
-    )] = "application/jsonDEMO"
+    mediaType: Annotated[
+        Literal["application/jsonDEMO"],
+        Field(
+            description=ResourceConfig.model_fields["mediaType"].description,
+        ),
+    ] = "application/jsonDEMO"
 
-    configuration: Annotated[JSONConfig, Field(
-        description="JSON parse strategy-specific configuration."
-    )] = JSONConfig()
+    configuration: Annotated[
+        JSONConfig, Field(description="JSON parse strategy-specific configuration.")
+    ] = JSONConfig()
 
 
 class SessionUpdateJSONParse(SessionUpdate):

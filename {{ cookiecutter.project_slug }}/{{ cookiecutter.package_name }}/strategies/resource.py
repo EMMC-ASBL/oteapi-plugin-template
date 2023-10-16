@@ -10,9 +10,12 @@ from pydantic.dataclasses import dataclass
 class DemoConfig(AttrDict):
     """Strategy-specific Configuration Data Model."""
 
-    datacache_config: Annotated[Optional[DataCacheConfig], Field(
-        description="Configuration for the data cache.",
-    )] = None
+    datacache_config: Annotated[
+        Optional[DataCacheConfig],
+        Field(
+            description="Configuration for the data cache.",
+        ),
+    ] = None
 
 
 class DemoResourceConfig(ResourceConfig):
@@ -20,27 +23,39 @@ class DemoResourceConfig(ResourceConfig):
 
     # Require the resource to be a REST API with JSON responses that uses the
     # DemoJSONDataParseStrategy strategy.
-    mediaType: Annotated[Literal['application/jsonDEMO'], Field(
-        description=ResourceConfig.model_fields["mediaType"].description,
-    )] = "application/jsonDEMO"
+    mediaType: Annotated[
+        Literal["application/jsonDEMO"],
+        Field(
+            description=ResourceConfig.model_fields["mediaType"].description,
+        ),
+    ] = "application/jsonDEMO"
 
-    accessService: Annotated[Literal['DEMO-access-service'], Field(
-        description=ResourceConfig.model_fields["accessService"].description,
-    )] = "DEMO-access-service"
+    accessService: Annotated[
+        Literal["DEMO-access-service"],
+        Field(
+            description=ResourceConfig.model_fields["accessService"].description,
+        ),
+    ] = "DEMO-access-service"
 
-    configuration: Annotated[DemoConfig, Field(
-        description="Demo resource strategy-specific configuration.",
-    )] = DemoConfig()
+    configuration: Annotated[
+        DemoConfig,
+        Field(
+            description="Demo resource strategy-specific configuration.",
+        ),
+    ] = DemoConfig()
 
 
 class SessionUpdateDemoResource(SessionUpdate):
     """Class for returning values from Demo Resource strategy."""
 
-    output: Annotated[dict, Field(
-        description=(
-            "The output from downloading the response from the given `accessUrl`."
-        )
-    )]
+    output: Annotated[
+        dict,
+        Field(
+            description=(
+                "The output from downloading the response from the given `accessUrl`."
+            )
+        ),
+    ]
 
 
 @dataclass

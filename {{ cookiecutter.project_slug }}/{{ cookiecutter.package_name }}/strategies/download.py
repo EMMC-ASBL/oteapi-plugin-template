@@ -11,37 +11,46 @@ from pydantic.dataclasses import dataclass
 class FileConfig(AttrDict):
     """File-specific Configuration Data Model."""
 
-    text: Annotated[bool, Field(
-        description=(
-            "Whether the file should be opened in text mode. If `False`, the file will"
-            " be opened in bytes mode."
+    text: Annotated[
+        bool,
+        Field(
+            description=(
+                "Whether the file should be opened in text mode. If `False`, the file will"
+                " be opened in bytes mode."
+            ),
         ),
-    )] = False
+    ] = False
 
-    encoding: Annotated[Optional[str], Field(
-        description=(
-            "Encoding used when opening the file. The default is platform dependent."
+    encoding: Annotated[
+        Optional[str],
+        Field(
+            description=(
+                "Encoding used when opening the file. The default is platform dependent."
+            ),
         ),
-    )] = None
+    ] = None
 
-    datacache_config: Annotated[Optional[DataCacheConfig], Field(
-        description=(
-            "Configurations for the data cache for storing the downloaded file "
-            "content."
+    datacache_config: Annotated[
+        Optional[DataCacheConfig],
+        Field(
+            description=(
+                "Configurations for the data cache for storing the downloaded file "
+                "content."
+            ),
         ),
-    )] = None
+    ] = None
 
 
 class FileResourceConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    downloadUrl: Annotated[FileUrl, Field(
-        description="The file URL, which will be downloaded."
-    )]
+    downloadUrl: Annotated[
+        FileUrl, Field(description="The file URL, which will be downloaded.")
+    ]
 
-    configuration: Annotated[FileConfig, Field(
-        description="File download strategy-specific configuration."
-    )] = FileConfig()
+    configuration: Annotated[
+        FileConfig, Field(description="File download strategy-specific configuration.")
+    ] = FileConfig()
 
     @field_validator("downloadUrl", mode="after")
     @classmethod

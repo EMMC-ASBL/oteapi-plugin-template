@@ -12,22 +12,30 @@ class DemoDataModel(AttrDict):
 
     demo_data: Annotated[list[int], Field(description="List of demo data.")]
 
-    datacache_config: Annotated[Optional[DataCacheConfig], Field(
-        description=(
-            "Configurations for the data cache for storing the downloaded file "
-            "content."
+    datacache_config: Annotated[
+        Optional[DataCacheConfig],
+        Field(
+            description=(
+                "Configurations for the data cache for storing the downloaded file "
+                "content."
+            ),
         ),
-    )] = None
+    ] = None
 
 
 class DemoFilterConfig(FilterConfig):
     """Demo filter strategy filter config."""
 
-    filterType: Annotated[Literal['filter/DEMO'], Field(
-        description=FilterConfig.model_fields["filterType"].description,
-    )] = "filter/DEMO"
+    filterType: Annotated[
+        Literal["filter/DEMO"],
+        Field(
+            description=FilterConfig.model_fields["filterType"].description,
+        ),
+    ] = "filter/DEMO"
 
-    configuration: Annotated[DemoDataModel, Field(description="Demo filter data model.")]
+    configuration: Annotated[
+        DemoDataModel, Field(description="Demo filter data model.")
+    ]
 
 
 class SessionUpdateDemoFilter(SessionUpdate):
