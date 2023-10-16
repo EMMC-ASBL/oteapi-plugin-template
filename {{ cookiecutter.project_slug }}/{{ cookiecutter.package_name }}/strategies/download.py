@@ -15,8 +15,8 @@ class FileConfig(AttrDict):
         bool,
         Field(
             description=(
-                "Whether the file should be opened in text mode. If `False`, the file will"
-                " be opened in bytes mode."
+                "Whether the file should be opened in text mode. If `False`, the file "
+                "will be opened in bytes mode."
             ),
         ),
     ] = False
@@ -25,7 +25,8 @@ class FileConfig(AttrDict):
         Optional[str],
         Field(
             description=(
-                "Encoding used when opening the file. The default is platform dependent."
+                "Encoding used when opening the file. The default is platform "
+                "dependent."
             ),
         ),
     ] = None
