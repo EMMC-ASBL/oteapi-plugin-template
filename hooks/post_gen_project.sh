@@ -68,19 +68,22 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
      - Pull requests with at least 1 reviewer approval.
      - Check success for the CI tests:
 
-       - 'pre-commit
-       - 'pylint-safety'
+       - 'External / Run \`pre-commit\`'
+       - 'External / Run \`pylint\` & \`safety\`'
+       - 'External / Build distribution package'
+       - 'External / Build Documentation'
        - 'pytest (linux-py3.9)'
        - 'pytest (windows-py3.9)'
-       - 'Build distribution package'
-       - 'Documentation'
+
+       Note, we recommend only requiring the pytest jobs for Python 3.9, since it is
+       the minimum supported version.
 
   4. Create a 'CI/CD' label in the GitHub repository.
 
   5. Start the documentation via GitHub Pages by running:
 
        # Install the package
-       pip install -U pip setuptools wheel
+       pip install -U pip wheel flit
        pip install -U -e .[dev]
 
        # Build and deploy the documentation to the 'gh-pages' branch on GitHub
@@ -90,8 +93,9 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
   6. Uncomment the CI/CD workflows and other code, where necessary,
      when you're ready.
 
-  7. Finally, it is VERY IMPORTANT the protection for the 'ci/dependabot-update'
-     branch ONLY allows force pushes for everyone.
+  7. Finally, it is VERY IMPORTANT the protection for the 'ci/dependency-updates'
+     branch allows force pushes for the user the 'RELEASE_PAT' secret belongs to.
+     This can be set to "Everyone" to ensure this if you are unsure.
 
 Please write TEAM4.0@SINTEF.no or create issues on GitHub if there are any issues.
 
