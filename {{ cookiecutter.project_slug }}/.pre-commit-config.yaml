@@ -4,7 +4,7 @@
 #   pre-commit autoupdate
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
     - id: end-of-file-fixer
     - id: debug-statements
@@ -18,11 +18,11 @@ repos:
     - id: trailing-whitespace
       args: [--markdown-linebreak-ext=md]
 
-  - repo: https://github.com/timothycrosley/isort
-    rev: 5.12.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.292
     hooks:
-    - id: isort
-      args: ["--profile", "black", "--filter-files", "--skip-gitignore"]
+      - id: ruff
+        args: ["--fix", "--exit-non-zero-on-fix"]
 
   - repo: https://github.com/ambv/black
     rev: 23.9.1
@@ -37,35 +37,13 @@ repos:
       files: ^{{ cookiecutter.package_name }}/.*$
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.1
+    rev: v1.6.0
     hooks:
     - id: mypy
       exclude: ^tests/.*$
 
   - repo: local
     hooks:
-    - id: pylint
-      name: pylint
-      entry: pylint
-      args:
-      - "--rcfile=pyproject.toml"
-      - "--extension-pkg-whitelist='pydantic'"
-      language: python
-      types: [python]
-      require_serial: true
-      files: ^.*$
-      exclude: ^tests/.*$
-    - id: pylint-tests
-      name: pylint - tests
-      entry: pylint
-      args:
-      - "--rcfile=pyproject.toml"
-      - "--extension-pkg-whitelist='pydantic'"
-      - "--disable=import-outside-toplevel,redefined-outer-name,import-error"
-      language: python
-      types: [python]
-      require_serial: true
-      files: ^tests/.*$
     - id: update-docs-api-reference
       name: Update API Reference in Documentation
       entry: invoke
