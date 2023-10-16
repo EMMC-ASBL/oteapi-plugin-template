@@ -37,7 +37,7 @@ git remote add origin {{ cookiecutter.scm_url }}.git >> /dev/null
 git branch -M main >> /dev/null
 
 # Create permanent branch for CI concerning dependency updates through Dependabot.
-git branch ci/dependabot-updates >> /dev/null
+git branch ci/dependency-updates >> /dev/null
 
 # Information message
 echo "Congratulations on creating '{{ cookiecutter.project_name }}' !
@@ -50,10 +50,10 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
 (CI: continuous integration)
 (CD: continuous deployment)
 
-  1. Push 'main' and 'ci/dependabot-updates' branches to the 'origin' remote:
+  1. Push 'main' and 'ci/dependency-updates' branches to the 'origin' remote:
 
        git push -u origin main:main
-       git push -u origin ci/dependabot-updates:ci/dependabot-updates
+       git push -u origin ci/dependency-updates:ci/dependency-updates
 
   2. Add a 'RELEASE_PAT' secret to GitHub Actions.
      For more information and documentation on this see:
@@ -62,7 +62,7 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
 
      https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
 
-  3. Setup branch protection rules for 'main' and 'ci/dependabot-updates'.
+  3. Setup branch protection rules for 'main' and 'ci/dependency-updates'.
      We recommend to require:
 
      - Pull requests with at least 1 reviewer approval.

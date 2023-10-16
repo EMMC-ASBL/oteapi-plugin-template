@@ -4,75 +4,58 @@ on:
   pull_request:
   push:
     branches:
-      - 'master'
+      - 'main'
       - 'push-action/**'  # Allow pushing to protected branches (using CasperWA/push-protected)
 
 jobs:
+  basic:
+    name: External
+    uses: SINTEF/ci-cd/.github/workflows/ci_tests.yml@v2.5.2
+    with:
+      # General
+      install_extras: "[dev]"
 
-  pre-commit:
-    runs-on: ubuntu-latest
+      # pre-commit
+      run_pre-commit: true
+      python_version_pre-commit: "3.9"
+      skip_pre-commit_hooks: "pylint,pylint-tests"
 
-    steps:
-    - uses: actions/checkout@v3
+      # pylint & safety
+      python_version_pylint_safety: "3.9"
 
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
+      run_pylint: true
+      pylint_runs: |
+        --rcfile=pyproject.toml --ignore-paths=tests/ --extension-pkg-whitelist='pydantic' {{ cookiecutter.package_name }}
+        --rcfile=pyproject.toml --extension-pkg-whitelist='pydantic' --disable=import-outside-toplevel,redefined-outer-name,import-error --recursive=yes tests
+      pylint_targets: "{{ cookiecutter.package_name }}"
+      pylint_options: ""
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -U setuptools wheel
+      run_safety: true
+      # Ignore ID 44715 for now.
+      # See this NumPy issue for more information: https://github.com/numpy/numpy/issues/19038
+      safety_options: "--ignore 44715"
 
-        while IFS="" read -r line || [ -n "${line}" ]; do
-          if [[ "${line}" =~ ^pre-commit.*$ ]]; then
-            pre_commit="${line}"
-          fi
-        done < requirements_dev.txt
+      # Build package
+      run_build_package: true
+      python_version_package: "3.9"
+      build_libs: flit
+      build_cmd: flit build
 
-        while IFS="" read -r line || [ -n "${line}" ]; do
-          if [[ "${line}" =~ ^invoke.*$ ]]; then
-            invoke="${line}"
-          fi
-        done < requirements_docs.txt
+      # Build documentation
+      run_build_docs: true
+      python_version_docs: "3.9"
+      warnings_as_errors: true
 
-        pip install ${pre_commit} ${invoke}
-
-    - name: Test with pre-commit
-      run: SKIP=pylint,pylint-tests pre-commit run --all-files
-
-  pylint-safety:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 2
-
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
-
-    - name: Install dependencies
-      run: |
-        python -m pip install -U pip
-        pip install -U setuptools wheel
-        pip install -U -r requirements.txt -r requirements_dev.txt -r requirements_docs.txt
-        pip install -e .
-        pip install safety
-
-    - name: Run pylint
-      run: pylint --rcfile=pyproject.toml --ignore-paths=tests/ --extension-pkg-whitelist='pydantic' *.py {{ cookiecutter.package_name }}
-
-    - name: Run pylint - tests
-      run: pylint --rcfile=pyproject.toml --extension-pkg-whitelist='pydantic' --disable=import-outside-toplevel,redefined-outer-name,import-error tests
-
-    # Ignore ID 44715 for now.
-    # See this NumPy issue for more information: https://github.com/numpy/numpy/issues/19038
-    - name: Run safety
-      run: pip freeze | safety check --stdin --ignore 44715
+      use_mkdocs: true
+      update_python_api_ref: true
+      update_docs_landing_page: true
+      package_dirs: "{{ cookiecutter.package_name }}"
+      full_docs_dir: strategies
+      landing_page_replacement_separator: ","
+      landing_page_replacements: |
+        (LICENSE),(LICENSE.md)
+        (docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)
+        (setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)
 
   pytest:{% raw %}
     name: pytest (${{ matrix.os[1] }}-py${{ matrix.python-version }})
@@ -120,61 +103,3 @@ jobs:
       with:
         files: coverage.xml
         flags: {{ "${{ matrix.os[1] }}" }}
-
-  build-package:
-    name: Build distribution package
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
-
-    - name: Install dependencies
-      run: |
-        python -m pip install -U pip
-        pip install -U setuptools wheel build
-
-    - name: Check building distribution
-      run: python -m build
-
-  docs:
-    name: Documentation
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 2
-
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
-
-    - name: Install dependencies
-      run: |
-        python -m pip install -U pip
-        pip install -U setuptools wheel
-        pip install -e .[docs]
-
-    - name: Build
-      run: |
-        invoke create-api-reference-docs --pre-clean
-        invoke create-docs-index
-
-        if [ -n "$(git status --porcelain docs/api_reference docs/index.md)" ]; then
-          echo -e "\u274c Discrepancies found !"
-          echo -e "The following files in the documentation must be committed:"
-          git status --porcelain docs/api_reference docs/index.md
-          echo -e "\nRun:\n"
-          echo "    invoke create-api-reference-docs --pre-clean"
-          echo -e "    invoke create-docs-index\n"
-          echo "And commit the changed files."
-          exit 1
-        fi
-
-        mkdocs build --strict
