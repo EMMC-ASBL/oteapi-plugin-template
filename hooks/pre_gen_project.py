@@ -9,7 +9,8 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from typing import List, Sequence, Union
+    from typing import List, Union
+    from collections.abc import Sequence
 
 
 def run_cmd(cmd: "Union[str, Sequence[str]]") -> subprocess.CompletedProcess:

@@ -1,52 +1,60 @@
 """Demo download strategy class for file."""
-from typing import TYPE_CHECKING, Optional
+from typing import Any, Optional, Annotated
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
 from oteapi.utils.paths import uri_to_path
-from pydantic import Field, FileUrl, validator
+from pydantic import Field, FileUrl, field_validator
 from pydantic.dataclasses import dataclass
-
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict
 
 
 class FileConfig(AttrDict):
     """File-specific Configuration Data Model."""
 
-    text: bool = Field(
-        False,
-        description=(
-            "Whether the file should be opened in text mode. If `False`, the file will"
-            " be opened in bytes mode."
+    text: Annotated[
+        bool,
+        Field(
+            description=(
+                "Whether the file should be opened in text mode. If `False`, the file "
+                "will be opened in bytes mode."
+            ),
         ),
-    )
-    encoding: Optional[str] = Field(
-        None,
-        description=(
-            "Encoding used when opening the file. The default is platform dependent."
+    ] = False
+
+    encoding: Annotated[
+        Optional[str],
+        Field(
+            description=(
+                "Encoding used when opening the file. The default is platform "
+                "dependent."
+            ),
         ),
-    )
-    datacache_config: Optional[DataCacheConfig] = Field(
-        None,
-        description=(
-            "Configurations for the data cache for storing the downloaded file "
-            "content."
+    ] = None
+
+    datacache_config: Annotated[
+        Optional[DataCacheConfig],
+        Field(
+            description=(
+                "Configurations for the data cache for storing the downloaded file "
+                "content."
+            ),
         ),
-    )
+    ] = None
 
 
 class FileResourceConfig(ResourceConfig):
     """File download strategy filter config."""
 
-    downloadUrl: FileUrl = Field(  # type: ignore[assignment]
-        ..., description="The file URL, which will be downloaded."
-    )
-    configuration: FileConfig = Field(
-        FileConfig(), description="File download strategy-specific configuration."
-    )
+    downloadUrl: Annotated[
+        FileUrl, Field(description="The file URL, which will be downloaded.")
+    ]
 
-    @validator("downloadUrl")
+    configuration: Annotated[
+        FileConfig, Field(description="File download strategy-specific configuration.")
+    ] = FileConfig()
+
+    @field_validator("downloadUrl", mode="after")
+    @classmethod
     def ensure_path_exists(cls, value: FileUrl) -> FileUrl:
         """Ensure `path` is defined in `downloadUrl`."""
         if not value.path:
@@ -57,7 +65,7 @@ class FileResourceConfig(ResourceConfig):
 class SessionUpdateFile(SessionUpdate):
     """Class for returning values from Download File strategy."""
 
-    key: str = Field(..., description="Key to access the data in the cache.")
+    key: Annotated[str, Field(description="Key to access the data in the cache.")]
 
 
 @dataclass
@@ -72,11 +80,11 @@ class FileStrategy:
 
     download_config: FileResourceConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Initialize."""
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdateFile:
+    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdateFile:
         """Read local file."""
         filename = uri_to_path(self.download_config.downloadUrl).resolve()
 

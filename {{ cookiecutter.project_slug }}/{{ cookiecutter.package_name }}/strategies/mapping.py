@@ -1,11 +1,8 @@
 """Demo mapping strategy class."""
-from typing import TYPE_CHECKING
+from typing import Any, Optional
 
 from oteapi.models import MappingConfig, SessionUpdate
 from pydantic.dataclasses import dataclass
-
-if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict, Optional
 
 
 @dataclass
@@ -20,7 +17,7 @@ class DemoMappingStrategy:
 
     mapping_config: MappingConfig
 
-    def initialize(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -36,7 +33,7 @@ class DemoMappingStrategy:
         """
         return SessionUpdate()
 
-    def get(self, session: "Optional[Dict[str, Any]]" = None) -> SessionUpdate:
+    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the

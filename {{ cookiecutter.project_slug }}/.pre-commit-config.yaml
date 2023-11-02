@@ -58,7 +58,7 @@ repos:
     - id: mypy
       exclude: ^tests/.*$
       additional_dependencies:
-        - "pydantic<2"
+        - "pydantic>=2"
 
   # ci-cd is a collection of hooks to help with CI/CD
   # The main code repository can be found at:
