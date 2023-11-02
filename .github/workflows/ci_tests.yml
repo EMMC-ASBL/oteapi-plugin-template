@@ -7,29 +7,29 @@ on:
       - 'master'
 
 jobs:
-
   test-template:
     runs-on: ubuntu-latest
     name: Build cookiecutter template and run standard tests
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: "3.9"
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -U setuptools wheel flit
-        pip install cookiecutter
+        pip install -r .github/utils/requirements.txt
 
     - name: Set up git
       run: |
-        git config --global user.name "oteapi-plugin-template"
-        git config --global user.email "oteapi-plugin-template@EMMC-ASBL.org"
+        git config --global user.name "TEAM 4.0[bot]"
+        git config --global user.email "Team4.0@SINTEF.no"
 
     - name: Run cookiecutter
       run: cookiecutter --no-input --config-file .github/utils/cookiecutter_values.yaml .
@@ -51,15 +51,10 @@ jobs:
       working-directory: ./oteapi-ci
 
     - name: Run safety
-      run: |
-        pip install safety
-        pip freeze | safety check --stdin
+      run: pip freeze | safety check --stdin
 
     - name: Build docs
-      run: |
-        invoke create-api-reference-docs --pre-clean
-        invoke create-docs-index
-        mkdocs build --strict
+      run: mkdocs build --strict
       working-directory: ./oteapi-ci
 
     - name: Build source distribution
@@ -67,11 +62,14 @@ jobs:
       working-directory: ./oteapi-ci
 
   pre-commit_safety:
+    # Do not use SINTEF/ci-cd, since it requires the root repository to be installable
+    # as a package.
     runs-on: ubuntu-latest
     name: pre-commit & safety
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
@@ -82,8 +80,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -U setuptools wheel
-        pip install -r requirements.txt
-        pip install safety
+        pip install -r requirements.txt -r .github/utils/requirements.txt
 
     - name: Test with pre-commit
       run: pre-commit run --all-files
