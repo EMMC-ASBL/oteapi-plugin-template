@@ -44,7 +44,7 @@ jobs:
 
     # There should be no warnings, so we're treating warnings as errors
     - name: Run pytest
-      run: pytest -vvv -pythonwarnings="error"
+      run: pytest -vvv --pythonwarnings="error"
       working-directory: ./oteapi-ci
 
     - name: Run pre-commit
