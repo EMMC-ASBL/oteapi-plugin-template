@@ -1,11 +1,10 @@
 # Python
 *.egg-info
 __pycache__
-*.pyc
+*.py[cod]
 
 # Testing and tools
-.pytest_cache/
-.mypy_cache/
+.*_cache/
 
 # Coverage
 .coverage
