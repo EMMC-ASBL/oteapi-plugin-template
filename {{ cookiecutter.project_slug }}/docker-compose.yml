@@ -21,8 +21,7 @@ services:
       - "${PWD}:/{{ cookiecutter.project_slug }}"
     entrypoint: |
       /bin/bash -c "if [ \"${PATH_TO_OTEAPI_CORE}\" != \"/dev/null\" ] && [ -n \"${PATH_TO_OTEAPI_CORE}\" ]; then \
-      pip install -U --force-reinstall -e /oteapi-core; fi \
-      && ./entrypoint.sh --reload --debug --log-level debug"
+      pip install -U --force-reinstall -e /oteapi-core; fi && ./entrypoint.sh --reload --debug --log-level debug"
 
   redis:
     image: redis:latest
