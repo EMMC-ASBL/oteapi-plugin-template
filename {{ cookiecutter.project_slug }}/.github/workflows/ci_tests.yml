@@ -25,9 +25,6 @@ jobs:
       run_pylint: false
 
       run_safety: true
-      # Ignore ID 44715 for now.
-      # See this NumPy issue for more information: https://github.com/numpy/numpy/issues/19038
-      safety_options: "--ignore 44715"
 
       # Build package
       run_build_package: true
