@@ -105,7 +105,7 @@ class DemoResourceStrategy:
         # Example of the plugin using a parse strategy to (fetch) and parse the data
         session = session if session else {}
 
-        parse_config = self.resource_config.copy()
+        parse_config = self.resource_config.model_copy()
         if not parse_config.downloadUrl:
             parse_config.downloadUrl = self.resource_config.accessUrl
 

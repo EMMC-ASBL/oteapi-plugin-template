@@ -42,8 +42,9 @@ jobs:
     - name: Install template
       run: pip install -e oteapi-ci[dev]
 
+    # There should be no warnings, so we're treating warnings as errors
     - name: Run pytest
-      run: pytest -vvv
+      run: pytest -vvv -pythonwarnings="error"
       working-directory: ./oteapi-ci
 
     - name: Run pre-commit
