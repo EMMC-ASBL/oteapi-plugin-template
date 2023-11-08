@@ -28,7 +28,7 @@ repos:
   # More information can be found in its documentation:
   # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.3
+    rev: v0.1.4
     hooks:
       - id: ruff
         args: ["--fix", "--exit-non-zero-on-fix"]
@@ -37,7 +37,7 @@ repos:
   # Black is a code style and formatter
   # It works on files in-place
   - repo: https://github.com/ambv/black
-    rev: 23.10.1
+    rev: 23.11.0
     hooks:
     - id: black
       exclude: ^{{ cookiecutter.project_slug }}/
@@ -69,7 +69,7 @@ repos:
   # The project's documentation can be found at:
   # https://SINTEF.github.io/ci-cd/
   - repo: https://github.com/SINTEF/ci-cd
-    rev: v2.5.2
+    rev: v2.5.3
     hooks:
     - id: docs-api-reference
       args:
