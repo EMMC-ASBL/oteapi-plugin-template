@@ -25,7 +25,7 @@ repos:
   # More information can be found in its documentation:
   # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.5
+    rev: v0.1.6
     hooks:
       - id: ruff
         args: ["--fix", "--exit-non-zero-on-fix"]
@@ -66,7 +66,7 @@ repos:
   # The project's documentation can be found at:
   # https://SINTEF.github.io/ci-cd/
   - repo: https://github.com/SINTEF/ci-cd
-    rev: v2.5.3
+    rev: v2.6.0
     hooks:
     - id: docs-api-reference
       args:
