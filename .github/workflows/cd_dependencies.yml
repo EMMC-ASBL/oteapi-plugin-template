@@ -42,13 +42,18 @@ jobs:
 
     - name: Update pyproject.toml dependencies
       run: |
-        pre-commit run --all-files --hook-stage=manual update-pyproject
+        pre-commit run --all-files --hook-stage=manual update-pyproject || CHECK_FAILED=true
 
         if [ -n "$(git status --porcelain {{\ cookiecutter.project_slug\ }}/pyproject.toml)" ]; then
           echo "UPDATE_DEPS=true" >> $GITHUB_ENV
           git add {{\ cookiecutter.project_slug\ }}/pyproject.toml
           git commit -m "Update dependencies"
         else
+          if [ -n "${CHECK_FAILED}" ]; then
+            echo "The pre-commit hook failed (no changes to pyproject.toml)."
+            exit 1
+          fi
+
           echo "UPDATE_DEPS=false" >> $GITHUB_ENV
         fi
 
