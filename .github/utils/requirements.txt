@@ -1,2 +1,2 @@
 cookiecutter~=2.5
-safety~=2.3
+safety~=3.0
