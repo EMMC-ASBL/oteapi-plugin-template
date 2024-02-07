@@ -2,6 +2,7 @@
 
 Validate variables.
 """
+
 import re
 import subprocess  # nosec
 import sys
