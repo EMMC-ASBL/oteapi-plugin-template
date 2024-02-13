@@ -1,4 +1,5 @@
 """Demo strategy class for text/json."""
+
 import json
 from typing import Any, Literal, Optional, Annotated
 

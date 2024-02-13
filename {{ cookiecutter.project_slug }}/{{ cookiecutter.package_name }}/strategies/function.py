@@ -1,4 +1,5 @@
 """Demo function strategy class."""
+
 from typing import Any, Optional
 
 from oteapi.models import FunctionConfig, SessionUpdate

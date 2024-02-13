@@ -1,4 +1,5 @@
 """Demo resource strategy class."""
+
 from typing import Any, Literal, Optional, Annotated
 
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
