@@ -1,4 +1,5 @@
 """Demo filter strategy."""
+
 from typing import Any, Literal, Optional, Annotated
 
 from oteapi.datacache import DataCache
