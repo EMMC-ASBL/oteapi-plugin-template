@@ -1,4 +1,5 @@
 """Demo transformation strategy class."""
+
 from datetime import datetime
 from typing import Any, Optional, Annotated
 
