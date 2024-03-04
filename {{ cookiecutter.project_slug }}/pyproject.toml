@@ -40,13 +40,13 @@ doc = [
     "mkdocs ~=1.5",
     "mkdocs-awesome-pages-plugin ~=2.9",
     "mkdocs-material ~=9.5",
-    "mkdocstrings[python] ~=0.24.0",
+    "mkdocstrings[python] ~=0.24.1",
 ]
 dev = [
     "pre-commit ~=3.6",
-    "pytest ~=8.0",
+    "pytest ~=8.1",
     "pytest-cov ~=4.1",
-    "tomlkit ~=0.12.3",
+    "tomlkit ~=0.12.4",
     "{{ cookiecutter.project_slug }}[doc]",
 ]
 
