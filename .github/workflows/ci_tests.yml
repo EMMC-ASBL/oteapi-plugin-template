@@ -62,11 +62,11 @@ jobs:
       run: flit build
       working-directory: ./oteapi-ci
 
-  pre-commit_safety:
+  safety:
     # Do not use SINTEF/ci-cd, since it requires the root repository to be installable
     # as a package.
     runs-on: ubuntu-latest
-    name: pre-commit & safety
+    name: safety
 
     steps:
     - name: Checkout repository
@@ -82,9 +82,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U setuptools wheel
         pip install -r requirements.txt -r .github/utils/requirements.txt
-
-    - name: Test with pre-commit
-      run: pre-commit run --all-files
 
     - name: Run safety
       run: pip freeze | safety check --stdin
