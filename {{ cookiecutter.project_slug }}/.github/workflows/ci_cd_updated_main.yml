@@ -8,7 +8,7 @@ jobs:
   update-repository:
     name: External
     if: github.repository_owner == '{{ cookiecutter.username }}'
-    uses: SINTEF/ci-cd/.github/workflows/ci_cd_updated_default_branch.yml@v2.5.2
+    uses: SINTEF/ci-cd/.github/workflows/ci_cd_updated_default_branch.yml@v2.7.4
     with:
       # General
       git_username: "{{ cookiecutter.author }}"
@@ -16,6 +16,7 @@ jobs:
       default_repo_branch: main
 
       # Dependencies branch
+      update_dependencies_branch: true
       permanent_dependencies_branch: ci/dependency-updates
 
       # Documentation
