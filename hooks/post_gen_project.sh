@@ -56,11 +56,16 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
        git push -u origin ci/dependency-updates:ci/dependency-updates
 
   2. Add a 'RELEASE_PAT' secret to GitHub Actions.
+     Add a 'CODECOV_TOKEN' secret to GitHub Actions.
      For more information and documentation on this see:
 
      https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
      https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
+
+     https://codecov.io
+
+     https://docs.codecov.com/docs/github-tutorial
 
   3. Setup branch protection rules for 'main' and 'ci/dependency-updates'.
      We recommend to require:
@@ -68,12 +73,12 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
      - Pull requests with at least 1 reviewer approval.
      - Check success for the CI tests:
 
-       - 'External / Run \`pre-commit\`'
        - 'External / Run \`pylint\` & \`safety\`'
        - 'External / Build distribution package'
        - 'External / Build Documentation'
        - 'pytest (linux-py3.9)'
        - 'pytest (windows-py3.9)'
+       - 'pre-commit.ci - pr'
 
        Note, we recommend only requiring the pytest jobs for Python 3.9, since it is
        the minimum supported version.
@@ -83,7 +88,7 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
   5. Start the documentation via GitHub Pages by running:
 
        # Install the package
-       pip install -U pip wheel flit
+       pip install -U pip setuptools wheel
        pip install -U -e .[dev]
 
        # Build and deploy the documentation to the 'gh-pages' branch on GitHub

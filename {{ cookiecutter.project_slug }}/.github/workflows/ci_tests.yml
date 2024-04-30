@@ -10,20 +10,18 @@ on:
 jobs:
   basic:
     name: External
-    uses: SINTEF/ci-cd/.github/workflows/ci_tests.yml@v2.5.2
+    uses: SINTEF/ci-cd/.github/workflows/ci_tests.yml@v2.7.4
     with:
       # General
       install_extras: "[dev]"
 
       # pre-commit
-      run_pre-commit: true
-      python_version_pre-commit: "3.9"
+      run_pre-commit: false
 
       # pylint & safety
       python_version_pylint_safety: "3.9"
 
       run_pylint: false
-
       run_safety: true
 
       # Build package
@@ -61,12 +59,11 @@ jobs:
         python-version: ["3.9", "3.10"]
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 2
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 {% endraw %}
@@ -90,7 +87,9 @@ jobs:
 
     - name: Upload coverage to Codecov
       if: matrix.python-version == '3.9' && github.repository == '{{ cookiecutter.username }}/{{ cookiecutter.project_slug }}'
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         files: coverage.xml
         flags: {{ "${{ matrix.os[1] }}" }}
+      env:
+        CODECOV_TOKEN: {{ "${{ secrets.CODECOV_TOKEN }}" }}

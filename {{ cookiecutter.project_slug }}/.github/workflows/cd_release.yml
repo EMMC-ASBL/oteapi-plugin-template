@@ -9,7 +9,7 @@ jobs:
   update-and-publish:
     name: External
     if: github.repository == '{{ cookiecutter.username }}/{{ cookiecutter.project_slug }}' && startsWith(github.ref, 'refs/tags/v')
-    uses: SINTEF/ci-cd/.github/workflows/cd_release.yml@v2.5.2
+    uses: SINTEF/ci-cd/.github/workflows/cd_release.yml@v2.7.4
     with:
       # General
       git_username: "{{ cookiecutter.author }}"
