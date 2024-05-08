@@ -36,11 +36,11 @@ dependencies = [
 [project.optional-dependencies]
 doc = [
     "invoke ~=2.2",
-    "mike ~=2.0",
+    "mike ~=2.1",
     "mkdocs >=1.5.3,<1.7",
     "mkdocs-awesome-pages-plugin ~=2.9",
     "mkdocs-material >=9.5.5,<10",
-    "mkdocstrings[python] ~=0.25.0",
+    "mkdocstrings[python] ~=0.25.1",
 ]
 dev = [
     "pre-commit ~=3.7",
