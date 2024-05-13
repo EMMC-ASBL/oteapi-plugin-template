@@ -46,7 +46,7 @@ dev = [
     "pre-commit ~=3.7",
     "pytest ~=8.2",
     "pytest-cov ~=5.0",
-    "tomlkit ~=0.12.4",
+    "tomlkit ~=0.12.5",
     "{{ cookiecutter.project_slug }}[doc]",
 ]
 
