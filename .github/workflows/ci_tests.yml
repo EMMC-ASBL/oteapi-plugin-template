@@ -52,7 +52,11 @@ jobs:
       working-directory: ./oteapi-ci
 
     - name: Run safety
-      run: pip freeze | safety check --stdin
+      # ID: 70612
+      #   Package: Jinja2
+      #   Has been disputed by the maintainer and multiple third parties.
+      #   For more information see: https://github.com/advisories/GHSA-f6pv-j8mr-w6rr
+      run: pip freeze | safety check --stdin --ignore=70612
 
     - name: Build docs
       run: mkdocs build --strict
@@ -84,4 +88,8 @@ jobs:
         pip install -r requirements.txt -r .github/utils/requirements.txt
 
     - name: Run safety
-      run: pip freeze | safety check --stdin
+      # ID: 70612
+      #   Package: Jinja2
+      #   Has been disputed by the maintainer and multiple third parties.
+      #   For more information see: https://github.com/advisories/GHSA-f6pv-j8mr-w6rr
+      run: pip freeze | safety check --stdin --ignore=70612
