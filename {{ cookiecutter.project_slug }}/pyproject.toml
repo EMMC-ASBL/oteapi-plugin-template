@@ -40,10 +40,10 @@ doc = [
     "mkdocs >=1.5.3,<1.7",
     "mkdocs-awesome-pages-plugin ~=2.9",
     "mkdocs-material >=9.5.5,<10",
-    "mkdocstrings[python] ~=0.25.1",
+    "mkdocstrings[python] ~=0.25.2",
 ]
 dev = [
-    "pre-commit ~=3.7",
+    "pre-commit ~=3.8",
     "pytest ~=8.3",
     "pytest-cov ~=5.0",
     "tomlkit ~=0.13.0",
