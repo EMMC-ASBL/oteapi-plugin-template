@@ -82,7 +82,7 @@ repos:
   # The project's documentation can be found at:
   # https://SINTEF.github.io/ci-cd/
   - repo: https://github.com/SINTEF/ci-cd
-    rev: v2.8.3
+    rev: v2.9.0
     hooks:
     - id: docs-api-reference
       args:
