@@ -40,7 +40,7 @@ repos:
   # More information can be found in its documentation:
   # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.2
+    rev: v0.9.3
     hooks:
       - id: ruff
         args: ["--fix", "--exit-non-zero-on-fix"]
@@ -48,7 +48,7 @@ repos:
   # Black is a code style and formatter
   # It works on files in-place
   - repo: https://github.com/ambv/black
-    rev: 24.10.0
+    rev: 25.1.0
     hooks:
     - id: black
 
