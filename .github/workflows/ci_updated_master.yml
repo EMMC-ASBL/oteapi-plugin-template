@@ -8,7 +8,7 @@ jobs:
   update-dependencies-branch:
     name: External
     if: github.repository_owner == 'EMMC-ASBL'
-    uses: SINTEF/ci-cd/.github/workflows/ci_cd_updated_default_branch.yml@v2.9.1
+    uses: SINTEF/ci-cd/.github/workflows/ci_cd_updated_default_branch.yml@v2.9.2
     with:
       # General
       git_username: "TEAM 4.0[bot]"
