@@ -41,7 +41,7 @@ doc = [
     "mkdocs-autorefs~=1.4",
     "mkdocs-awesome-pages-plugin ~=2.10",
     "mkdocs-material >=9.5.5,<10",
-    "mkdocstrings[python] ~=0.28.3",
+    "mkdocstrings[python] ~=0.29.0",
 ]
 dev = [
     "pre-commit ~=4.1",
