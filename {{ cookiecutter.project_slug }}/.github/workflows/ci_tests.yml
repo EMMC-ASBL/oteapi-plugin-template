@@ -49,7 +49,7 @@ jobs:
       landing_page_replacement_separator: ","
       landing_page_replacements: |
         (LICENSE),(LICENSE.md)
-        (docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)
+        (compose.yml),({{ cookiecutter.scm_url }}/blob/main/compose.yml)
         (setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)
 
   pytest:{% raw %}

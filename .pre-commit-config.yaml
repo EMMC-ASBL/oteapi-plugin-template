@@ -10,7 +10,7 @@ ci:
   autofix_prs: false
   autoupdate_branch: 'master'
   autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
-  autoupdate_schedule: 'weekly'
+  autoupdate_schedule: 'quarterly'
   skip: []
   submodules: false
 
@@ -22,19 +22,59 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-    - id: end-of-file-fixer
-    - id: debug-statements
-      exclude: ^{{ cookiecutter.project_slug }}/
+    - id: check-json
+      name: Check JSON
+    - id: check-toml
+      name: Check TOML
     - id: check-yaml
       name: Check YAML
       exclude: ^{{ cookiecutter.project_slug }}/\.github/workflows/.*\.yml$
-    - id: check-toml
-      name: Check TOML
+    - id: debug-statements
+      exclude: ^{{ cookiecutter.project_slug }}/
+    - id: end-of-file-fixer
+    - id: mixed-line-ending
     - id: requirements-txt-fixer
       name: Fix requirements*.txt
       files: ^requirements.*\.txt$
     - id: trailing-whitespace
       args: [--markdown-linebreak-ext=md]
+
+  # Markdown linter to ensure the quality of the documentation
+  # More information can be found in its source repository:
+  # https://github.com/DavidAnson/markdownlint-cli2
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.17.2
+    hooks:
+    - id: markdownlint-cli2
+      name: markdownlint
+      args:
+      - --fix
+      - --config=.markdownlint.yaml
+
+  # Pyupgrade is a code upgrade tool
+  # It works on files in-place
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+    - id: pyupgrade
+      args: [--py310-plus]
+      exclude: ^{{ cookiecutter.project_slug }}/
+
+  # Black is a code style and formatter
+  # It works on files in-place
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+    - id: black
+      exclude: ^{{ cookiecutter.project_slug }}/
+
+  # Run black on Python code in documentation strings and files
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.19.1
+    hooks:
+    - id: blacken-docs
+      additional_dependencies: [black]
+      exclude: ^{{ cookiecutter.project_slug }}/
 
   # ruff is a Python linter, incl. import sorter and formatter
   # It works partly on files in-place
@@ -46,14 +86,6 @@ repos:
       - id: ruff
         args: ["--fix", "--exit-non-zero-on-fix"]
         exclude: ^{{ cookiecutter.project_slug }}/
-
-  # Black is a code style and formatter
-  # It works on files in-place
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-    - id: black
-      exclude: ^{{ cookiecutter.project_slug }}/
 
   # Bandit is a security linter
   # More information can be found in its documentation:
@@ -97,7 +129,7 @@ repos:
       - "--docs-folder=docs"
       - "--replacement-separator=,"
       - "--replacement=(LICENSE),(LICENSE.md)"
-      - "--replacement=(docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)"
+      - "--replacement=(compose.yml),({{ cookiecutter.scm_url }}/blob/main/compose.yml)"
       - "--replacement=(setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"
     - id: update-pyproject
       stages: [manual]
