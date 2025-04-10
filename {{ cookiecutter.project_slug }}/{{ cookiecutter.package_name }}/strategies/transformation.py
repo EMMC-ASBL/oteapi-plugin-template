@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import datetime
+import sys
 from datetime import datetime
 from typing import Annotated
 
@@ -10,7 +12,7 @@ from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 
-class RunDummyTransformation(AttrDict):
+class DummyTransformationContent(AttrDict):
     """Class for returning values from Dummy Transformation strategy."""
 
     result: Annotated[str, Field(description="The job ID.")]
@@ -41,7 +43,7 @@ class DummyTransformationStrategy:
         """
         return AttrDict()
 
-    def get(self) -> AttrDict:
+    def get(self) -> DummyTransformationContent:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
@@ -52,21 +54,7 @@ class DummyTransformationStrategy:
             session-specific context from services.
 
         """
-        return AttrDict()
-
-    def run(self) -> RunDummyTransformation:
-        """Run a transformation job.
-
-        This method will be called through the `/initialize` endpoint of the OTEAPI
-        Services.
-
-        Returns:
-            An update model of key/value-pairs to be stored in the
-            session-specific context from services.
-            As a minimum, the dictionary will contain the job ID.
-
-        """
-        return RunDummyTransformation(result="a01d")
+        return DummyTransformationContent(result="a01d")
 
     def status(self, task_id: str) -> TransformationStatus:
         """Get job status.
@@ -79,11 +67,16 @@ class DummyTransformationStrategy:
             metadata.
 
         """
+        if sys.version_info < (3, 11):
+            time_now = datetime.datetime.utcnow()
+        else:
+            time_now = datetime.datetime.now(datetime.UTC)
+
         return TransformationStatus(
             id=task_id,
             status="wip",
             messages=[],
-            created=datetime.utcnow(),
-            startTime=datetime.utcnow(),
-            finishTime=datetime.utcnow(),
+            created=time_now,
+            startTime=time_now,
+            finishTime=time_now,
         )

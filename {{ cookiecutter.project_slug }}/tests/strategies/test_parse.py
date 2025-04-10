@@ -18,8 +18,12 @@ def test_json(static_files: Path) -> None:
     assert sample_file.exists(), f"Test file not found at {sample_file} !"
 
     config = {
-        "downloadUrl": sample_file.as_uri(),
-        "mediaType": "application/jsonDEMO",
+        "parserType": "parser/jsonDEMO",
+        "entity": "http://onto-ns.com/meta/1.0/test",
+        "configuration": {
+            "downloadUrl": sample_file.as_uri(),
+            "mediaType": "application/jsonDEMO",
+        }
     }
     parser_initialize = DemoJSONDataParseStrategy(config).initialize()
     parser_get = DemoJSONDataParseStrategy(config).get()

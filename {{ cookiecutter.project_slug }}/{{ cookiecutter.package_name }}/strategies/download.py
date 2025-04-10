@@ -65,7 +65,7 @@ class FileResourceConfig(ResourceConfig):
         return value
 
 
-class GetFile(AttrDict):
+class DownloadFileContent(AttrDict):
     """Class for returning values from Download File strategy."""
 
     key: Annotated[str, Field(description="Key to access the data in the cache.")]
@@ -87,7 +87,7 @@ class FileStrategy:
         """Initialize."""
         return AttrDict()
 
-    def get(self) -> GetFile:
+    def get(self) -> DownloadFileContent:
         """Read local file."""
         filename = uri_to_path(self.download_config.downloadUrl).resolve()
 
@@ -104,4 +104,4 @@ class FileStrategy:
                 else filename.read_bytes()
             )
 
-        return GetFile(key=key)
+        return DownloadFileContent(key=key)

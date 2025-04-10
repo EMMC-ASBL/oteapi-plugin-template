@@ -41,7 +41,7 @@ class DemoFilterConfig(FilterConfig):
     ]
 
 
-class InitDemoFilter(AttrDict):
+class DemoFilterContent(AttrDict):
     """Class for returning values from Download File strategy."""
 
     key: Annotated[str, Field(description="Key to access the data in the cache.")]
@@ -59,7 +59,7 @@ class DemoFilter:
 
     filter_config: DemoFilterConfig
 
-    def initialize(self) -> InitDemoFilter:
+    def initialize(self) -> DemoFilterContent:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
@@ -77,7 +77,7 @@ class DemoFilter:
         else:
             key = cache.add(self.filter_config.configuration.demo_data)
 
-        return InitDemoFilter(key=key)
+        return DemoFilterContent(key=key)
 
     def get(self) -> AttrDict:
         """Execute the strategy.
