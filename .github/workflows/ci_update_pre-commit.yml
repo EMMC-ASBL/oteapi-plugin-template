@@ -1,4 +1,4 @@
-name: CI - Update `pre-commit` hooks
+name: CI - Update 'pre-commit' hooks
 
 on:
   schedule:
@@ -78,7 +78,7 @@ jobs:
         token: ${{ secrets.RELEASE_PAT }}
         committer: "${{ env.GIT_USER_NAME }} <${{ env.GIT_USER_EMAIL }}>"
         author: "${{ env.GIT_USER_NAME }} <${{ env.GIT_USER_EMAIL }}>"
-        branch: ci/update-dependencies
+        branch: ci/update-pre-commit
         delete-branch: true
         title: "[Auto-generated] Update dependencies"
         body: ${{ steps.pr_body.outputs.result }}

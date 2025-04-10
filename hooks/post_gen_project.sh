@@ -36,9 +36,6 @@ https://github.com/EMMC-ASBL/oteapi-plugin-template
 git remote add origin {{ cookiecutter.scm_url }}.git >> /dev/null
 git branch -M main >> /dev/null
 
-# Create permanent branch for CI concerning dependency updates through Dependabot.
-git branch ci/dependency-updates >> /dev/null
-
 # Information message
 echo "Congratulations on creating '{{ cookiecutter.project_name }}' !
 
@@ -50,10 +47,9 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
 (CI: continuous integration)
 (CD: continuous deployment)
 
-  1. Push 'main' and 'ci/dependency-updates' branches to the 'origin' remote:
+  1. Push the 'main' branch to the 'origin' remote:
 
        git push -u origin main:main
-       git push -u origin ci/dependency-updates:ci/dependency-updates
 
   2. Add a 'RELEASE_PAT' secret to GitHub Actions.
      Add a 'CODECOV_TOKEN' secret to GitHub Actions.
@@ -67,7 +63,7 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
 
      https://docs.codecov.com/docs/github-tutorial
 
-  3. Setup branch protection rules for 'main' and 'ci/dependency-updates'.
+  3. Setup branch protection rules for 'main'.
      We recommend to require:
 
      - Pull requests with at least 1 reviewer approval.
@@ -95,12 +91,8 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
        mike deploy --push --config-file mkdocs.yml latest main
        mike set-default --push --config-file mkdocs.yml latest
 
-  6. Uncomment the CI/CD workflows and other code, where necessary,
+  6. Finally, uncomment the CI/CD workflows and other code, where necessary,
      when you're ready.
-
-  7. Finally, it is VERY IMPORTANT the protection for the 'ci/dependency-updates'
-     branch allows force pushes for the user the 'RELEASE_PAT' secret belongs to.
-     This can be set to "Everyone" to ensure this if you are unsure.
 
 Please write TEAM4.0@SINTEF.no or create issues on GitHub if there are any issues.
 
