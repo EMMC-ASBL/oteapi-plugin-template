@@ -1,9 +1,11 @@
 """Demo download strategy class for file."""
 
-from typing import Any, Optional, Annotated
+from __future__ import annotations
+
+from typing import Annotated
 
 from oteapi.datacache import DataCache
-from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
+from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig
 from oteapi.utils.paths import uri_to_path
 from pydantic import Field, FileUrl, field_validator
 from pydantic.dataclasses import dataclass
@@ -23,7 +25,7 @@ class FileConfig(AttrDict):
     ] = False
 
     encoding: Annotated[
-        Optional[str],
+        str | None,
         Field(
             description=(
                 "Encoding used when opening the file. The default is platform "
@@ -33,7 +35,7 @@ class FileConfig(AttrDict):
     ] = None
 
     datacache_config: Annotated[
-        Optional[DataCacheConfig],
+        DataCacheConfig | None,
         Field(
             description=(
                 "Configurations for the data cache for storing the downloaded file "
@@ -63,7 +65,7 @@ class FileResourceConfig(ResourceConfig):
         return value
 
 
-class SessionUpdateFile(SessionUpdate):
+class GetFile(AttrDict):
     """Class for returning values from Download File strategy."""
 
     key: Annotated[str, Field(description="Key to access the data in the cache.")]
@@ -81,11 +83,11 @@ class FileStrategy:
 
     download_config: FileResourceConfig
 
-    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def initialize(self) -> AttrDict:
         """Initialize."""
-        return SessionUpdate()
+        return AttrDict()
 
-    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdateFile:
+    def get(self) -> GetFile:
         """Read local file."""
         filename = uri_to_path(self.download_config.downloadUrl).resolve()
 
@@ -102,4 +104,4 @@ class FileStrategy:
                 else filename.read_bytes()
             )
 
-        return SessionUpdateFile(key=key)
+        return GetFile(key=key)

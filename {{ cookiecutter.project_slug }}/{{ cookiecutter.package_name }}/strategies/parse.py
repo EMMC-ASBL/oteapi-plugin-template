@@ -1,10 +1,12 @@
 """Demo strategy class for text/json."""
 
+from __future__ import annotations
+
 import json
-from typing import Any, Literal, Optional, Annotated
+from typing import Literal, Annotated
 
 from oteapi.datacache import DataCache
-from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
+from oteapi.models import AttrDict, DataCacheConfig, ParserConfig
 from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
@@ -14,7 +16,7 @@ class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
     datacache_config: Annotated[
-        Optional[DataCacheConfig],
+        DataCacheConfig | None,
         Field(
             description=(
                 "Configurations for the data cache for storing the downloaded file "
@@ -24,13 +26,13 @@ class JSONConfig(AttrDict):
     ] = None
 
 
-class JSONParseConfig(ResourceConfig):
+class JSONParseConfig(ParserConfig):
     """File download strategy filter config."""
 
     mediaType: Annotated[
         Literal["application/jsonDEMO"],
         Field(
-            description=ResourceConfig.model_fields["mediaType"].description,
+            description=ParserConfig.model_fields["mediaType"].description,
         ),
     ] = "application/jsonDEMO"
 
@@ -39,7 +41,7 @@ class JSONParseConfig(ResourceConfig):
     ] = JSONConfig()
 
 
-class SessionUpdateJSONParse(SessionUpdate):
+class GetJSONParse(AttrDict):
     """Class for returning values from JSON Parse."""
 
     content: Annotated[dict, Field(description="Content of the JSON document.")]
@@ -57,11 +59,11 @@ class DemoJSONDataParseStrategy:
 
     parse_config: JSONParseConfig
 
-    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def initialize(self) -> AttrDict:
         """Initialize."""
-        return SessionUpdate()
+        return AttrDict()
 
-    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdateJSONParse:
+    def get(self) -> GetJSONParse:
         """Parse json."""
         downloader = create_strategy("download", self.parse_config)
         output = downloader.get()
@@ -69,6 +71,6 @@ class DemoJSONDataParseStrategy:
         content = cache.get(output["key"])
 
         if isinstance(content, dict):
-            return SessionUpdateJSONParse(content=content)
+            return GetJSONParse(content=content)
 
-        return SessionUpdateJSONParse(content=json.loads(content))
+        return GetJSONParse(content=json.loads(content))

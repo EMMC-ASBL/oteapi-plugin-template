@@ -131,4 +131,4 @@ repos:
       - "--replacement-separator=,"
       - "--replacement=(LICENSE),(LICENSE.md)"
       - "--replacement=(compose.yml),({{ cookiecutter.scm_url }}/blob/main/compose.yml)"
-      - "--replacement=(setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"
+      - "--replacement=(pyproject.toml),({{ cookiecutter.scm_url }}/blob/main/pyproject.toml)"

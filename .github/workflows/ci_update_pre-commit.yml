@@ -1,4 +1,4 @@
-name: CI - Single Dependabot PR
+name: CI - Update `pre-commit` hooks
 
 on:
   schedule:
@@ -16,7 +16,6 @@ jobs:
     if: github.repository_owner == 'EMMC-ASBL'
     runs-on: ubuntu-latest
     env:
-      DEPENDABOT_BRANCH: ci/dependency-updates
       GIT_USER_NAME: "TEAM 4.0[bot]"
       GIT_USER_EMAIL: "Team4.0@SINTEF.no"
 
@@ -26,10 +25,10 @@ jobs:
       with:
         ref: master
 
-    - name: Set up Python 3.9
+    - name: Set up Python 3.10
       uses: actions/setup-python@v5
       with:
-        python-version: "3.9"
+        python-version: "3.10"
 
     - name: Install dependencies
       run: |
@@ -42,12 +41,8 @@ jobs:
         git config --global user.name "${{ env.GIT_USER_NAME }}"
         git config --global user.email "${{ env.GIT_USER_EMAIL }}"
 
-    - name: Reset to '${{ env.DEPENDABOT_BRANCH }}'
-      run: |
-        git fetch origin ${{ env.DEPENDABOT_BRANCH }}:${{ env.DEPENDABOT_BRANCH }}
-        git reset --hard ${{ env.DEPENDABOT_BRANCH }}
-
     - name: Auto-update `pre-commit` hooks
+      id: update_pre_commit
       run: |
         pre-commit autoupdate -c \{\{\ cookiecutter.project_slug\ \}\}/.pre-commit-config.yaml
         pre-commit autoupdate
@@ -55,19 +50,19 @@ jobs:
         if [ -n "$(git status --porcelain .pre-commit-config.yaml \{\{\ cookiecutter.project_slug\ \}\}/.pre-commit-config.yaml)" ]; then
           # Set environment variable notifying next steps that the hooks changed
           echo "Pre-commit hooks have been updated !"
-          echo "UPDATED_PRE_COMMIT_HOOKS=true" >> $GITHUB_ENV
+          echo "UPDATED_PRE_COMMIT_HOOKS=true" >> $GITHUB_OUTPUT
         else
           echo "No pre-commit hooks have been updated."
-          echo "UPDATED_PRE_COMMIT_HOOKS=false" >> $GITHUB_ENV
+          echo "UPDATED_PRE_COMMIT_HOOKS=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Possibly run `pre-commit` with updated hooks
-      if: env.UPDATED_PRE_COMMIT_HOOKS == 'true'
+      if: steps.update_pre_commit.outputs.UPDATED_PRE_COMMIT_HOOKS == 'true'
       continue-on-error: true  # Still create the PR if this step fails
       run: pre-commit run --all-files
 
     - name: Possibly commit changes and updates
-      if: env.UPDATED_PRE_COMMIT_HOOKS == 'true'
+      if: steps.update_pre_commit.outputs.UPDATED_PRE_COMMIT_HOOKS == 'true'
       run: git commit -am "Update \`pre-commit\` hooks"
 
     - name: Fetch PR body
@@ -87,7 +82,7 @@ jobs:
         delete-branch: true
         title: "[Auto-generated] Update dependencies"
         body: ${{ steps.pr_body.outputs.result }}
-        labels: CI/CD
+        labels: CI/CD,skip-changelog
 
     - name: Information
       run: 'echo "${{ steps.cpr.outputs.pull-request-operation }} PR #${{ steps.cpr.outputs.pull-request-number }}: ${{ steps.cpr.outputs.pull-request-url }}"'

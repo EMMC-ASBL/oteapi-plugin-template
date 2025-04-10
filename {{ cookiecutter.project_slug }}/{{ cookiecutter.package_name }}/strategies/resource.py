@@ -1,8 +1,10 @@
 """Demo resource strategy class."""
 
-from typing import Any, Literal, Optional, Annotated
+from __future__ import annotations
 
-from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
+from typing import Literal, Annotated
+
+from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig
 from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
@@ -12,7 +14,7 @@ class DemoConfig(AttrDict):
     """Strategy-specific Configuration Data Model."""
 
     datacache_config: Annotated[
-        Optional[DataCacheConfig],
+        DataCacheConfig | None,
         Field(
             description="Configuration for the data cache.",
         ),
@@ -46,7 +48,7 @@ class DemoResourceConfig(ResourceConfig):
     ] = DemoConfig()
 
 
-class SessionUpdateDemoResource(SessionUpdate):
+class GetDemoResource(AttrDict):
     """Class for returning values from Demo Resource strategy."""
 
     output: Annotated[
@@ -71,32 +73,24 @@ class DemoResourceStrategy:
 
     resource_config: DemoResourceConfig
 
-    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def initialize(self) -> AttrDict:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
         Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
 
         Returns:
             An update model of key/value-pairs to be stored in the
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return AttrDict()
 
-    def get(
-        self, session: Optional[dict[str, Any]] = None
-    ) -> SessionUpdateDemoResource:
+    def get(self) -> GetDemoResource:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
         OTEAPI Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
 
         Returns:
             An update model of key/value-pairs to be stored in the
@@ -104,14 +98,13 @@ class DemoResourceStrategy:
 
         """
         # Example of the plugin using a parse strategy to (fetch) and parse the data
-        session = session if session else {}
-
         parse_config = self.resource_config.model_copy()
         if not parse_config.downloadUrl:
             parse_config.downloadUrl = self.resource_config.accessUrl
 
-        session.update(create_strategy("parse", parse_config).initialize(session))
-        session.update(create_strategy("parse", parse_config).get(session))
+        strategy = create_strategy("parse", parse_config)
+        session = strategy.initialize()
+        session.update(strategy.get())
 
         if "content" not in session:
             raise ValueError(
@@ -119,4 +112,4 @@ class DemoResourceStrategy:
                 "to return a session with a 'content' key."
             )
 
-        return SessionUpdateDemoResource(output=session["content"])
+        return GetDemoResource(output=session["content"])

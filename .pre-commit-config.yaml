@@ -130,11 +130,11 @@ repos:
       - "--replacement-separator=,"
       - "--replacement=(LICENSE),(LICENSE.md)"
       - "--replacement=(compose.yml),({{ cookiecutter.scm_url }}/blob/main/compose.yml)"
-      - "--replacement=(setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)"
+      - "--replacement=(pyproject.toml),({{ cookiecutter.scm_url }}/blob/main/pyproject.toml)"
     - id: update-pyproject
       stages: [manual]
       verbose: true
       args:
       - "--root-repo-path={{ cookiecutter.project_slug }}"
-      - "--ignore=dependency-name=oteapi-core...versions=>=1"
+      - "--ignore=dependency-name=oteapi-core...versions=>=2"
       - "--skip-unnormalized-python-package-names"

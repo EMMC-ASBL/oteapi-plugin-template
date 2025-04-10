@@ -1,14 +1,16 @@
 """Demo transformation strategy class."""
 
-from datetime import datetime
-from typing import Any, Optional, Annotated
+from __future__ import annotations
 
-from oteapi.models import SessionUpdate, TransformationConfig, TransformationStatus
+from datetime import datetime
+from typing import Annotated
+
+from oteapi.models import AttrDict, TransformationConfig, TransformationStatus
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 
-class SessionUpdateDummyTransformation(SessionUpdate):
+class RunDummyTransformation(AttrDict):
     """Class for returning values from Dummy Transformation strategy."""
 
     result: Annotated[str, Field(description="The job ID.")]
@@ -26,48 +28,37 @@ class DummyTransformationStrategy:
 
     transformation_config: TransformationConfig
 
-    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def initialize(self) -> AttrDict:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
         Services.
 
-        Parameters:
-            session: A session-specific dictionary context.
-
         Returns:
             An update model of key/value-pairs to be stored in the
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return AttrDict()
 
-    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def get(self) -> AttrDict:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
         OTEAPI Services.
 
-        Parameters:
-            session: A session-specific dictionary context.
-
         Returns:
             An update model of key/value-pairs to be stored in the
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return AttrDict()
 
-    def run(
-        self, session: Optional[dict[str, Any]] = None
-    ) -> SessionUpdateDummyTransformation:
+    def run(self) -> RunDummyTransformation:
         """Run a transformation job.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
         Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
 
         Returns:
             An update model of key/value-pairs to be stored in the
@@ -75,7 +66,7 @@ class DummyTransformationStrategy:
             As a minimum, the dictionary will contain the job ID.
 
         """
-        return SessionUpdateDummyTransformation(result="a01d")
+        return RunDummyTransformation(result="a01d")
 
     def status(self, task_id: str) -> TransformationStatus:
         """Get job status.

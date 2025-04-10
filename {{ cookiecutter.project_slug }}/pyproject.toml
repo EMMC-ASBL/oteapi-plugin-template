@@ -50,8 +50,8 @@ testing = [
     "tomlkit ~=0.13.2",
 ]
 dev = [
-    "pre-commit ~=4.2",
     "{{ cookiecutter.project_slug }}[docs,testing]",
+    "pre-commit ~=4.2",
 ]
 
 [project.urls]

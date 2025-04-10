@@ -43,7 +43,7 @@ git branch ci/dependency-updates >> /dev/null
 echo "Congratulations on creating '{{ cookiecutter.project_name }}' !
 
 For the following commands, it is expected you are in a virtual environment
-with at least Python 3.9.
+with at least Python 3.10.
 
 There are still some last things to do to ensure you have a nice CI/CD setup.
 
@@ -76,11 +76,11 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
        - 'External / Run \`pylint\` & \`safety\`'
        - 'External / Build distribution package'
        - 'External / Build Documentation'
-       - 'pytest (linux-py3.9)'
-       - 'pytest (windows-py3.9)'
+       - 'pytest (linux-py3.10)'
+       - 'pytest (windows-py3.10)'
        - 'pre-commit.ci - pr'
 
-       Note, we recommend only requiring the pytest jobs for Python 3.9, since it is
+       Note, we recommend only requiring the pytest jobs for Python 3.10, since it is
        the minimum supported version.
 
   4. Create a 'CI/CD' label in the GitHub repository.

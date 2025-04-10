@@ -53,7 +53,7 @@ docker logs -f {{ cookiecutter.project_slug }}-oteapi-1
 
 Now, one can instantiate an `otelib.OTEClient` with `"http://localhost:8080"` (or using the `PORT` environment variable value instead of `8080` if it has been set) and test the strategies by supplying the correct configuration values.
 
-Note, remember to update [`setup.cfg`]({{ cookiecutter.scm_url }}/blob/main/setup.cfg) to list the plugin strategies - otherwise they will not be findable by the OTEAPI service.
+Note, remember to update [`pyproject.toml`]({{ cookiecutter.scm_url }}/blob/main/pyproject.toml) to list the plugin strategies - otherwise they will not be findable by the OTEAPI service.
 
 ## License and copyright
 
