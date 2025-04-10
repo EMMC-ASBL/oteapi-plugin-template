@@ -23,7 +23,7 @@ def test_json(static_files: Path) -> None:
         "configuration": {
             "downloadUrl": sample_file.as_uri(),
             "mediaType": "application/jsonDEMO",
-        }
+        },
     }
     parser_initialize = DemoJSONDataParseStrategy(config).initialize()
     parser_get = DemoJSONDataParseStrategy(config).get()

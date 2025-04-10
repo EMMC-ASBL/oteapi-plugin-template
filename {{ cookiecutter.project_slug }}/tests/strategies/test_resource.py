@@ -2,19 +2,12 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from pathlib import Path
-
-
-def test_resource(static_files: Path) -> None:
+def test_resource() -> None:
     """Test `file` download strategy on binary and text files.
 
     Test files are taken from filesamples.com.
     """
-    import json
-
     from {{ cookiecutter.package_name }}.strategies.resource import DemoResourceStrategy
 
     config = {

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import datetime
 import sys
-from datetime import datetime
 from typing import Annotated
 
 from oteapi.models import AttrDict, TransformationConfig, TransformationStatus

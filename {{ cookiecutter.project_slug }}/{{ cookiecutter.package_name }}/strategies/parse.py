@@ -6,7 +6,13 @@ import json
 from typing import Annotated, Literal
 
 from oteapi.datacache import DataCache
-from oteapi.models import AttrDict, DataCacheConfig, HostlessAnyUrl, ParserConfig, ResourceConfig
+from oteapi.models import (
+    AttrDict,
+    DataCacheConfig,
+    HostlessAnyUrl,
+    ParserConfig,
+    ResourceConfig,
+)
 from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
