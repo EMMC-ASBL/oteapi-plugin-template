@@ -45,7 +45,7 @@ jobs:
         pre-commit run --all-files --hook-stage=manual update-pyproject || CHECK_FAILED=true
 
         if [ -n "$(git status --porcelain {{\ cookiecutter.project_slug\ }}/pyproject.toml)" ]; then
-          echo "UPDATE_DEPS=true" >> $GITHUB_OUTPUT
+          echo "update_deps=true" >> $GITHUB_OUTPUT
           git add {{\ cookiecutter.project_slug\ }}/pyproject.toml
           git commit -m "Update dependencies"
         else
@@ -54,18 +54,18 @@ jobs:
             exit 1
           fi
 
-          echo "UPDATE_DEPS=false" >> $GITHUB_OUTPUT
+          echo "update_deps=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Fetch PR body
-      if: steps.update_pyproject.outputs.UPDATE_DEPS == 'true'
+      if: steps.update_pyproject.outputs.update_deps == 'true'
       id: pr_body
       uses: chuhlomin/render-template@v1.10
       with:
         template: .github/utils/pyproject_toml_update_pr_body.txt
 
     - name: Create PR
-      if: steps.update_pyproject.outputs.UPDATE_DEPS == 'true'
+      if: steps.update_pyproject.outputs.update_deps == 'true'
       id: cpr
       uses: peter-evans/create-pull-request@v7
       with:

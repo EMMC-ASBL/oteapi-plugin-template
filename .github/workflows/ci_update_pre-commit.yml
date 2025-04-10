@@ -50,19 +50,19 @@ jobs:
         if [ -n "$(git status --porcelain .pre-commit-config.yaml \{\{\ cookiecutter.project_slug\ \}\}/.pre-commit-config.yaml)" ]; then
           # Set environment variable notifying next steps that the hooks changed
           echo "Pre-commit hooks have been updated !"
-          echo "UPDATED_PRE_COMMIT_HOOKS=true" >> $GITHUB_OUTPUT
+          echo "updated_pre_commit_hooks=true" >> $GITHUB_OUTPUT
         else
           echo "No pre-commit hooks have been updated."
-          echo "UPDATED_PRE_COMMIT_HOOKS=false" >> $GITHUB_OUTPUT
+          echo "updated_pre_commit_hooks=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Possibly run `pre-commit` with updated hooks
-      if: steps.update_pre_commit.outputs.UPDATED_PRE_COMMIT_HOOKS == 'true'
+      if: steps.update_pre_commit.outputs.updated_pre_commit_hooks == 'true'
       continue-on-error: true  # Still create the PR if this step fails
       run: pre-commit run --all-files
 
     - name: Possibly commit changes and updates
-      if: steps.update_pre_commit.outputs.UPDATED_PRE_COMMIT_HOOKS == 'true'
+      if: steps.update_pre_commit.outputs.updated_pre_commit_hooks == 'true'
       run: git commit -am "Update \`pre-commit\` hooks"
 
     - name: Fetch PR body
