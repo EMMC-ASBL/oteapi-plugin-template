@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Annotated
+from typing import Annotated, Literal
 
 from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig
 from oteapi.plugins import create_strategy

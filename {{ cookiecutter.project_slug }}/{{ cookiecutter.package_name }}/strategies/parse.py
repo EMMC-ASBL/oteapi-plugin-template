@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import Literal, Annotated
+from typing import Annotated, Literal
 
 from oteapi.datacache import DataCache
 from oteapi.models import AttrDict, DataCacheConfig, ParserConfig

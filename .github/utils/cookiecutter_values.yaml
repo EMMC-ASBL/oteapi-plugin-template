@@ -8,5 +8,5 @@ default_context:
   email: "Team4.0@SINTEF.no"
   version: "0.0.1"
   scm_url: "https://github.com/EMMC-ASBL/oteapi-plugin-template-ci"
-  year: "2023"
+  year: "2025"
   use_git: yes

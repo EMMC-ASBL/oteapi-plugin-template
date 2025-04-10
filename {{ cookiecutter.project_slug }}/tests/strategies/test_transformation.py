@@ -10,9 +10,7 @@ def test_transformation() -> None:
     from {{ cookiecutter.package_name }}.strategies.transformation import DummyTransformationStrategy
 
     config = {"transformationType": "script/DEMO"}
-    transformation_initialize = DummyTransformationStrategy(
-        config
-    ).initialize()
+    transformation_initialize = DummyTransformationStrategy(config).initialize()
     transformation_get = DummyTransformationStrategy(config).get()
 
     assert {**transformation_initialize} == {}
