@@ -1,16 +1,14 @@
 """Tests the resource strategy."""
 
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from oteapi.models import SessionUpdate
 
-    from {{ cookiecutter.package_name }}.strategies.resource import SessionUpdateDemoResource
-
-
-def test_resource(static_files: "Path") -> None:
+def test_resource(static_files: Path) -> None:
     """Test `file` download strategy on binary and text files.
 
     Test files are taken from filesamples.com.
@@ -27,10 +25,8 @@ def test_resource(static_files: "Path") -> None:
         "mediaType": "application/jsonDEMO",
         "accessService": "DEMO-access-service",
     }
-    resource_initialize: "SessionUpdate" = DemoResourceStrategy(config).initialize()
-    resource_get: "SessionUpdateDemoResource" = DemoResourceStrategy(config).get(
-        resource_initialize
-    )
+    resource_initialize = DemoResourceStrategy(config).initialize()
+    resource_get = DemoResourceStrategy(config).get()
 
     test_data = json.loads(sample_file.read_text())
 
