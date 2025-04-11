@@ -1,9 +1,11 @@
 """Demo filter strategy."""
 
-from typing import Any, Literal, Optional, Annotated
+from __future__ import annotations
+
+from typing import Annotated, Literal
 
 from oteapi.datacache import DataCache
-from oteapi.models import AttrDict, DataCacheConfig, FilterConfig, SessionUpdate
+from oteapi.models import AttrDict, DataCacheConfig, FilterConfig
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
@@ -14,7 +16,7 @@ class DemoDataModel(AttrDict):
     demo_data: Annotated[list[int], Field(description="List of demo data.")]
 
     datacache_config: Annotated[
-        Optional[DataCacheConfig],
+        DataCacheConfig | None,
         Field(
             description=(
                 "Configurations for the data cache for storing the downloaded file "
@@ -39,7 +41,7 @@ class DemoFilterConfig(FilterConfig):
     ]
 
 
-class SessionUpdateDemoFilter(SessionUpdate):
+class DemoFilterContent(AttrDict):
     """Class for returning values from Download File strategy."""
 
     key: Annotated[str, Field(description="Key to access the data in the cache.")]
@@ -57,16 +59,11 @@ class DemoFilter:
 
     filter_config: DemoFilterConfig
 
-    def initialize(
-        self, session: Optional[dict[str, Any]] = None
-    ) -> SessionUpdateDemoFilter:
+    def initialize(self) -> DemoFilterContent:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
         Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
 
         Returns:
             An update model of key/value-pairs to be stored in the
@@ -80,20 +77,17 @@ class DemoFilter:
         else:
             key = cache.add(self.filter_config.configuration.demo_data)
 
-        return SessionUpdateDemoFilter(key=key)
+        return DemoFilterContent(key=key)
 
-    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def get(self) -> AttrDict:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
         OTEAPI Services.
-
-        Parameters:
-            session: A session-specific dictionary context.
 
         Returns:
             An update model of key/value-pairs to be stored in the
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return AttrDict()
