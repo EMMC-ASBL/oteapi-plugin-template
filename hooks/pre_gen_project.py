@@ -3,6 +3,8 @@
 Validate variables.
 """
 
+from __future__ import annotations
+
 import re
 import subprocess  # nosec
 import sys
@@ -10,11 +12,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from typing import List, Union
     from collections.abc import Sequence
 
 
-def run_cmd(cmd: "Union[str, Sequence[str]]") -> subprocess.CompletedProcess:
+def run_cmd(cmd: str | Sequence[str]) -> subprocess.CompletedProcess:
     """Run a command via `subprocess.run()`.
 
     Parameters:
@@ -61,7 +62,7 @@ if re.match(r"\s", PROJECT_NAME):
 # Ensure git has already been configured
 result = run_cmd("git config --list")
 if result.stdout:
-    git_config: "List[str]" = result.stdout.decode("utf8").splitlines()
+    git_config: list[str] = result.stdout.decode("utf8").splitlines()
     VALID = 0
     for config in git_config:
         if re.match(r"^user\.(email|name)=.+$", config):

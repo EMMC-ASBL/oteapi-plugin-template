@@ -1,9 +1,6 @@
 """Tests the function strategy."""
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from oteapi.models import SessionUpdate
+from __future__ import annotations
 
 
 def test_function() -> None:
@@ -11,10 +8,8 @@ def test_function() -> None:
     from {{ cookiecutter.package_name }}.strategies.function import DemoFunctionStrategy
 
     config = {"functionType": "function/DEMO"}
-    function_initialize: "SessionUpdate" = DemoFunctionStrategy(config).initialize()
-    function_get: "SessionUpdate" = DemoFunctionStrategy(config).get(
-        function_initialize
-    )
+    function_initialize = DemoFunctionStrategy(config).initialize()
+    function_get = DemoFunctionStrategy(config).get()
 
     assert {**function_initialize} == {}
     assert {**function_get} == {}

@@ -1,4 +1,5 @@
 version: 2
+
 updates:
 - package-ecosystem: pip
   directory: "/"
@@ -6,16 +7,24 @@ updates:
     interval: weekly
     day: monday
     time: "05:18"
-  # Should be bigger than or equal to the total number of dependencies (currently 12 = 1 + 7 + 4)
-  open-pull-requests-limit: 20
-  target-branch: ci/dependency-updates
+  target-branch: main
   labels:
     - CI/CD
+    - skip-changelog
+  groups:
+    packages:
+      applies-to: version-updates
+      patterns: ["*"]
+    security:
+      applies-to: security-updates
+      patterns: ["*"]
+
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: daily
     time: "05:24"
-  target-branch: ci/dependency-updates
+  target-branch: main
   labels:
     - CI/CD
+    - skip-changelog

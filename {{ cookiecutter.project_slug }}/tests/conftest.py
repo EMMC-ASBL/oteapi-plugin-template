@@ -1,5 +1,7 @@
 """Pytest fixtures and configuration."""
 
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 import pytest
@@ -9,7 +11,7 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture(scope="session")
-def static_files() -> "Path":
+def static_files() -> Path:
     """Path to `static` folder containing static test files."""
     from pathlib import Path
 

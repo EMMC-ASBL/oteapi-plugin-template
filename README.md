@@ -29,7 +29,7 @@ Furthermore, the repository will contain **dummy/demo** strategies for each of t
 These should be **updated** to **your specific needs** according to the strategy or strategies you intend to implement.
 The ones that are not used should be deleted.
 
-It is **important** to update the [`setup.cfg`](%7B%7B%20cookiecutter.project_slug%20%7D%7D/setup.cfg) according to the updated strategies in order for the strategies to be importable through OTEAPI Core.
+It is **important** to update the [`pyproject.toml`](%7B%7B%20cookiecutter.project_slug%20%7D%7D/pyproject.toml) according to the updated strategies in order for the strategies to be importable through OTEAPI Core.
 Please ensure to either uncomment the strategies as they are needed or remove them altogether if they are not needed.
 
 ## Usage
@@ -38,7 +38,7 @@ To start up a new OTEAPI Plugin repository you need to have the following pre-re
 
 - Access to a command line.
 - Have [`git`](https://git-scm.com/) installed.
-- Have minimum [Python 3.9](https://www.python.org/) installed.
+- Have minimum [Python 3.10](https://www.python.org/) installed.
 
 Also, it might be good to operate within a virtual environment.
 For more information about what suits your needs, take a look at [this guide from python.org](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) or [this guide from towardsdatascience.com](https://towardsdatascience.com/virtual-environments-104c62d48c54).

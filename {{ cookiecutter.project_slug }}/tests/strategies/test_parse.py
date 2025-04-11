@@ -1,16 +1,14 @@
 """Tests the demo parse strategy for JSON."""
 
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from oteapi.models import SessionUpdate
 
-    from {{ cookiecutter.package_name }}.strategies.parse import SessionUpdateJSONParse
-
-
-def test_json(static_files: "Path") -> None:
+def test_json(static_files: Path) -> None:
     """Test `application/jsonDEMO` parse strategy on local file."""
     import json
 
@@ -20,13 +18,15 @@ def test_json(static_files: "Path") -> None:
     assert sample_file.exists(), f"Test file not found at {sample_file} !"
 
     config = {
-        "downloadUrl": sample_file.as_uri(),
-        "mediaType": "application/jsonDEMO",
+        "parserType": "parser/jsonDEMO",
+        "entity": "http://onto-ns.com/meta/1.0/test",
+        "configuration": {
+            "downloadUrl": sample_file.as_uri(),
+            "mediaType": "application/jsonDEMO",
+        },
     }
-    parser_initialize: "SessionUpdate" = DemoJSONDataParseStrategy(config).initialize()
-    parser_get: "SessionUpdateJSONParse" = DemoJSONDataParseStrategy(config).get(
-        parser_initialize
-    )
+    parser_initialize = DemoJSONDataParseStrategy(config).initialize()
+    parser_get = DemoJSONDataParseStrategy(config).get()
 
     test_data = json.loads(sample_file.read_text())
 

@@ -1,8 +1,8 @@
 """Demo mapping strategy class."""
 
-from typing import Any, Optional
+from __future__ import annotations
 
-from oteapi.models import MappingConfig, SessionUpdate
+from oteapi.models import AttrDict, MappingConfig
 from pydantic.dataclasses import dataclass
 
 
@@ -18,34 +18,28 @@ class DemoMappingStrategy:
 
     mapping_config: MappingConfig
 
-    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def initialize(self) -> AttrDict:
         """Initialize strategy.
 
         This method will be called through the `/initialize` endpoint of the OTEAPI
         Services.
 
-        Parameters:
-            session: A session-specific dictionary context.
-
         Returns:
             An update model of key/value-pairs to be stored in the
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return AttrDict()
 
-    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def get(self) -> AttrDict:
         """Execute the strategy.
 
         This method will be called through the strategy-specific endpoint of the
         OTEAPI Services.
 
-        Parameters:
-            session: A session-specific dictionary context.
-
         Returns:
             An update model of key/value-pairs to be stored in the
             session-specific context from services.
 
         """
-        return SessionUpdate()
+        return AttrDict()

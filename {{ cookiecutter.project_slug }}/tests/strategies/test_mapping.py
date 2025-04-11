@@ -1,9 +1,6 @@
 """Tests the mapping strategy."""
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from oteapi.models import SessionUpdate
+from __future__ import annotations
 
 
 def test_mapping() -> None:
@@ -11,8 +8,8 @@ def test_mapping() -> None:
     from {{ cookiecutter.package_name }}.strategies.mapping import DemoMappingStrategy
 
     config = {"mappingType": "mapping/DEMO"}
-    mapping_initialize: "SessionUpdate" = DemoMappingStrategy(config).initialize()
-    mapping_get: "SessionUpdate" = DemoMappingStrategy(config).get(mapping_initialize)
+    mapping_initialize = DemoMappingStrategy(config).initialize()
+    mapping_get = DemoMappingStrategy(config).get()
 
     assert {**mapping_initialize} == {}
     assert {**mapping_get} == {}

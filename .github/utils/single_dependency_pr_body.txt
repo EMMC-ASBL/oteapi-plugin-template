@@ -1,8 +1,8 @@
 ### Update dependencies
 
-Automatically created PR from [`ci/dependency-updates`](https://github.com/EMMC-ASBL/oteapi-plugin-template/tree/ci/dependency-updates).
+Automatically created PR.
 
-For more information see the ["Dependabot updates" workflow](https://github.com/EMMC-ASBL/oteapi-plugin-template/blob/master/.github/workflows/ci_dependabot.yml).
+For more information see the ["CI - Update 'pre-commit' hooks" workflow](https://github.com/EMMC-ASBL/oteapi-plugin-template/blob/master/.github/workflows/ci_update_pre-commit.yml).
 
 #### To-do
 

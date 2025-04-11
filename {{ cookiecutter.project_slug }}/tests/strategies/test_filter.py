@@ -1,11 +1,6 @@
 """Tests the filter strategy."""
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from oteapi.models import SessionUpdate
-
-    from {{ cookiecutter.package_name }}.strategies.filter import SessionUpdateDemoFilter
+from __future__ import annotations
 
 
 def test_filter() -> None:
@@ -22,8 +17,8 @@ def test_filter() -> None:
         "filterType": "filter/DEMO",
         "configuration": {"demo_data": demo_data},
     }
-    filter_initialize: "SessionUpdateDemoFilter" = DemoFilter(config).initialize()
-    filter_get: "SessionUpdate" = DemoFilter(config).get(filter_initialize)
+    filter_initialize = DemoFilter(config).initialize()
+    filter_get = DemoFilter(config).get()
 
     content = DataCache().get(filter_initialize.key)
 

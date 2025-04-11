@@ -34,15 +34,15 @@ In order to test this locally, one requires [Docker Compose](https://github.com/
 Then, one can setup a local REST API service that includes this plugin and test it with the following commands:
 
 ```shell
-docker-compose -f docker-compose.yml pull  # Download the latest container images
-docker-compose -f docker-compose.yml up  # Run the services
+docker compose -f compose.yml pull  # Download the latest container images
+docker compose -f compose.yml up  # Run the services
 ```
 
-This will start the service and take over the terminal, printing log messages from all the services started through the [`docker-compose.yml`]({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml) file.
+This will start the service and take over the terminal, printing log messages from all the services started through the [`compose.yml`]({{ cookiecutter.scm_url }}/blob/main/compose.yml) file.
 If one instead wishes to keep that terminal available, or only show the logs relevant for the `oteapi` service, one can do:
 
 ```shell
-docker-compose -f docker-compose.yml up -d  # Run the services detached
+docker compose -f compose.yml up -d  # Run the services detached
 
 # Show logs and give back terminal
 docker logs {{ cookiecutter.project_slug }}-oteapi-1
@@ -53,7 +53,7 @@ docker logs -f {{ cookiecutter.project_slug }}-oteapi-1
 
 Now, one can instantiate an `otelib.OTEClient` with `"http://localhost:8080"` (or using the `PORT` environment variable value instead of `8080` if it has been set) and test the strategies by supplying the correct configuration values.
 
-Note, remember to update [`setup.cfg`]({{ cookiecutter.scm_url }}/blob/main/setup.cfg) to list the plugin strategies - otherwise they will not be findable by the OTEAPI service.
+Note, remember to update [`pyproject.toml`]({{ cookiecutter.scm_url }}/blob/main/pyproject.toml) to list the plugin strategies - otherwise they will not be findable by the OTEAPI service.
 
 ## License and copyright
 

@@ -6,4 +6,6 @@ Authored by {{ cookiecutter.author }}, {{ cookiecutter.organization }}, {{ cooki
 Created from cookiecutter-oteapi-plugin, SINTEF, 2023
 """
 
+from __future__ import annotations
+
 __version__ = "{{ cookiecutter.version }}"

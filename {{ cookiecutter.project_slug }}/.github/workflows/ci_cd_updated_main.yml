@@ -8,7 +8,7 @@ jobs:
   update-repository:
     name: External
     if: github.repository_owner == '{{ cookiecutter.username }}'
-    uses: SINTEF/ci-cd/.github/workflows/ci_cd_updated_default_branch.yml@v2.7.4
+    uses: SINTEF/ci-cd/.github/workflows/ci_cd_updated_default_branch.yml@v2.9.2
     with:
       # General
       git_username: "{{ cookiecutter.author }}"
@@ -16,8 +16,7 @@ jobs:
       default_repo_branch: main
 
       # Dependencies branch
-      update_dependencies_branch: true
-      permanent_dependencies_branch: ci/dependency-updates
+      update_dependencies_branch: false
 
       # Documentation
       update_docs: true
@@ -25,13 +24,14 @@ jobs:
       update_python_api_ref: true
       update_docs_landing_page: true
       package_dirs: "{{ cookiecutter.package_name }}"
-      python_version: "3.9"
+      python_version: "3.10"
       doc_extras: "[docs]"
+      changelog_exclude_labels: "skip-changelog,duplicate,question,invalid,wontfix"
       full_docs_dirs: "strategies"
       landing_page_replacement_separator: ","
       landing_page_replacements: |
         (LICENSE),(LICENSE.md)
-        (docker-compose.yml),({{ cookiecutter.scm_url }}/blob/main/docker-compose.yml)
-        (setup.cfg),({{ cookiecutter.scm_url }}/blob/main/setup.cfg)
+        (compose.yml),({{ cookiecutter.scm_url }}/blob/main/compose.yml)
+        (pyproject.toml),({{ cookiecutter.scm_url }}/blob/main/pyproject.toml)
     secrets:
       PAT: {{ "${{ secrets.RELEASE_PAT }}" }}

@@ -1,10 +1,6 @@
 """Tests the transformation strategy."""
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from oteapi.interfaces import ITransformationStrategy
-    from oteapi.models import SessionUpdate
+from __future__ import annotations
 
 
 def test_transformation() -> None:
@@ -14,19 +10,13 @@ def test_transformation() -> None:
     from {{ cookiecutter.package_name }}.strategies.transformation import DummyTransformationStrategy
 
     config = {"transformationType": "script/DEMO"}
-    transformation_initialize: "SessionUpdate" = DummyTransformationStrategy(
-        config
-    ).initialize()
-    transformation_get: "SessionUpdate" = DummyTransformationStrategy(config).get(
-        transformation_initialize
-    )
 
+    transformation_initialize = DummyTransformationStrategy(config).initialize()
     assert {**transformation_initialize} == {}
-    assert {**transformation_get} == {}
 
-    transformation: "ITransformationStrategy" = DummyTransformationStrategy(config)
+    transformation = DummyTransformationStrategy(config)
 
-    assert {**transformation.run()} == {"result": "a01d"}
+    assert {**transformation.get()} == {"result": "a01d"}
 
     test_task_id = "a01d"
     static_status_demo_data = {

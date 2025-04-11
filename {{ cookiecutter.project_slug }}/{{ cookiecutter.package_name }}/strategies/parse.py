@@ -1,10 +1,18 @@
 """Demo strategy class for text/json."""
 
+from __future__ import annotations
+
 import json
-from typing import Any, Literal, Optional, Annotated
+from typing import Annotated, Literal
 
 from oteapi.datacache import DataCache
-from oteapi.models import AttrDict, DataCacheConfig, ResourceConfig, SessionUpdate
+from oteapi.models import (
+    AttrDict,
+    DataCacheConfig,
+    HostlessAnyUrl,
+    ParserConfig,
+    ResourceConfig,
+)
 from oteapi.plugins import create_strategy
 from pydantic import Field
 from pydantic.dataclasses import dataclass
@@ -13,8 +21,17 @@ from pydantic.dataclasses import dataclass
 class JSONConfig(AttrDict):
     """JSON parse-specific Configuration Data Model."""
 
+    downloadUrl: Annotated[
+        HostlessAnyUrl | None,
+        Field(description=ResourceConfig.model_fields["downloadUrl"].description),
+    ]
+    mediaType: Annotated[
+        Literal["application/jsonDEMO"],
+        Field(description=ResourceConfig.model_fields["mediaType"].description),
+    ] = "application/jsonDEMO"
+
     datacache_config: Annotated[
-        Optional[DataCacheConfig],
+        DataCacheConfig | None,
         Field(
             description=(
                 "Configurations for the data cache for storing the downloaded file "
@@ -24,22 +41,20 @@ class JSONConfig(AttrDict):
     ] = None
 
 
-class JSONParseConfig(ResourceConfig):
+class JSONParserConfig(ParserConfig):
     """File download strategy filter config."""
 
-    mediaType: Annotated[
-        Literal["application/jsonDEMO"],
-        Field(
-            description=ResourceConfig.model_fields["mediaType"].description,
-        ),
-    ] = "application/jsonDEMO"
+    parserType: Annotated[
+        Literal["parser/jsonDEMO"],
+        Field(description=ParserConfig.model_fields["parserType"].description),
+    ] = "parser/jsonDEMO"
 
     configuration: Annotated[
         JSONConfig, Field(description="JSON parse strategy-specific configuration.")
-    ] = JSONConfig()
+    ]
 
 
-class SessionUpdateJSONParse(SessionUpdate):
+class JSONParseContent(AttrDict):
     """Class for returning values from JSON Parse."""
 
     content: Annotated[dict, Field(description="Content of the JSON document.")]
@@ -51,24 +66,26 @@ class DemoJSONDataParseStrategy:
 
     **Registers strategies**:
 
-    - `("mediaType", "application/jsonDEMO")`
+    - `("parserType", "parser/jsonDEMO")`
 
     """
 
-    parse_config: JSONParseConfig
+    parse_config: JSONParserConfig
 
-    def initialize(self, session: Optional[dict[str, Any]] = None) -> SessionUpdate:
+    def initialize(self) -> AttrDict:
         """Initialize."""
-        return SessionUpdate()
+        return AttrDict()
 
-    def get(self, session: Optional[dict[str, Any]] = None) -> SessionUpdateJSONParse:
+    def get(self) -> JSONParseContent:
         """Parse json."""
-        downloader = create_strategy("download", self.parse_config)
+        downloader = create_strategy(
+            "download", self.parse_config.configuration.model_dump()
+        )
         output = downloader.get()
         cache = DataCache(self.parse_config.configuration.datacache_config)
         content = cache.get(output["key"])
 
         if isinstance(content, dict):
-            return SessionUpdateJSONParse(content=content)
+            return JSONParseContent(content=content)
 
-        return SessionUpdateJSONParse(content=json.loads(content))
+        return JSONParseContent(content=json.loads(content))
