@@ -69,9 +69,9 @@ There are still some last things to do to ensure you have a nice CI/CD setup.
      - Pull requests with at least 1 reviewer approval.
      - Check success for the CI tests:
 
-       - 'External / Run \`pylint\` & \`safety\`'
        - 'External / Build distribution package'
        - 'External / Build Documentation'
+       - 'pip-audit'
        - 'pytest (linux-py3.10)'
        - 'pytest (windows-py3.10)'
        - 'pre-commit.ci - pr'
