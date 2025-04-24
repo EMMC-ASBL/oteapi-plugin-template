@@ -1,3 +1,2 @@
 cookiecutter~=2.6
 flit~=3.12
-pip-audit~=2.9
