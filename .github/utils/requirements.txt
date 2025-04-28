@@ -1,3 +1,2 @@
 cookiecutter~=2.6
 flit~=3.12
-safety~=3.3

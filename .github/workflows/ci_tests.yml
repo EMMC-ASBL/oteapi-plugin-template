@@ -56,8 +56,8 @@ jobs:
       run: pre-commit run --all-files
       working-directory: ./oteapi-ci
 
-    - name: Run safety
-      run: pip freeze | safety check --stdin
+    - name: Run pip-audit
+      uses: pypa/gh-action-pip-audit@v1.1.0
 
     - name: Build docs
       run: mkdocs build --strict
@@ -67,11 +67,11 @@ jobs:
       run: flit build
       working-directory: ./oteapi-ci
 
-  safety:
+  pip-audit:
     # Do not use SINTEF/ci-cd, since it requires the root repository to be installable
     # as a package.
     runs-on: ubuntu-latest
-    name: safety
+    name: pip-audit
 
     steps:
     - name: Checkout repository
@@ -88,5 +88,5 @@ jobs:
         pip install -U setuptools wheel
         pip install -r requirements.txt -r .github/utils/requirements.txt
 
-    - name: Run safety
-      run: pip freeze | safety check --stdin
+    - name: Run pip-audit
+      uses: pypa/gh-action-pip-audit@v1.1.0
