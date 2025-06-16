@@ -45,9 +45,9 @@ docs = [
     "mkdocstrings[python] ~=0.29.1",
 ]
 testing = [
-    "pytest ~=8.3",
-    "pytest-cov ~=6.1",
-    "tomlkit ~=0.13.2",
+    "pytest ~=8.4",
+    "pytest-cov ~=6.2",
+    "tomlkit ~=0.13.3",
 ]
 dev = [
     "{{ cookiecutter.project_slug }}[docs,testing]",
