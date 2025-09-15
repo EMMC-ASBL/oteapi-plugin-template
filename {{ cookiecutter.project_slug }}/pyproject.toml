@@ -46,7 +46,7 @@ docs = [
 ]
 testing = [
     "pytest ~=8.4",
-    "pytest-cov ~=6.3",
+    "pytest-cov >=6.3.0,<8",
     "tomlkit ~=0.13.3",
 ]
 dev = [
