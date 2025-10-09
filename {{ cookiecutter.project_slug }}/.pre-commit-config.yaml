@@ -67,7 +67,7 @@ repos:
 
   # Black is a code style and formatter
   # It works on files in-place
-  - repo: https://github.com/ambv/black
+  - repo: https://github.com/ambv/black-pre-commit-mirror
     rev: 25.9.0
     hooks:
     - id: black
@@ -84,7 +84,7 @@ repos:
   # More information can be found in its documentation:
   # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.2
+    rev: v0.14.0
     hooks:
       - id: ruff-check
         name: ruff
