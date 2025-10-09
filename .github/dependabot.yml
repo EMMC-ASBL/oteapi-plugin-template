@@ -5,6 +5,7 @@ updates:
   directories:
     - "/"
     - "/.github/utils/"
+    - "/{{ cookiecutter.project_slug }}/.github/utils"
   schedule:
     interval: weekly
     day: monday
@@ -24,7 +25,7 @@ updates:
 - package-ecosystem: github-actions
   directories:
     - "/"
-    - "/{{ cookiecutter.project_slug }}/"
+    - "/{{ cookiecutter.project_slug }}"
   schedule:
     interval: daily
     time: "05:24"
