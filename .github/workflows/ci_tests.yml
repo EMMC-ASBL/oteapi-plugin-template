@@ -96,3 +96,6 @@ jobs:
       uses: pypa/gh-action-pip-audit@v1.1.0
       with:
         inputs: ${{ github.workspace }}/requirements.txt ${{ github.workspace }}/.github/utils/requirements.txt
+        # Temporarily ignore pip vulnerability until we can upgrade to pip 25.3+
+        ignore-vulns: |
+          GHSA-4xh5-x5gv-qwph
