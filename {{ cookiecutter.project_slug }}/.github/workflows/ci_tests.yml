@@ -70,6 +70,9 @@ jobs:
       uses: pypa/gh-action-pip-audit@v1.1.0
       with:
         inputs: ${{ runner.temp }}/requirements.txt
+        # Temporarily ignore pip vulnerability until we can upgrade to pip 25.3+
+        ignore-vulns: |
+          GHSA-4xh5-x5gv-qwph
 
   pytest:
     name: pytest (${{ matrix.os[1] }}-py${{ matrix.python-version }})
