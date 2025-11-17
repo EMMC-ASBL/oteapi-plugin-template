@@ -1,4 +1,3 @@
 cookiecutter~=2.6
 flit~=3.12
-pip<25.3  # temporary
 pip-tools~=7.5
