@@ -50,7 +50,8 @@ Install cookiecutter according to [the documentation](https://cookiecutter.readt
 Then run the following to generate a new OTEAPI Plugin repository:
 
 ```console
-$ cookiecutter gh:EMMC-ASBL/oteapi-plugin-template  # Download from GitHub and generate repo
+# Download from GitHub and generate repo
+$ cookiecutter gh:EMMC-ASBL/oteapi-plugin-template
 project_name [OTEAPI My Plugin]:
 ...
 ```
