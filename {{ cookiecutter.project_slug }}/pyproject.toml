@@ -47,7 +47,7 @@ docs = [
 testing = [
     "pytest ~=9.0",
     "pytest-cov ~=7.0",
-    "tomlkit ~=0.13.3",
+    "tomlkit ~=0.14.0",
 ]
 dev = [
     "{{ cookiecutter.project_slug }}[docs,testing]",
