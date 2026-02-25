@@ -81,7 +81,7 @@ repos:
   # More information can be found in its documentation:
   # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.1
+    rev: v0.15.2
     hooks:
       - id: ruff-check
         name: ruff
@@ -92,7 +92,7 @@ repos:
   # More information can be found in its documentation:
   # https://bandit.readthedocs.io/en/latest/
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.9.3
+    rev: 1.9.4
     hooks:
     - id: bandit
       args: ["-r"]
