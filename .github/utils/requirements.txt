@@ -1,3 +1,4 @@
+chardet<7  # Temporary fix for https://github.com/binaryornot/binaryornot/issues/634
 cookiecutter~=2.6
 flit~=3.12
 pip-tools~=7.5
