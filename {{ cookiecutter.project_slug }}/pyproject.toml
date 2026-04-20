@@ -37,7 +37,7 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "mike ~=2.1",
+    "mike ~=2.2",
     "mkdocs ~=1.6",
     "mkdocs-autorefs~=1.4",
     "mkdocs-awesome-pages-plugin ~=2.10",
