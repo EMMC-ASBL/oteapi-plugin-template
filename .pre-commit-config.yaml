@@ -81,7 +81,7 @@ repos:
   # More information can be found in its documentation:
   # https://docs.astral.sh/ruff/
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.17
+    rev: v0.15.19
     hooks:
       - id: ruff-check
         name: ruff
