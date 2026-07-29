@@ -67,7 +67,7 @@ class DummyTransformationStrategy:
 
         """
         if sys.version_info < (3, 11):
-            time_now = datetime.datetime.utcnow()
+            time_now = datetime.datetime.utcnow()  # noqa: DTZ003
         else:
             time_now = datetime.datetime.now(datetime.UTC)
 
