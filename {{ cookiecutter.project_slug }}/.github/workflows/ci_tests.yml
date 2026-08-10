@@ -63,6 +63,9 @@ jobs:
         pip install -U setuptools wheel
         pip install -r .github/utils/requirements_ci.txt
 
+        # Temporary workaround for pip-tools
+        pip install "pip<26.2"
+
     - name: Prepare for pip-audit{% raw %}
       run: pip-compile --output-file=${{ runner.temp }}/requirements.txt --all-extras --allow-unsafe ${{ github.workspace }}/pyproject.toml
 
